@@ -1,0 +1,120 @@
+= LiquiDoc CMF
+
+This repo contains the boilerplate files for, and rudimentary documentation of, a content mamanagement framework (CMF) for combining open-source tools and workflows for documentation management.
+LiquiDoc CMF (LDCMF) incorporates two excellent lightweight markup languages (link:http://asciidoctor.org/docs/what-is-asciidoc/[AsciiDoc] and link:https://github.com/darvid/trine/wiki/YAML-Primer[YAML]) with open-source build and publish utilities (link:https://git-scm.com/book/en/v2/Getting-Started-Git-Basics[Git], link:http://asciidoctor.org/[Asciidoctor], link:http://idratherbewriting.com/2015/02/27/static-site-generators-start-to-displace-online-cmss/[static site generators], build and deployment tools, and many others) using a wrapper utility called link:https://github.com/briandominick/liquidoc-gem[*LiquiDoc*].
+This creates a truly open, highly portable system for developing and maintaining docs code the way programmers develop and maintain product code.
+
+== Usage
+
+Complete documentation for LDCMF is still being developed.
+
+The following procedure is a *bootstrapping operation* to get an _actual LDCMF project_ started.
+It further sets up initial files based on custom preferences.
+The newly generated `README.adoc` instructs future users to set up and use your docs.
+
+=== Quickstart
+
+[WARNING]
+This file (`README.adoc`) is the README for the generic LiquiDoc CMF project bootstrap repository.
+If you wish to keep this file, move/rename it _before_ running the quickstart, which generates a proper `README.adoc` for your actual docs project/directory, which this directory and its contents then becomes.
+
+If you have link:https://git-scm.com/book/en/v2/Getting-Started-Installing-Git[Git] and link:https://www.ruby-lang.org/en/downloads/[Ruby runtime] installed, you can get going with LiquiDoc CMF in a few quick steps.
+
+. Clone this repo.
++
+[subs="quotes"]
+----
+git clone git@github.com:DocOps/liquidoc-cmf.git *docs_dir*
+----
++
+Replace `docs_dir` with the directory name you want to give this directory.
+
+. Change to the project directory.
++
+.Example
+----
+cd docs_dir
+----
+
+. Re-associate your files with the proper repository.
+
+.. _If this project is its own Git repo_, change the project's remote origin Git repository.
++
+----
+git remote set-url origin git://github.com:your-project/your-repo-name.git
+----
++
+Replace this URI with your own.
+
+.. _If this project is part of a parent directory's Git repo_, remove local Git files.
++
+----
+rm -rf .git
+----
+
+. Run Bundler to install dependencies.
++
+----
+bundle install
+----
++
+If Bundler is not installed, run `gem install bundler`, then repeat this command.
+
+. Rename this README so _init_ does not overwrite it.
++
+.Example
+----
+mv README.adoc README.meta.adoc
+----
+
+. Edit your project metafile.
++
+In your favorite text/code editor, open `_data/meta.yml` and fill out the required info, then *save the file*.
+
+. Run LiquiDoc with the LDCMF initialization config.
++
+----
+bundle exec liquidoc -c _init/init.yml
+----
+
+. You can now review and edit your `README.adoc` and `src/index.adoc` files with custom content.
+
+. Delete or move the `README.meta.adoc` file (this file) and the `_init/` directory, which you will no longer need.
+
+Further instructions are in your new README!
+The new README file is oriented for your project's future users, so you don't need to repeat setup steps.
+Just run your first build.
+
+== Structure
+
+This is the basic file directory structure of an initial LiquiDoc CMF project).
+
+[source]
+----
+liquidoc-cmf/
+├── _configs/
+│   ├── asciidoctor.yml
+│   └── build-docs.yml
+├── _data/
+│   └── meta.yml
+├── _templates/
+│   └── liquid/
+│       └── company.asciidoc
+├── src/
+│   ├── assets/
+│   ├── includes/
+│   ├── portal/
+│   ├── topics/
+│   └── index.adoc
+└── theme/
+README.adoc
+Gemfile
+----
+
+[NOTE]
+Empty directories (ex., `src/assets/`) must be manually added.
+
+== Contributing
+
+This is an open source project that is eager for contributions and feedback.
+More soon.

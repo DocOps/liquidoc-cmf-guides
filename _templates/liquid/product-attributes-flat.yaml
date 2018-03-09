@@ -1,0 +1,3 @@
+{% for p in product %}
+x: test {{p.slug}}
+{% endfor %}

@@ -1,0 +1,40 @@
+= NOTICE of Packaged Dependencies
+:page-permalink: '{site_path}/notice'
+
+The following open source packages are fully or partially included with LiquiDoc.
+
+include::{includes_dir}/_built_dependencies_table.adoc[]
+
+ifdef::cheat[]
+[[notice-sourcing]]
+.How this appendix is sourced
+****
+This file is not sourced as YAML but rather as plain text for a couple of reasons.
+First of all, this file is traditionally named `NOTICE` and kept prominently in the root directory in open-source projects.
+
+More importantly, since this file _must_ be present in this open-source project where it is distributed (GitHub), we do not want to duplicate the source.
+So we store it in a very human-readable plaintext format, then we extract data from it during the parsing step of the build routine.
+
+Here is the NOTICE file in its entirety:
+
+[source,plaintext]
+.LiquiDoc NOTICE file
+----
+include::NOTICE[]
+----
+
+And here is the section from `_configs/build-docs.yml` that instructs the data extraction:
+
+[source,yaml]
+.From build-docs.yml
+----
+include::_configs/build-docs.yml[tags=regex-notice]
+----
+****
+
+[TIP]
+.META AF!
+Here again we find examples of code listings drawn from their canonical source.
+The `NOTICE` file in its entirety, and a segnment of the build configuration YAML using `include::{root_path}/_configs/build-docs.yml[tags=regex-notice]`.
+
+endif::cheat[]

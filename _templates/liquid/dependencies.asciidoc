@@ -1,0 +1,16 @@
+{% for dep in data %}{% if dep.license_url %}{% capture license %}link:http{{dep.license_url}}[{{dep.license}}]{% endcapture %}{% else %}{% assign license = dep.license %}{% endif %}
+[cols="1s,4"]
+|===
+| Package
+s| {{ dep.name }}
+
+| License
+| {{ license }}
+
+| Author
+| {{ dep.author }}
+
+| Website
+| {{ dep.package_url }}
+|===
+{% endfor %}

@@ -1,0 +1,29 @@
+- name: _configs/
+  description: This is where we tell our tooling how to do what. The `_configs/` directory usually contains at least one `build\*.yml` file that instructs a build routine as well as an `asciidoctor.yml` file for establishing global AsciiDoc/Asciidoctor settings, and optionally a `jekyll.yml` file to stand in as the `_config.yml` for Jekyll operations.
+
+- name: data/
+  description: Where we store small-data files.
+
+- name: _templates/
+  description: This directory is for storing templates used in preprocessing.
+
+- name: build/
+  description: A directory created and written to during the build process.
+
+- name: content/
+  description: This is where _most_ of our content will come from.
+
+- name: content/\*index*.adoc
+  description: The defining file for book builds and the homepage and something of a map for site builds. This file sould have `index` in its filename but should also be descriptive of what it produces.
+
+- name: content/includes/
+  description: Snippets and partials go in here. This is where we put highly reusable and often partly dynamic text content. Snippets should not have headers. They may be collected into files by type or subject, distinguished by AsciiDoc include tags in their comments.
+
+- name: content/topics/
+  description: Topics are chunks of content that could stand alone, for instance as a web page, but that also might be reused in different contexts, including as a component of a larger page or other document, such as a book. All topic files should have a level-one header (`=`).
+
+- name: content/[content]/
+  description: A freely named directory for your main content, however organized. Often called `pages/` to comport with Jekyll conventions.
+
+- name: theme/
+  description: Files for defining layout and style for _publishing_ go here. Not to be confused with `_layouts/`, which holds similarly purposeful files for structuring content in preprocess operations.

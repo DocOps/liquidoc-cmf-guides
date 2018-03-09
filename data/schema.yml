@@ -1,0 +1,282 @@
+# USER STORIES: These "user stories" are stated strictly from a documentation perspective. They may not
+# reflect a 1:1 relationship with product user stories. When creating your own, consider the scale of a
+# user story to be a distinct problem the user can resolve with a distinct action or set of steps.
+# User stories always represent topics, so their slugs align with filenames in the content/topics
+# directory and appears on an automatically generated HTML page of its own, unless otherwise
+# instructed indicated with a setting standalone: false. Both standalone and non-standalone topic files
+# can of course be included in larger files, such as pages.
+
+topics:
+# DOCPRO stories
+# META-INSTRUCTIONS: You may wish to keep this entire section, though you are welcome
+# to remove any story you do not wish your documentarian users to know about.
+  - slug: get-started-liquidoc
+    action: get started with a LiquiDoc-ready repository
+    title: Getting Started with a LiquiDoc-ready Repository
+    title_short: Getting Started with LiquiDoc
+    roles: [docpro]
+    categories: [setup]
+  - slug: overview-liquidoc-cmf
+    action: grasp the significance of LiquiDoc CMF
+    title: Grasping the Significance of LiquiDoc CMF
+    title_short: LiquiDoc CMF Intro
+    roles: [docpro]
+    categories: [understand]
+  - slug: ldcmf-structure-this
+    action: get familiar with this LDCMF environment
+    title: Getting to Know This LDCMF Environment
+    title_short: This LDCMF Environment
+    roles: [docpro]
+    categories: [understand]
+  - slug: setup-toolset
+    action: establish a great local toolset
+    title: Establishing a Local Toolset
+    title_short: Setup Local Tools
+    roles: [docpro]
+    categories: [setup]
+  - slug: write-edit-asciidoc
+    action: write and edit content in AsciiDoc
+    title: Writing and Editing in AsciiDoc
+    title_short: AsciiDoc for Content
+    roles: [docpro]
+    categories: [contribute]
+    tags: [AsciiDoc,content,Git]
+  - slug: manage-source
+    action: locate and manage source files
+    title: Locating & managing Source Files
+    title_short: Managing Files
+    roles: [docpro]
+    categories: [contribute]
+    tags: [Git,architecture]
+  - slug: commit-git
+    action: commit changes to source control
+    title: Committing changes to Source Control
+    title_short: Working with Git
+    roles: [docpro]
+    categories: [contribute]
+    tags: [Git]
+  - slug: write-edit-yaml
+    action: write and edit small-data in YAML
+    title: Writing & Editing Small-Data in YAML
+    title_short: YAML for Small Data
+    roles: [docpro,admin]
+    categories: [contribute]
+    tags: [YAML,data]
+  - slug: submit-data-content
+    action: submit and iterate data/content commits for publication
+    title: Submitting Data & Content for Review
+    title_short: Submitting for Review
+    roles: [docpro]
+    categories: [contribute,workflow]
+    tags: [Git,GitHub]
+  - slug: review-data-content
+    action: eview and approve data/content commits for publication
+    title: Reviewing Merge Requests
+    title_short: Reviewing Merge Requests
+    roles: [docpro]
+    categories: [contribute,workflow]
+    tags: [Git,GitHub]
+
+# COMMON stories
+# META-INSTRUCTION: These are highly optional, though build-docs-basic is strongly recommended
+# so all your users can generate
+  - slug: build-docs-basic
+    action: build a preconfigured docset
+    title: Building a Preconfigured Docset
+    title_short: Building a Basic Docset
+    roles: [docpro,admin,dev]
+    categories: [build]
+    tags: [CLI]
+  - slug: build-docs-advanced
+    action: build a preconfigured docset with additional options
+    title: Build a Preconfigured Docset with Additional Options
+    title_short: Building Advanced Docsets
+    roles: [docpro,admin,dev]
+    categories: [build]
+    tags: [CLI]
+  - slug: build-docs-testing-dev
+    action: build docs for testing and development
+    title: Building Docs for Testing and Development
+    title_short: Building for Dev/Testing
+    roles: [admin,dev]
+    categories: [build]
+    tags: [CLI]
+
+# ADMIN stories
+# META-INSTRUCTION: These are for you, administrator. If you like having a copy in your docs portal,
+# keep it all. Remember, you can always find this information on the official LiquiDoc site
+  - slug: initialize-docs-env
+    action: initialize a new LiquiDoc CMF environment
+    title: Initializing a New LiquiDoc CMF Environment
+    title_short: Bootstrap an LDCMF Environment
+    roles: [admin]
+    categories: [setup]
+    tags: [CLI,YAML]
+  - slug: overview-config-file
+    action: get comfortable with LiquiDoc build configuration
+    title: Getting Comfortable with LiquiDoc Build Configuration
+    title_short: LiquiDoc Build Configuration
+    roles: [admin]
+    categories: [setup]
+    tags: [CLI,YAML]
+  - slug: overview-asciidoc-preproc
+    action: understand AsciiDoc preprocessing techniques
+    title: Understanding AsciiDoc Preprocessing Techniques
+    title_short: AsciiDoc Preprocessing
+    roles: [admin,dev]
+    categories: [configure,build]
+    tags: [AsciiDoc,YAML,Liquid,templating]
+  - slug: parse-small-data
+    action: parse small-data files with templates
+    title: Parsing Small-Data Files with Templates
+    title_short: Parsing Small Data
+    roles: [admin]
+    categories: [configure,build]
+    tags: [YAML,CLI,templating,theming,Liquid,data]
+  - slug: templating-with-liquid
+    action: design preprocessing templates in Liquid
+    title: Designing Preprocessing Templates in Liquid
+    title_short: Designing Liquid Preprocessors
+    role: [admin,dev]
+    categories: [configure,theme]
+    tags: [Liquid,templates,theming,data]
+  - slug: migrate-assets
+    action: copy assets during a docs build
+    title: Migrating Assets During a Docs Build
+    short_title: Migrating Assets
+    roles: [admin]
+    categories: [configure,build]
+    tags: [YAML,CLI]
+  - slug: convert-small-data
+    action: convert small-data files to other formats
+    title: Converting Small-Data Files to Other Small-Data Formats
+    title_short: Converting Small Data
+    roles: [admin]
+    categories: [configure,build]
+    tags: [data,YAML,JSON,XML,CSV]
+  - slug: render-html
+    action: render simple HTML output
+    title: Rendering Simple HTML5 Output
+    title_short: Rendering HTML5
+    roles: [admin]
+    categories: [configure,build]
+  - slug: render-pdf
+    action: render PDF output
+    title: Rendering PDF Output
+    title_short: Rendering PDF
+    roles: [admin]
+    categories: [configure,build]
+  - slug: generate-static-site
+    action: generate a static website
+    title: Generating a Static Website
+    title_short: Generating Static Site
+    roles: [admin]
+    categories: [configure,build]
+  - slug: product-repo-as-submodule
+    action: treat a product repository as a submodule
+    title: Treating a Product Repository as a Submodule
+    title_short: Product Repo as Submodule
+    roles: [admin]
+    categories: [configure]
+  - slug: manage-release-history
+    action: coordinate and produce a product release history
+    title: Coordinating & Producing a Release History
+    title_short: Release History Production
+    roles: [admin]
+    categories: [manage,build,configure]
+  - slug: adapt-these-docs
+    action: adapt these very docs to cover my own environment
+    title: Adapting These Docs to Cover Your Own Environment
+    title_short: Adapting These Docs
+    roles: [admin]
+    categories: [manage,configure,modify]
+  - slug: working-includes
+    action: understand the way AsciiDoc includes are used in LiquiDoc
+    title: Using AsciiDoc Includes are Used in LiquiDoc
+    title_short: AsciiDoc Includes in LiquiDoc
+    roles: [admin,dev]
+    categories: [configure]
+
+# DEV stories
+# META-INSTRUCTION: It is highly recommended that you refocus this section of your meta docs to include
+# developer-facing information and instructions. To your audience, this content is about how to hack
+# your product, NOT LiquiDoc
+# IF YOU'RE JUST GETTING STARTED, perhaps these files can serve as boilerplates,
+# but you'll definitely want to tailor all of this to your project.
+  - slug: setup-ruby-dev-env
+    action: establish a LiquiDoc development environment
+    title: Establishing a LiquiDoc Development Environment
+    title_short: LiquiDoc Dev Env Setup
+    roles: [dev]
+    categories: [setup]
+  - slug: extend-liquidoc
+    action: extend LiquiDoc's capabilities without modifying its source
+    title: Extending LiquiDoc's Capabilities Without Modifying Its Source
+    title_short: Extending LiquiDoc
+    roles: [dev,admin]
+    categories: [extend,contribute]
+  - slug: modify-liquidoc
+    action: modify LiquiDoc's behavior by hacking its source
+    title: Modifying LiquiDoc's Behavior by Hacking its Source
+    title_short: Hacking LiquiDoc
+    roles: [dev]
+    categories: [modify,contribute]
+  - slug: submit-code
+    action: submit code commits for incorporation into LiquiDoc or LDCFM
+    title: Submitting Code Commits for Incorporation into LiquiDoc or LDCFM
+    title_short: Pushing Code to LiquiDoc
+    roles: [dev]
+    categories: [modify,contribute]
+  - slug: document-code-changes
+    action: properly document your code changes and their impact
+    title: Properly Document Your Code Changes and Their Impact
+    title_short: Documenting LiquiDoc Code/Changes
+    roles: [dev]
+    categories: [modify,contribute]
+  - slug: manage-oss-dependencies
+    action: manage and document open-source dependencies
+    title: Managing & Documenting Open-Source Dependencies
+    title_short: Handling Open-Source Dependencies
+    roles: [dev]
+    categories: [modify,contribute]
+  - slug: release-history-dev
+    action: contribute to a clean, useful release history
+    title: Contributing to a Clean, Useful Release History
+    title_short: LiquiDoc Release History
+    roles: [dev]
+    categories: [modify,contribute]
+  - slug: run-liquidoc-alternate-gem
+    action: run LiquiDoc using an alternate gem
+    title: Running LiquiDoc Using an Alternate Gem
+    title_short: Alternating LiquiDoc Gems
+    roles: [dev,admin]
+    categories: [modify,build]
+
+# NON-PRODUCT stories
+# META-INSTRUCTION: While these stories are not particularly specific in their wording, the material
+# they cover is _not_ stuff you want to confuse readers with, so review and edit with care.
+  - slug: understand-contributor-rights
+    action: understand my rights as a contributor
+    title: Understanding My Rights as a Contributor
+    title_short: Contributor Rights
+    roles: [docpro,dev]
+    categories: [understand,contribute]
+    tags: [policy,git]
+  - slug: understand-reviews-policy
+    action: understand how merge requests are evaluated
+    title: Understanding How Merge Requests are Evaluated
+    title_short: Merge Request Evaluation
+    roles: [docpro]
+    categories: [understand,contribute]
+    tags: [policy,git]
+
+categories:
+  - setup
+  - build
+  - contribute
+  - configure
+  - theme
+  - extend
+  - modify
+  - manage
+  - understand

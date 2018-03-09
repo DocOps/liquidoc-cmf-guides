@@ -1,0 +1,3 @@
+{% for term in data %}
+{{ term.name }}::
+{{ term.description }}{% endfor %}

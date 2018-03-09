@@ -1,0 +1,5 @@
+= AsciiDoc Style Guide
+
+LiquiDoc's official “AsciiDoc Style Guide” is coming soon.
+
+For now, check out the Asciidoctor Project's delightful “link:https://asciidoctor.org/docs/asciidoc-writers-guide/[AsciiDoc Writer's Guide]”.

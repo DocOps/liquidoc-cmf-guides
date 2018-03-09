@@ -1,0 +1,9 @@
+Welcome to the {portal_product} {portal_user} {portal_term}!
+
+Here you will learn to {user_verb} {portal_product} as a {user_role}.
+
+ifdef::cheat[]
+[TIP.cheat]
+The above lines are generated mostly from variables.
+The words _{portal_product}_, _{portal_user}_, _{portal_term}_, and even _{user_verb}_ were all created by these variables, respectively: `{portal_product}`, `{portal_user}`, `{portal_term}`, and `{user_verb}`.
+endif::[]

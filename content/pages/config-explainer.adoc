@@ -1,0 +1,42 @@
+= How This Documentation is Built
+:page-permalink: {site_path}/build-config-explainer
+
+LiquiDoc's own documentation is a fairly complex implementation of LiquiDoc and the LiquiDoc Content Management Framework (LDCMF).
+It takes advantage of most of LiquiDoc's capabilities and is the defining project for LDCMF.
+
+The build is defined in `_configs/build-docs.yml`, which is a self-documenting configuration.
+Managing LiquiDoc build configurations is programming, albeit using an extraordinarily orderly “DSL” (domain-specific language).
+If you are not a developer, LiquiDoc's self-documentation features may seem more intimidating than helpful.
+Nevertheless, spending a few moments on this page and reviewing the LiquiDoc Docs configuration file may be the best way to get a sense for the power and dexterity of LiquiDoc.
+
+== Order Out of Chaos
+
+LiquiDoc enables single sourcing of content and data by enabling files to be written to an effemeral directory.
+
+The LiquiDoc configuration file is a map that pulls disparate files together just so, with the end result being one or more rich-media documents.
+LiquiDoc “steps” through this configuration when you run a build, and each step and substep yields automatic or custom messages.
+By default, these are printed to a file at `_build/pre/config-explainer.adoc`, or printed to screen with the `--explicit` command-line flag.
+
+Go ahead and give it a try now:
+
+[source,bash,subs="attributes"]
+----
+bundle exec liquidoc -c {docs_build_path_def} --explicit
+----
+
+This output is formatted as AsciiDoc ordered and unordered lists.
+You may find it helpful in understanding what the config file (`{docs_build_path_def}`) is up to.
+
+== The Config Explainer Output
+
+What follows is the full text of LiquiDoc's config-explainer feature for this project ({project_name_full}).
+
+[NOTE]
+Because the explainer is written as LiquiDoc progresses through the configuration file, this file will only be complete if at least one build has previously been performed _since_ the last time the build configuration file was altered.
+The line below this one will include a _copy of_ that file (`include::../pre/config-explainer.adoc[]`), made by migrating the file last step of the build process.
+That file will not be in place or complete until the build has completed at least once since the last time the config file was altered or the `{build_dir}/pre/` directory has been removed.
+
+[subs="attributes"]
+====
+include::../pre/config-explainer.adoc[]
+====

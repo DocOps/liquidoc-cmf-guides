@@ -1,0 +1,153 @@
+include::{page_meta}[tags="get-started-liquidoc"]
+
+If you learn better from doing or reading, you can get started with this LiquiDoc CMF environment right away.
+
+ifdef::show_docpro[]
+As a _documentarian_, your environment should already be configured.
+The contents of this {portal_term} are customized for your team's needs.
+endif::show_docpro[]
+
+ifdef::show_admin[]
+As an LDCMF _admin_ for your own project, you will have to at least initialize an LDCMF environment before building any docs or even sharing the environment with your team.
+This section will get you started, and the rest of this {portal_term} will help you cuztomize the environment to suit your product demands and your team's workflow.
+endif::show_admin[]
+
+ifdef::show_dev[]
+As a {product_suite} _developer_, you need a suitable dev and testing environment.
+That starts with building these very docs, but we'll also explore building from test/sample environments, as well.
+endif::show_dev[]
+
+Once we make sure you have the few prerequisites in place, you can build these docs.
+ifdef::show_docpro[]
+That will be essentially the entire operation for documentarians.
+You can get started creating or editing content, then rebuilding to see your work in place.
+endif::[]
+
+== Installing Dependencies
+
+The only prerequisite software packages you may need up front are Ruby runtime and Git.
+The rest will be installed during the basic setup instructions.
+
+* link:https://git-scm.com/book/en/v2/Getting-Started-Installing-Git[Git installation instructions]
+
+* link:https://www.ruby-lang.org/en/downloads/[Ruby runtime installation] (probably unnecessary on Mac or Linux)
+
+== Quickstart
+
+The following instructions require a command-line interface.
+Open your preferred terminal app and navigate to a workspace in which you can create a new subdirectory for the local repository (“repo”).
+
+[TIP]
+If you don't know how to open a terminal, use your operating system's magic finder.
+
+// tag::admin-edit[]
+. Clone this repo.
++
+[subs="quotes"]
+----
+git clone {this_repo_uri} {project_basedir_bold}
+----
++
+Now you have a local copy of the repository files.
+
+. Change your working directory to the docs directory.
++
+.Example
+----
+cd {project_basedir}/{docs_path}
+----
+
+. Run Bundler to install dependencies.
++
+----
+bundle install
+----
++
+If Bundler is not installed, run `gem install bundler`, then repeat this command.
+
+. Run your first build of these docs.
++
+----
+bundle exec liquidoc -c _configs/build-docs.yml
+----
++
+This executes the LiquiDoc utility through Bundler, basing the build procedure on a configuration file passed using `-c`.
+We'll explore what's happening here in a moment.
+
+. Serve the website locally.
++
+----
+bundle exec jekyll serve --destination build/site \
+  --config _configs/jekyll-global.yml --skip-initial-build --no-watch
+----
+
+Now you're able to view the {project_name} web portals, including a copy of this very {portal_term}, right on your local machine.
+Browse link:http://127.0.0.1:4100/index[http://127.0.0.1:4100/index].
+// end::admin-edit[]
+
+=== What Just Happened?
+// tag::admin-edit[]
+The only steps you'll need to perform regularly going forward will be the last two.
+But all these steps are relevant to your work, so we'll exlore them one by one.
+
+==== Ruby runtime
+
+Whether you already had a Ruby runtime environment or just installed it, you're now able to execute packaged Ruby scripts called “gems”.
+
+Unless you intend to modify (hack) LiquiDoc, Asciidoctor, or Jekyll yourself, you don't need to know anything about the Ruby language to use these utilities.
+However, it is handy to understand a little about how Ruby works on your system and how you will be engaging with it.
+That orientation starts below with
+
+==== Git
+
+If you were not familiar with Git before, you are about to get intimate.
+We'll be exploring Git operations in the <<overview-liquidoc-cmf,LiquiDoc CMF Overview>>.
+For now, the relevant aspect of Git is that you have created a Git repo during the first step above.
+This step executed a Git command (`git clone`) to grab a copy of this repo from the remote address and clone it to your system.
+In so doing, it initialized that root directory as a Git repository -- not just any set of files.
+This means your repository is ready for action, and all the powers of Git are at your fingertips.
+You'll be using more of them soon enough.
+
+==== Project working directory
+
+Every LiquiDoc CMF project has a base directory from which it's best to run all commands.
+Always navigate into this directory when you begin working on content, so any `liquidoc`, asciidoctor`, or `jekyll` commands you may find in these instructions are always run from that base.
+
+[TIP]
+If you ever need to know what directory you are in, enter `pwd` at the prompt and the full path will display.
+
+==== Bundler
+
+The first Ruby “trick” you should be familiar with is `bundle`, the command that runs the Bundler gem.
+For our purposes, Bundler reads the file simply called `Gemfile`, which you will find in your project root directory and gathers packages, primarily from link:https://rubygems.org/[Rubgems.org], an open-source gem package hosting service.
+This `Gemfile` defines dependencies used by LiquiDoc, Jekyll, and Asciidoctor as they process source code into publications during a build procedure.
+Engaging Bundler during every execution of these key Ruby gems ensures proper versions of all their prerequisites are in order.
+
+Running `bundle update` on the command prompt will always check for and install the latest gem updates, which should be pretty safe to do from time to time.
+// admin-edit            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+==== LiquiDoc build procedure
+
+The `bundle exec liquidoc` command executes the utility that coordinates the complex documentation build procedure.
+This is all instructed in the build-configuration file indicated in the command (`_configs/build-docs.yml`).
+We'll explore that file and the entire build operation much further in the <<overview-liquidoc-cmf,LiquiDoc CMF Overview>>.
+
+ifdef::show_docpro[]
+For now, it is most helpful to understand the role LiquiDoc plays in the build process, which is mainly just the orderly invocation of more-powerful tools like Liquid, Asciidoctor, and Jekyll.
+The `liquidoc` command accepts a range of options, but you'll be running it under fairly strict instructions..
+endif::[]
+
+At the end of this procedure, we have generated PDF artifacts as well as static HTML files completely parsed, compiled and ready to serve.
+// end::admin-edit[]
+
+==== Jekyll serve procedure
+
+This step fires up a local “development server”, giving us a proper browser protocol for navigating all those HTML files.
+We look more deeply at the role Jekyll plays in LiquiDoc CMF in <<overview-liquidoc-cmf,LiquiDoc CMF Overview>>.
+
+This specific `jekyll serve` command was run with some special options.
+Without delving into too much detail, these options serve all the pages we want at once, for multiple portals, and disables default Jekyll features that would interfere with our operations.
+
+[TIP]
+The reason we have to run this step separately is that the build we performed in the last step created multiple Jekyll sites (our “portals”), and we have to serve Jekyll with specific commands in order to
+This step will be integrated into the LiquiDoc configuration when LiquiDoc is better able to accommodate complex Jekykll commands.

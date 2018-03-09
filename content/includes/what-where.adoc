@@ -1,0 +1,33 @@
+// This file contains includable snippets describing various elements of the
+// LiquiDoc CMF architecture and processes
+
+// tag::data-config[]
+One aspect of the LiquiDoc CMF architecture that new LDCMF admins often find confusing is differentiating the `_configs/` directory from the `data/` directory, since both are usually populated by YAML files.
+The `_configs/` directory holds small-data files that help instruct the LiquiDoc _build process_ itelf or the final _output_ rendering.
+Little of the data in the `_configs/` directory would appear as content in the final published docs.
+Conversely, the `data/` directory holds any small-data files _about_ your _product, your _company_, or other subject matter that will appear _inside_ the final output.
+This difference is also why only one of these top-level directories starts with an underscore to indicate it should not be copied into the `_build/` directory, as it only instructs a procedure and does not provide content.
+// end::data-condig[]
+
+// tag::template-parsing[]
+Template parsing is the act of pressing data from one source through a markup language in order to mix the source data in with content and markup to generate new source for subsequent processing.
+
+Templating languages usually accommodate _iteration_, the process of “looping” over data in a series (such as a list or array) in order to repeatedly apply logic and formatting on each item in the series.
+
+.Example Liquid template
+[source,asciidoc]
+----
+{% for term in data %} // <1>
+{{ term.name }}:: // <2>
+{{ term.description }}
+{% endfor %} // <3>
+----
+
+. A _for_ loop iterates through each item in a block of data called `data`, such as:
++
+[source,yaml]
+----
+include::../data/terms.yml[tags="sample"]
+----
+
+// end::template-parsing[]

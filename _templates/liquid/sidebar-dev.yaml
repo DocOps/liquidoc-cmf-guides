@@ -1,0 +1,23 @@
+entries:
+- title: Sidebar
+  levels: one
+  folders:
+{%- for cat in categories -%}
+{%- assign cat_found = false -%}
+{%- for story in topics -%}
+{%- unless cat_found == true -%}
+{%- if story.categories.first == cat and story.roles contains "dev" -%}
+{%- assign cat_found = true %}
+    - title: {{ cat | capitalize }}
+      output: web
+      folderitems:
+{%- endif -%}
+{%- endunless -%}
+{%- if story.title_short -%}{%- assign this_title = story.title_short -%}{%- else -%}{%- assign this_title = story.title -%}{%- endif -%}
+{%- if story.roles contains "dev" and story.categories.first == cat %}
+        - title: {{ this_title }}
+          url: {{ story.slug }}
+          output: web
+{%- endif -%}
+{%- endfor -%}
+{%- endfor -%}

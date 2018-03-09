@@ -1,0 +1,4 @@
+= Tooling Your Docs-as-Code Environment
+
+Since key features of any true docs-as-code practice include openness, extensibility, and portability, a robust LiquiDoc CMF instance can be operated using free and open-source software (FOSS).
+While some might prefer a proprietary/commercial code editor, those best suited to working with AsciiDoc are quite free.

@@ -1,0 +1,39 @@
+{% for story in topics %}
+// tag::{{ story.slug }}[]
+{%- capture roles -%}
+{%- for r in story.roles -%}{{ r }}{%- unless r == story.roles.last -%},{%- endunless -%}
+{%- endfor -%}{%- endcapture -%}
+{%- capture categories -%}
+{%- for c in story.categories -%}{{- c -}}{%- unless c == story.categories.last -%},{%- endunless -%}
+{%- endfor -%}{%- endcapture -%}
+{%- capture tags -%}
+{%- for t in story.tags -%}{{ t }}{%- unless t == story.tags.last -%},{%- endunless -%}
+{%- endfor -%}{%- endcapture %}
+= {{ story.title }}
+:page-title: {{ story.title }}
+:page-permalink: {site_path}/{{ story.slug }}
+:page-roles: [{{ roles }}]
+:page-categories: [{{ categories }}]
+:page-tags: [{{ tags }}]
+
+[cols="1,5"]
+|===
+| User story
+|
+ifeval::["{portal_slug}" == "docpro"]
+include::{includes_dir}/_built_user-stories-full.adoc[tags="docpro-{{ story.slug }}"]
+endif::[]
+ifeval::["{portal_slug}" == "admin"]
+include::{includes_dir}/_built_user-stories-full.adoc[tags="admin-{{ story.slug }}"]
+endif::[]
+ifeval::["{portal_slug}" == "dev"]
+include::{includes_dir}/_built_user-stories-full.adoc[tags="dev-{{ story.slug }}"]
+endif::[]
+|===
+// end::{{ story.slug }}[]
+
+{% if story.subtopics %}
+
+{% endif %}
+
+{% endfor %}

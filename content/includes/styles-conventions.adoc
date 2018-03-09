@@ -1,0 +1,54 @@
+// This file is intended to be embedded, wholly or in portions designated by `tag::tagname[]` notations.
+
+== AsciiDoc Styles for {project_name}
+// tag::asciidoc-styles[]
+These conventions apply to AsciiDoc _source code formatting_, instructing which AsciiDoc language elements to use for what, and how to format them when multiple options exist.
+Writing _style_ is handled separately.
+
+// end::asciidoc-styles[]
+
+== Writing (Output) Styles for {project_name}
+// tag::output-styles[]
+These are the markup-agnostic conventions we use in writing for the {project_name} project.
+That is, they are output-oriented -- they would be the same if we were writing in Markdown, Textile, or reStructuredText.
+
+// end::output-styles[]
+
+== LiquiDoc Conventions for {project_name}
+// tag::liquidoc-conventions[]
+These conventions indicate best-practices (or at least common standards) for formatting and naming elements of a LiquiDoc architecture and build configurations.
+
+=== Directories
+
+=== Naming Conventions
+
+=== Formatting Conventions
+
+* Append a slash (`/`) to the end of directory names in content and config files to clearly indicate they are directories.
++
+.Example from _configs/build-docs.yml
+[source,yaml]
+----
+...
+  source: content/
+  target: _build/
+...
+----
++
+.Example in AsciiDoc text
+[source,asciidoc]
+----
+Move content files from `content/` to `_build/`.
+----
+
+=== Variables vs Includes
+
+Conditional data/content is that which needs to render differently depending on which environment or output mode is designated).
+When we say “conditional data” or “conditional content”, we are _not_ referring to the explicit conditional flow tags (_if_ conditions), but rather the content we wish for these tags to manage.
+
+There are two ways to get variable data/content into page: variable placeholders and include macros.
+Both are forms of link:http://asciidoctor.org/docs/user-manual/#subs[“substitutions”] in AsciiDoc, which uses this term for any AsciiDoc code will cause displayed content to be altered (not just arranged) during the publishing process.
+
+*Variables* are called “attributes” in AsciiDoc parlance because some are used to establi
+
+// tag::liquidoc-conventions[]

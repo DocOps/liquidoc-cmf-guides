@@ -1,0 +1,36 @@
+common:
+  theme_path: ".."
+  docpro_manual_url: &docpro_manual_url http://docops.org/liquidoc/docs/docpro-manual.pdf
+  docpro_portal_url: &docpro_portal_url http://docops.org/liquidoc/docpro/home
+  admin_manual_url: &admin_manual_url http://docops.org/liquidoc/docs/docpro-manual.pdf
+  admin_portal_url: &admin_portal_url http://docops.org/liquidoc/admin/home
+  admin_manual_url: &admin_manual_url http://docops.org/liquidoc/dev/docpro-manual.pdf
+  admin_portal_url: &admin_portal_url http://docops.org/liquidoc/dev/home
+guide-1:
+  portal_id: 1
+  portal_slug: docpro
+  portal_user: Documentarian
+  portal_product: LiquiDoc
+  user_role: documentarian
+  user_verb: write, develop, and manage great docs with
+  site_path: docpro
+  show_docpro: true
+guide-2:
+  portal_id: 2
+  portal_slug: admin
+  portal_user: Administrator
+  portal_product: LiquiDoc
+  user_role: admin
+  user_verb: build and manage a sophisticated, open-source documentation toolchain
+  site_path: admin
+  show_admin: true
+guide-3:
+  portal_id: 3
+  portal_slug: dev
+  portal_user: Developer
+  portal_product: LiquiDoc
+  user_role: developer
+  user_verb: extend and customize a sophisticated, open-source toolchain
+  site_path: dev
+  show_docpro: true
+  show_admin: true

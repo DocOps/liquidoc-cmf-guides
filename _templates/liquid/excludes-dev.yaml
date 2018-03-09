@@ -1,0 +1,15 @@
+exclude:
+  - _built_index-stories.adoc
+  - special/
+  - assets/
+  - docs/
+  - theme/
+  - includes/
+  - snippets/
+  - site/
+  - index.html
+{%- for story in topics -%}
+{% unless story.roles contains "dev" %}
+  - topics/{{ story.slug }}.adoc
+{%- endunless -%}
+{% endfor %}

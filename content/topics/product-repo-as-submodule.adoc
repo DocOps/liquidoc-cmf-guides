@@ -1,0 +1,98 @@
+include::{page_meta}[tags="product-repo-as-submodule"]
+
+There is a strong alternative to including your docs code in the same repository as your product code without sacrificing access to the product's source from the docs source.
+That solution is *Git submodules*.
+
+Setting your product repo as a submodule of your docs repo enables the latter to alias the former as a subdirectory.
+From within any local instance of your docs repo, the entire product repo will appear as a directory in your docs source root, alongside `content/` and `data/`.
+This way, LiquiDoc can parse small-data files from the product codebase, and AsciiDoc files can `include::[]` actual product source in code listings, while the docs build will write to the a `build/` directory inside the docs repo for distinguished commitment and deployment.
+
+[TIP]
+The LiquiDoc Docs Project repo (`liquidoc-docs`) treats the Liqidoc product repo (`liquidoc-gem`) as a submodule.
+See <<adapting-these-docs#,Adapting These Docs>> for instructions on removing the submodule or reassigning it to your own product.
+
+== Adding a Submodule
+
+It is trivial to link a submodule to your docs repo, though there are some considerations for maintaining the relationship.
+
+[source,bash,subs="attributes"]
+.Adding a submodule
+----
+git submodule add {liquidoc_gem_repo_git_uri} product
+----
+
+The submodule repo should appear as a subdirectory at `product/`.
+
+[source,bash,subs="quotes"]
+.Just another subfolder
+----
+$ ls -l
+-rw-r--r--   1 me  staff   329 Feb 01 19:13 Gemfile
+-rw-r--r--   1 me  staff  2830 Feb 01 03:07 Gemfile.lock
+-rw-r--r--   1 me  staff   576 Feb 01 03:05 NOTICE
+-rw-r--r--   1 me  staff  2393 Feb 01 03:40 README.adoc
+drwxr-xr-x  10 me  staff   340 Feb 01 19:13 _configs
+drwxr-xr-x   3 me  staff   102 Feb 01 17:49 _templates
+drwxr-xr-x  10 me  staff   340 Feb 01 03:31 content
+drwxr-xr-x  10 me  staff   340 Feb 01 12:28 data
+*drwxr-xr-x  10 me  staff   340 Feb 01 13:48 product*
+drwxr-xr-x   8 me  staff   272 Feb 01 22:14 theme
+----
+
+[TIP]
+Having multiple products is a key use case for submodules.
+Such a case may be best addressed by treating first creating a `product/` or `lib/` directory under which to add multiple submodules.
+
+Now that you have an alias path for your product, you can navigate into it.
+
+[source,bash]
+.Browsing a submodule
+----
+$ ls product
+LICENSE   README.adoc  Rakefile  bin/ lib/ liquidoc.gemspec
+----
+
+Best of all, you can manage each Git repo independently.
+Navigate into either repo on the command line in order to run `git` commands against that repo, including branch checkouts.
+
+[source,bash]
+.Branch switching in main vs subrepo
+----
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+$ git checkout -b new-branch
+Switched to a new branch 'new-branch'
+$ cd product
+product/$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+----
+
+See link:https://git-scm.com/book/en/v2/Git-Tools-Submodules[Git's documentation] for full details.
+GitHub's guide to “link:https://github.com/blog/2104-working-with-submodules[Working with Submodules]” is a little easier on the eyes.
+
+== Submodule Build Strategies
+
+The two most-likely use cases for handling product code with submodules of a documentation repository are:
+
+* multiple product components, each in a distinct repository
+* multiple product versions handled in branches of the product repo
+
+=== Managing Mutliple Submodules
+
+This is the simplest scenario, as you may merely add each product component's repo as a submodule and handle each as a subdirectory.
+
+=== Managing Multiple Product Branches
+
+Not quite as simple as multiple products in different repos, it may actually take less effort to handle multiple branches of the same repo.
+This breaks down further into two cases:
+
+identical documentation with different content::
+In this case, you are documenting multiple versions of a product where minimal variables differ.
+In a well-planned project, those variables will be reflected in a small-data file such as `meta.yml` or `product.yml`.
+Therefore, When you switch the submodule's branch, those alternate variable values will now be readable, and the same LiquiDoc build config will build a nearly identical docset with those branch-specific details.
+
+different docs for different content::
+Here we're talking about multiple product versions that must be matched by their own docs versions.
+The recommended approach is to store versioned docs in branches that match the product repo's versioned branches, and manually (or programmatically) coordinate the docs repo's branch with the product repo's branch.

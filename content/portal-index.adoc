@@ -1,0 +1,84 @@
+= {portal_product} {portal_user} {portal_term}
+// Bump header levels for all subsequent includes
+:page-permalink: '{site_path}/home'
+:copyright_line: Copyright (C) 2018 {company_name}
+:toc: macro
+:page-topnav: topnav
+
+// for book-formatted, include the copyright and TOC
+ifdef::is_pdf[]
+toc::[]
+{copyright_line}
+
+endif::is_pdf[]
+
+== Introducing {product_suite_name}
+
+// tag::example-include[]
+// include intro text common to all portals
+include::includes/intro_portal_common.adoc[]
+// end::example-include[]
+
+ifdef::cheat[]
+[TIP]
+--
+The content above appears in all editions, but some of it is variable.
+Many of the strings (e.g., _{portal_product}_ and even _{user_verb}_, etc) are variables (`\{portal_product}` and `\{user_verb}`) are dynamically substituted with AsciiDoc attributes at build time.
+The content is included from a common file, like so:
+
+[source,asciidoc]
+ include::includes/intro_portal_common.adoc[]
+--
+endif::cheat[]
+
+// include intro text specific to current portal
+include::includes/intro_portal_{portal_slug}.adoc[]
+
+ifdef::cheat[]
+[TIP]
+--
+The above text is from a dynamically included file using:
+
+[source,asciidoc]
+ include::portal/intro_portal_{portal_slug}.adoc[]
+
+Where `\{portal_slug}` is a variable defined in a block of a YAML file (`_configs/portals.yml`) that is only passed to one designated portal during the build config file (`_configs/build-docs.yml`), where it is designated as `data: data/portals.yml:portal-{portal_id}`.
+--
+endif::cheat[]
+
+// insert 'jargon ahead' warning
+include::./includes/snippets.adoc[tags="warning-jargon"]
+
+// for non-PDF, include the copyright line here
+ifndef::is_pdf[{copyright_line}]
+
+// for book-formatted output, include the remainder of the portal's contents in this document
+ifdef::is_pdf[]
+
+ifeval::["{portal_slug}" == "docpro"]
+include::_built_index-stories.adoc[tags="docpro",leveloffset=+1]
+endif::[]
+ifeval::["{portal_slug}" == "admin"]
+include::_built_index-stories.adoc[tags="admin",leveloffset=+1]
+endif::[]
+ifeval::["{portal_slug}" == "dev"]
+include::_built_index-stories.adoc[tags="dev",leveloffset=+1]
+endif::[]
+
+= Appendices
+
+:leveloffset: +1
+
+[[jargon_guide]]
+[appendix]
+include::pages/jargon-guide.adoc[]
+
+[[config_explainer]]
+[appendix]
+include::pages/config-explainer.adoc[]
+
+[[notice]]
+[appendix]
+include::pages/notice.adoc[]
+
+endif::is_pdf[]

@@ -1,0 +1,38 @@
+project_name: LiquiDoc/LDCMF User Guides # The name of THIS project repo
+product_suite_name: LiquiDoc and LiquiDoc CMF
+product_suite_name_short: LiquiDoc and LDCMF
+# if your docs are in your product repo, the next line will match the previous
+space_type: repo
+project_root:
+docs_root_path:
+
+# Company info
+company_name: LiquiDocOps Collective
+company_name_short: LiquiDocOps
+address_street: 12 Nowhere Lane
+address_city: Placeville
+address_state: New York
+address_zipcode: 12121
+
+### URLs
+# Keepers (These URLs apply to most LDCMF projects)
+project_git_repo_web_url: https://github.com/DocOps/liquidoc-docs # The URL of your GitHub or other interface
+docs_git_repo_uri: git@github.com:DocOps/liquidoc-docs.git
+
+# Product-specific URL vars
+liquidoc-docs_github_project_url:  https://github.com/DocOps/liquidoc-gem
+liquidoc-docs_github_project_git_uri: git@github.com:DocOps/liquidoc-gem.git
+this_github_project_url: https://github.com/DocOps/liquidoc-docs
+liquidoc-gem_github_project_url: https://github.com/DocOps/liquidoc-gem
+liquidoc-cmf_github_project_url: https://github.com/DocOps/liquidoc-cmf
+
+
+portals:
+  - docpro
+  - admin
+  - dev
+
+index_file: portal-index.adoc
+
+# instructions
+docs_build_path_def: _configs/build-docs.yml

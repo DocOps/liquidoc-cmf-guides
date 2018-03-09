@@ -1,0 +1,12 @@
+# This file contains global Asciidoctor attributes
+imagesdir: assets/images
+root_dir: .
+safe: 0
+project_root_path_from_build: ..
+icons: font
+allow-uri-read: true
+cache-uri: true
+configs_path: ../../../_configs
+includes_dir: ../includes
+page_meta: ../includes/_built_page-meta.adoc
+data_dir: ../data

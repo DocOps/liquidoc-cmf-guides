@@ -1,0 +1,119 @@
+= LiquiDoc User Guides
+// tag::settings[]
+:liquidoc-gem_github_project_url: https://github.com/DocOps/liquidoc-gem
+:liquidoc-docs_github_project_url: https://github.com/DocOps/liquidoc-gem
+:liquidoc-docs_github_project_git_uri: git@github.com:DocOps/liquidoc-gem.git
+:liquidoc-cmf_github_project_url: https://github.com/DocOps/liquidoc-cmf
+:liquidoc_landing_url: https://docops.org/liquidoc
+:docpro_portal_url: https://docops.org/liquidoc/docs/docpro
+:docpro_manual_url: https://docops.org/liquidoc/docs/docpro-manual.pdf
+:admin_portal_url: https://docops.org/liquidoc/docs/admin
+:admin_manual_url: https://docops.org/liquidoc/docs/admin-manual.pdf
+:dev_portal_url: https://docops.org/liquidoc/docs/dev
+:dev_manual_url: https://docops.org/liquidoc/docs/dev-manual.pdf
+:docs_build_path_def: _configs/build-docs.yml
+// end::settings[]
+
+The contents of this repository provide self-documentation of the link:{liquidoc-gem_github_project_url}[LiquiDoc utility].
+This repo contains the source content and data files as well as the LiquiDoc configuration (dependencies bundle and LiquiDoc config) necessary to build the docs source into robust artifacts with two commands.
+
+[source,bash]
+----
+bundle
+bundle exec liquidoc -c _configs/build-docs.yml
+----
+
+(Detailed <<build,installation instructions below>>.)
+
+== Overview
+
+You will find in this repo the source for numerous artifacts, including differently formatted “editions” of our core user guides, as well as outreach materials intended to help introduce and popularize LiquiDoc.
+
+[NOTE]
+The source data and content for this repository are oriented toward LiquiDoc, but the entire project was developed with _your own project_ in mind.
+If you are developing or administering a LiquiDoc-based documentation project, the contents of this repo may not _only_ be instructional.
+<<clone_adapt,Instructions are provided>> for cloning this repo and reorienting it to provide internal and customer-facing docs for your project.
+
+[[core_attributes]]
+=== Core Artifacts
+
+These documents are the rendered final output of this source repository.
+They each provide direct information _about_ LiquiDoc and instructing its _usage_.
+
+// tag::artifact-links[]
+* LiquiDoc Documentarian's Guide (link:{docpro_portal_url}[Web Portal]) (link:{docpro_manual_url}[PDF Manual])
+* LiquiDoc Administrator's Guide (link:{admin_portal_url}[Web Portal]) (link:{admin_manual_url}[PDF Manual])
+* LiquiDoc Developer's Guide link:{dev_portal_url}[(Web Portal]) (link:{dev_manual_url}[PDF Manual])
+// end::artifact-links[]
+
+[NOTE]
+The Documentarian's Guide provides general instructions for using LiquiDoc to build your project's documentation, mainly in the form of _actual instructions_ for contributing content to the LiquiDoc User Guides project (_this repo!_) itself.
+That is to say, if you read the Documentarian's Guide you'll be able to contribute effectively to this very project, and your contributions will be welcomed.
+
+The following artifacts are still in the works but listed here to provide context for the breadth of this project:
+
+* LiquiDoc Landing Page
+* LiquiDoc Documentarian's Overview (Slides) (Onesheet)
+* LiquiDoc Administrator's Overview (Slides) (Onesheet)
+
+// === Instructional Artifacts
+//
+// Each of the above artifacts has an “instructional” correspondent.
+// That is, for every document above, there is a “behind the scenes” version that includes notes exposing how various components are sourced and built.
+//
+// The following documents are “cheat sheets” annotating the core artifacts, intended to teach _how_ LiquiDoc is documented in the course of, you know, documenting it.
+//
+// * LiquiDoc Documentarian's Guide (Portal) (PDF Manual)
+// * LiquiDoc Administrator's Guide (Portal) (PDF Manual)
+// * LiquiDoc Developer's Guide (Portal) (PDF Manual)
+// * LiquiDoc Landing Page
+// * LiquiDoc Documentarian's Overview (Slides) (Onesheet)
+// * LiquiDoc Administrator's Overview (Slides) (Onesheet)
+
+[[build]]
+== Build
+
+The following procedure invokes the LiquiDoc tool to build just the documentation.
+
+. Clone or download this repository to your local machine and switch to the new directory.
++
+[source,bash,subs="attributes"]
+----
+ git clone {github_project_git_uri}
+ cd acmedoc-poc
+----
+
+. Obtain the required Ruby dependency gems.
++
+ bundle install
+
+. Run the configured build.
++
+[source,bash,subs="attributes"]
+----
+ bundle exec liquidoc -c {docs_build_path_def}
+----
++
+LiquiDoc will compile PDFs (see `build/docs/`) then builds parallel Jekyll sites under `build/site/`.
+
+. (Optonal.) To serve your built Jekyll sites as one:
++
+----
+ bundle exec jekyll s --destination build/site \
+  --config _configs/jekyll-global.yml --skip-initial-build
+----
+
+[[clone_adapt]]
+== Cloning & Adapting These Docs
+
+The LiquiDoc Docs project has two purposes:
+
+. Describe and instruct the LiquiDoc utility, especially in the context of the LiquiDoc CMF framework.
+. Provide a boilerplate for other software documentation projects to clone and adapt.
+
+It is highly unlikely your own product lines up seamlessly with LiquiDoc even just in terms of documentation structure.
+Nevertheless, there is a good chance cloning this repo and making lots of content and even structural changes will be more convenient and efficient than starting from scratch.
+
+The content is highly modular, and much of it is drawn from distinct data sources that can be edited.
+In many instances, even terms like _LiquiDoc_ are drawn from variables designated in data files.
+The Administrator's Guide contains details for forking or adapting this repo to suit your needs.
