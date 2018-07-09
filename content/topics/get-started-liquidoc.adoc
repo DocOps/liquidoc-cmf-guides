@@ -3,7 +3,7 @@ include::{page_meta}[tags="get-started-liquidoc"]
 If you learn better from doing or reading, you can get started with this LiquiDoc CMF environment right away.
 
 ifdef::show_docpro[]
-As a _documentarian_, your environment should already be configured.
+As a _documentarian_, your environment should already be defined, though you may still need to set it up on your workstation.
 The contents of this {portal_term} are customized for your team's needs.
 endif::show_docpro[]
 
@@ -13,8 +13,8 @@ This section will get you started, and the rest of this {portal_term} will help 
 endif::show_admin[]
 
 ifdef::show_dev[]
-As a {product_suite} _developer_, you need a suitable dev and testing environment.
-That starts with building these very docs, but we'll also explore building from test/sample environments, as well.
+As a {product_suite_name} _developer_, you need a suitable dev and testing environment.
+That starts with building these very docs, but we'll also explore building from test/sample environments as well as your own custom environment, as well.
 endif::show_dev[]
 
 Once we make sure you have the few prerequisites in place, you can build these docs.
@@ -25,20 +25,34 @@ endif::[]
 
 == Installing Dependencies
 
-The only prerequisite software packages you may need up front are Ruby runtime and Git.
+The only prerequisite software packages you may need are Ruby runtime and Git.
+You will also need a terminal application.
 The rest will be installed during the basic setup instructions.
 
-* link:https://git-scm.com/book/en/v2/Getting-Started-Installing-Git[Git installation instructions]
+=== Git
 
-* link:https://www.ruby-lang.org/en/downloads/[Ruby runtime installation] (probably unnecessary on Mac or Linux)
+If you are just getting started with Git, this link:https://try.github.io/[GitHub resource guide] may have something for your learning style.
+
+[NOTE]
+Git is the fully open-source _distributed source control system_ (DVCS), whereas GitHub is a cloud-hosted commercial application built around Git, similar to other commercial projects like GitLab and BitBucket.
+These products add value to Git with web interfaces, collaborative features, and peripheral tooling.
+Most of the instructions here relate to Git, not GitHub, and therefore can be applied regardless of which platform you use.
+
+
+=== Ruby Runtime
+
+
 
 == Quickstart
 
 The following instructions require a command-line interface.
-Open your preferred terminal app and navigate to a workspace in which you can create a new subdirectory for the local repository (“repo”).
+Open your preferred terminal, and navigate to a workspace in which you can create a new subdirectory for the local repository (“repo”).
 
-[TIP]
-If you don't know how to open a terminal, use your operating system's magic finder.
+[TIP.beginner]
+.A note on Windows & Ruby
+Windows is not a great environment for coding, but you can definitely make it work.
+We recommend using the link:https://gitforwindows.org/[GitBash terminal] for both Git and Ruby commands, the latter usage requiring an link:https://stackoverflow.com/questions/3426347/how-to-run-ruby-and-git-commands-in-one-place-on-windows/10159798#10159798[additional setup step].
+
 
 // tag::admin-edit[]
 . Clone this repo.
@@ -82,7 +96,7 @@ bundle exec jekyll serve --destination build/site \
 ----
 
 Now you're able to view the {project_name} web portals, including a copy of this very {portal_term}, right on your local machine.
-Browse link:http://127.0.0.1:4100/index[http://127.0.0.1:4100/index].
+Browse link:http://127.0.0.1:{local_serve_port}/index[http://127.0.0.1:{local_serve_port}/index].
 // end::admin-edit[]
 
 === What Just Happened?
@@ -100,26 +114,27 @@ That orientation starts below with
 
 ==== Git
 
-If you were not familiar with Git before, you are about to get intimate.
-We'll be exploring Git operations in the <<overview-liquidoc-cmf,LiquiDoc CMF Overview>>.
+If you were not familiar with Git before, you are about to become intimate.
+We'll be exploring Git operations in the <<overview-liquidoc-cmf#,LiquiDoc CMF Overview>>.
 For now, the relevant aspect of Git is that you have created a Git repo during the first step above.
 This step executed a Git command (`git clone`) to grab a copy of this repo from the remote address and clone it to your system.
 In so doing, it initialized that root directory as a Git repository -- not just any set of files.
 This means your repository is ready for action, and all the powers of Git are at your fingertips.
 You'll be using more of them soon enough.
 
-==== Project working directory
+==== Project Working Directory
 
-Every LiquiDoc CMF project has a base directory from which it's best to run all commands.
-Always navigate into this directory when you begin working on content, so any `liquidoc`, asciidoctor`, or `jekyll` commands you may find in these instructions are always run from that base.
+Every LiquiDoc CMF project has a base directory from which it is best to run all commands.
+Always navigate into this directory when you begin working on content, so any `liquidoc`, `asciidoctor`, or `jekyll` commands you may find in these instructions are always run from that base.
 
-[TIP]
+[TIP.beginner]
 If you ever need to know what directory you are in, enter `pwd` at the prompt and the full path will display.
 
 ==== Bundler
 
 The first Ruby “trick” you should be familiar with is `bundle`, the command that runs the Bundler gem.
-For our purposes, Bundler reads the file simply called `Gemfile`, which you will find in your project root directory and gathers packages, primarily from link:https://rubygems.org/[Rubgems.org], an open-source gem package hosting service.
+For our purposes, Bundler reads the file simply called `Gemfile`, which you will find in your project root directory.
+Bundler gathers packages, primarily from link:https://rubygems.org/[Rubgems.org], an open-source gem package hosting service.
 This `Gemfile` defines dependencies used by LiquiDoc, Jekyll, and Asciidoctor as they process source code into publications during a build procedure.
 Engaging Bundler during every execution of these key Ruby gems ensures proper versions of all their prerequisites are in order.
 

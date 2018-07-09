@@ -1,0 +1,5 @@
+This guide exists to help you establish and maintain a complicated documentation project that essentially treats docs source like product code.
+You will learn to configure a complicated docs project in a sensible format using the link:https://github.com/DocOps/liquidoc-cmf[LiquiDoc Content Management Framework] (LDCMF).
+LDCMF combines the LiquiDoc open-source build utility with a set of standards and convention for organizing the codebase and proceding.
+
+We will offer thorough instructions to get you up and running with LiquiDoc and LDCMF.

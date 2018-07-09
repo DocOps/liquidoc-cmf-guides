@@ -1,0 +1,5 @@
+This Developer's {portal_term} will get you started modifying and hopefully contributing back to LiquiDoc and the LiquiDoc Content Management Framework.
+
+In this context, a _developer_ is someone who hacks the core tooling of a docs project.
+If your job is to _implement_, _configure_, or _design_ a content project _using_ LiquiDoc or LDCMF, this is probably not the guide for you.
+Those tasks are associated with the *administrator* roll.

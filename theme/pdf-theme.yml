@@ -199,6 +199,9 @@ image:
 prose:
   margin_top: 0
   margin_bottom: $block_margin_bottom / 1.5
+span:
+  term:
+    font_weight: bold
 sidebar:
   border_color: $page_background_color
   border_radius: $base_border_radius

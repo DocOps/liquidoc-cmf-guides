@@ -99,8 +99,7 @@ LiquiDoc will compile PDFs (see `build/docs/`) then builds parallel Jekyll sites
 . (Optonal.) To serve your built Jekyll sites as one:
 +
 ----
- bundle exec jekyll s --destination build/site \
-  --config _configs/jekyll-global.yml --skip-initial-build
+ bundle exec jekyll s --destination _build/site --config _configs/jekyll-global.yml --skip-initial-build
 ----
 
 [[clone_adapt]]

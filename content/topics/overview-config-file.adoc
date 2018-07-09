@@ -1,0 +1,11 @@
+include::{page_meta}[tags="overview-config-file"]
+
+LiquiDoc configuration files are formatted in YAML.
+They represent a sequential procedure, with each item in a YAML array representing a step or substep of the build.
+
+Let's look at a very simple LD configuration.
+
+[source,yaml]
+----
+
+----

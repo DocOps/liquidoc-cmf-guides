@@ -1,0 +1,72 @@
+
+
+
+* As a *documentarian*, I can *get started with a LiquiDoc-ready repository*.
+
+
+* As a *documentarian*, I can *write and edit content in AsciiDoc*.
+
+
+* As a *documentarian*, I can *find and manage source files*.
+
+
+* As a *documentarian*, I can *commit files to source control*.
+
+
+* As a *documentarian*, I can *write and edit small-data in YAML*.
+
+* As an *administrator*, I can *write and edit small-data in YAML*.
+
+
+* As a *documentarian*, I can *submit and iterate data/content commits for publication*.
+
+
+* As a *documentarian*, I can *review and approve data/content commits for publication*.
+
+
+* As a *documentarian*, I can *build a preconfigured docset*.
+
+* As an *administrator*, I can *build a preconfigured docset*.
+
+* As a *developer*, I can *build a preconfigured docset*.
+
+
+* As a *documentarian*, I can *build a preconfigured docset with additional options*.
+
+* As an *administrator*, I can *build a preconfigured docset with additional options*.
+
+* As a *developer*, I can *build a preconfigured docset with additional options*.
+
+
+* As an *administrator*, I can *build docs for development and testing*.
+
+* As a *developer*, I can *build docs for development and testing*.
+
+
+* As an *administrator*, I can *initialize a LiquiDoc build environment*.
+
+
+* As an *administrator*, I can *configure a simple docs build*.
+
+
+* As an *administrator*, I can *configure a sophisticated docs build*.
+
+
+* As an *administrator*, I can *parse*.
+
+
+* As a *developer*, I can *initialize a LiquiDoc development environment*.
+
+
+* As a *developer*, I can *extend LiquiDoc's capabilities without modifying its source*.
+
+
+* As a *developer*, I can *modify LiquiDoc's behavior by hacking its source code*.
+
+
+* As a *developer*, I can *submit code commits for incorporation into LiquiDoc or LDCFM*.
+
+
+* As an *administrator*, I can *run LiquiDoc using an alternate gem*.
+
+* As a *developer*, I can *run LiquiDoc using an alternate gem*.

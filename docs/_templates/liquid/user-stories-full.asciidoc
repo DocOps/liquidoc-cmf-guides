@@ -1,0 +1,17 @@
+{% for story in user-stories %}
+{% for this_role in story.roles %}
+{% case this_role %}
+  {% when "docpro" %}
+    {% assign role_full = "documentarian" %}
+    {% assign role_full_cap = "Documentarian" %}
+    {% assign role_article = "a" %}
+  {% when "admin" %}
+    {% assign role_full = "administrator" %}
+    {% assign role_full_cap = "Administrator" %}
+    {% assign role_article = "an" %}
+  {% when "dev" %}
+    {% assign role_full = "developer" %}
+    {% assign role_full_cap = "Developer" %}
+    {% assign role_article = "a" %}
+{% endcase %}
+* As {{ role_article }} *{{ role_full }}*, I can *{{ story.action }}*.{% endfor %}{% endfor %}

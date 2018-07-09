@@ -1,4 +1,4 @@
-# Move critical files to the temporary build directory
+# # Move critical files to the temporary build directory
 - stage: migrate-content
   action: migrate
   source: content/
@@ -11,9 +11,23 @@
   source: theme/
   target: _build/
   reason: so theme/ dir will be subordinate to the SSG source path
+- action: migrate
+  source: data/
+  target: _build/
+  reason: |
+    in order to have a copy available for includes (as snippets, not data sources). Note: We'll also be adding generated data files into this directory, including in the next stage
+- stage: parse-schema
+  action: parse
+  data: data/meta.yml
+  builds:
+    - template: data/schema.yml
+      output: _build/data/schema.yml
+      variables:
+        project:
+          name: LDCMF Guides
 - stage: parse-stories-data-1
   action: parse
-  data: data/schema.yml
+  data: _build/data/schema.yml
   message: . Performs the first round of product-data parsing to build two structurally vital files, sourcing data in `data/schema.yml`.
   builds:
     - template: _templates/liquid/index-by-user-stories.asciidoc
@@ -26,10 +40,12 @@
         .. Builds the metadata file `_build/includes/_built_page-meta.adoc` based on the user stories in `schema.yml`, looping over them as directed in `_templates/liquid/page-meta.asciidoc`.
 - stage: parse-metadata
   action: parse
-  data: data/meta.yml
+  data: _build/data/meta.yml
   builds:
   - output: _build/includes/_built_company-info.adoc
     template: _templates/liquid/company-info.asciidoc
+  - output: _build/data/built/strings.yml
+    template: _templates/liquid/strings-new.yaml
 # Generate glossary of terms source
 - action: parse
   data: data/terms.yml
@@ -54,14 +70,9 @@
   source: _build/theme/
   target: _build/site/ # => _build/site/theme
   reason: to be in place for Jekyll builds
-- action: migrate
-  source: data/
-  target: _build/
-  reason: |
-    in order to have a copy available for includes (as snippets, not data sources). Note: We'll also be adding generated data files into this directory
 # Preprocess product data
 - action: parse
-  data: data/schema.yml
+  data: _build/data/schema.yml
   reason: to have user-stories content in convenient includes
   builds:
     - output: _build/includes/_built_user-stories-bulleted-by-role.adoc
@@ -70,7 +81,7 @@
       template: _templates/liquid/user-stories-full.asciidoc
 - action: parse
   stage: parse-excludes-files
-  data: data/schema.yml
+  data: _build/data/schema.yml
   reason: |
     to build lists of files to _exclude from_ a given guide's Jekyll build (otherwise it would grab all our `topics/` source files for every guide)
   builds:
@@ -88,7 +99,7 @@
       template: _templates/liquid/topnav.yaml
       reason: the source file for the top navigation bar
 - action: parse
-  data: data/schema.yml
+  data: _build/data/schema.yml
   reason: the source files for the guide-specific sidebars
   builds:
     - template: _templates/liquid/sidebar-docpro.yaml
@@ -107,12 +118,13 @@
       - data/meta.yml
       - data/guides.yml:common
       - data/guides.yml:guide-1
+      - _build/data/built/strings.yml
   source: _build/portal-index.adoc
   builds:
     - output: _build/docs/docpro-guide.pdf
+      doctype: book
       attributes:
         portal_term: Manual
-        doctype: book
         is_pdf: true
         reason: to create a PDF customized for the 'docpro' user base
     - backend: jekyll
@@ -136,12 +148,13 @@
       - data/meta.yml
       - data/guides.yml:common
       - data/guides.yml:guide-2
+      - _build/data/built/strings.yml
   source: _build/portal-index.adoc
   builds:
     - output: _build/docs/admin-guide.pdf
+      doctype: book
       attributes:
         portal_term: Manual
-        doctype: book
         is_pdf: true
       reason: to create a PDF customized for the 'admin' user
     - backend: jekyll
@@ -164,12 +177,13 @@
       - data/meta.yml
       - data/guides.yml:common
       - data/guides.yml:guide-3
+      - _build/data/built/strings.yml
   source: _build/portal-index.adoc
   builds:
     - output: _build/docs/dev-guide.pdf
+      doctype: book
       attributes:
         portal_term: Manual
-        doctype: book
         is_pdf: true
       reason: to create a PDF customized for the 'admin' user
     - backend: jekyll
@@ -203,6 +217,14 @@
   source: content/index.html
   target: _build/site/
   reason: the HTML splash page for the whole shabang, like it's 1999
+- action: render
+  source: content/pages/ajyl-landing.adoc
+  data: _configs/asciidoctor.yml
+  builds:
+    - output: _build/docs/ajyl-intro.pdf
+      attributes:
+        is_pdf: true
+      style: theme/pdf-theme.yml
 - action: migrate
   source: _build/pre/config-explainer.adoc
   target: _build/includes/

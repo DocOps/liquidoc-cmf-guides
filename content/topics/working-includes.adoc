@@ -14,5 +14,15 @@ Let's take a look at part of +{index_file}+:
 
 [source,asciidoc]
 ----
-include::../portal-index.adoc[tags="example-include"]
+include::../{guides_index_file}[tags="example-include"]
+----
+
+What you see above as rendered output is sourced in the _actual_ +{guides_index_file}+ for this project.
+And the path calling it is defined by reading the _actual_ configuration file for this project (+{config_file}+).
+And that reference to the config file's name?
+You guessed it: dynamic.
+
+[source,asciidoc]
+----
+And the path calling it is defined by reading the _actual_ configuration file for this project (+{config_file}+).
 ----

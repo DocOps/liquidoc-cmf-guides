@@ -1,3 +1,26 @@
+# NON-GUIDE PAGES
+#
+pages:
+  - slug: project-home
+    description: Links to all key components of this project
+    title: {{ vars.project.name }} Home
+    description:
+  - slug: about-this-project
+    description: Explains what this “{{ data.project.name }}” project covers and how it all fits together.
+    title: About This Guide
+    title_short: About This Guide
+    domain: ldcmf
+  - slug: ajyl
+    description: The landing page for the AJYL docstack, featuring AsciiDoc, Jekyll, YAML, and Liquid, for serious software documentation projects.
+    title: AJYL
+    domain: ajyl
+  - slug: config-explainer
+    description: An automatically generated narrative of this project's build routine.
+    title: {{ vars.project.name }} Configuration Explainer
+    title_short: Config Explainer
+    domain: ldcmf
+# THE LDCMF USER GUIDES
+
 # USER STORIES: These "user stories" are stated strictly from a documentation perspective. They may not
 # reflect a 1:1 relationship with product user stories. When creating your own, consider the scale of a
 # user story to be a distinct problem the user can resolve with a distinct action or set of steps.
@@ -34,6 +57,11 @@ topics:
     title_short: Setup Local Tools
     roles: [docpro]
     categories: [setup]
+  - slug: setup-env-basic-windows
+    action: get the complete environment set up on Windows
+    title: Running LiquiDoc on Windows
+    title_short: Windows Setup
+    roles: [docpro,admin,dev]
   - slug: write-edit-asciidoc
     action: write and edit content in AsciiDoc
     title: Writing and Editing in AsciiDoc
@@ -140,6 +168,12 @@ topics:
     role: [admin,dev]
     categories: [configure,theme]
     tags: [Liquid,templates,theming,data]
+  - slug: dynamic-config
+    action: establish environmentally variable configuration routines
+    title: Establishing Dynamic Configurations for Build-specific Routines
+    title_short: Dynamic Build Configs
+    role: [admin]
+    categories: [configure,YAML,Liquid,templating]
   - slug: migrate-assets
     action: copy assets during a docs build
     title: Migrating Assets During a Docs Build
@@ -252,6 +286,20 @@ topics:
     roles: [dev,admin]
     categories: [modify,build]
 
+# MISC APPENDICES
+  - slug: troubleshooting-builds
+    action: follow clear steps to get unstuck when problems arise
+    title: Troubleshooting LiquiDoc Builds
+    title_short: Troubleshooting Builds
+    roles: [docpro,dev,admin]
+    categories: [troubleshooting,build]
+  - slug: troubleshooting-liquidoc-dev
+    action: systematically debug LiquiDoc's source when hacking or extending the gem
+    title: Debugging LiquiDoc
+    title_short: Troubleshooting LiquiDoc for Developers
+    roles: [dev]
+    categories: [troubleshooting,build]
+
 # NON-PRODUCT stories
 # META-INSTRUCTION: While these stories are not particularly specific in their wording, the material
 # they cover is _not_ stuff you want to confuse readers with, so review and edit with care.
@@ -280,3 +328,12 @@ categories:
   - modify
   - manage
   - understand
+  - troubleshooting
+
+guides:
+  - slug: docpro
+    role: documentarian
+  - slug: admin
+    role: administrator
+  - slug: dev
+    role: developer

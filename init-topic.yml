@@ -1,0 +1,11 @@
+- action: parse
+  data: data/schema.yml
+  builds:
+    - template: _templates/liquid/ops/topic.asciidoc
+      output: content/topics/dynamic-config.adoc
+      variables:
+        slug: dynamic-config
+    - template: _templates/liquid/ops/topic-entry.yaml
+      output: stdout
+      variables:
+        slug: dynamic-config

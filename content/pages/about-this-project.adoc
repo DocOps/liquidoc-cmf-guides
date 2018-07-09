@@ -1,0 +1,73 @@
+= About This Project
+
+This mutlifaceted “LDCMF Guides” website can be a bit confusing, so let's break down its purpose and structure clearly.
+Here we are talking about everything int he docops.com domain.
+
+== What We Are Documenting
+
+The {project_name} project constitutes the official documentation for the following projects:
+
+. the *AJYL docstack*, a set of technologies we consider ideal for documenting highly complex software products: {ajyl_list}
+. *LiquiDoc*, a build utility for generating artifacts using AJYL
+. *LiquiDoc CMF*, a “content management framework” for implementing AJYL projects
+
+The {project_name} project produces numerous artifacts covering multiple subjects for multiple audiences.
+Here are the major artifacts that do or will soon exist:
+
+. *AJYL docstack* mini-site, featuring:
+.. A landing page laying out the AJYL approach
+.. A whitepaper making the case for AJYL technologies
+.. Links to known AJYL projects
+. Three *LDCMF guides*, one for each user role (audience), both as web portal and PDF manual:
+.. Documentarian Portal/Mamual (*docpro*) for end users _writing/editing_ docs for LDCMF projects
+.. Administrator Portal/Manual (*admin*) for _configuring/managing_ LDCMF projects
+.. Developer Portal/Manaual (*dev*), for anyone who extends or documents a LDCMF project
+. *LiquiDoc* mini-site, including:
+.. a *landing page* introducing the FOSS utility itself
+.. *reference pages* for generic LiquiDoc, like
+*** command-line options
+*** config file strutcure
+*** available Liquid filters
+. Additional, *overlapping reference material* for the projects, such as
+.. a *glossary* of terms and jargon
+.. a *cheat shield* packed with LD, Liquid, Jekyll, AsciiDoc, and LDCMF references
+
+...All built from a single, DRY repo.
+
+[NOTE]
+.A Note on Roles
+In the context of these guides, a developer (_dev_) is someone who writes code or docs _for the LiquiDoc utility or the LDCMF_ standards and conventions.
+That is, coders who either hack this guide or hack the LiquiDoc Ruby source or the boilerplate LDCMF files.
+Whereas software engineers who use LDCMF to document their own products are considered _documentarians_ (_docpro_).
+
+== How We Are Doing It
+
+That is a whole lot of complex, interrelated documentation.
+So we are using the *AJYL* _docstack_, the *LiquiDoc* _utility_, and the *LiquiDoc Content Management _Framework_* to document AJYL, LiquiDoc, and LDCMF.
+
+== Why We Are Doing It This Way
+
+This site is a fairly ambitious project itself.
+It exists in addition to the three other projects it collectively documents.
+And of course, we have to use all this stuff for payed gigs as well.
+
+Building link:https://docops.github.io/acmedoc-www/[clever "dummy" sites] to demonstrate documenting complex products only led to confusion for users.
+It's hard enough to understand how a documentation platform works when you're familiar with the product.
+If it's called ACMEdoc and is filled with snarky sidebars, you've probably gone off the rails.
+
+Fortunately, we have to both _demonstrate_ and _document_ our tools and methods anyway.
+AJYL, LiquiDoc, and LDCMF together provide the level of complexity for demonstrating the true power of these very subjects in a way that might feel real, because the topics are all very real to us.
+We hope to achieve a useful example of what these technologies and methodologies do, since we have to write it all out in some kind of coherent fashion, anyway.
+
+== How to Use this Guide
+
+If you are building or managing an LDCMF project, you may wish to fork one or more of the LDCMF user guides and use it as internal docs for your own project.
+The _docpro_ guide (Documentarian Portal/Manual) can instruct writers', reviewers, and editors' use of the system.
+The _admin_ guide is probably for you; it is tagged for easy modification.
+You can feed your project's own variables in.
+
+== Consider the Implications of Customization
+
+If it is this easy to maintain a customized version of the docs about your documetation system, imagine the potential for customized docs for your product itself.
+Especially for enterprise products, LDCMF offers the power to maintain customer-specific versions of your product documentation.
+You could serve segregated, bespoke docs to each customer, or give them the source and easy instructions for serving on their intranet S3.

@@ -7,6 +7,7 @@ common:
   admin_manual_url: &admin_manual_url http://docops.org/liquidoc/dev/docpro-manual.pdf
   admin_portal_url: &admin_portal_url http://docops.org/liquidoc/dev/home
 guide-1:
+  guide_docpro: true
   portal_id: 1
   portal_slug: docpro
   portal_user: Documentarian
@@ -16,6 +17,7 @@ guide-1:
   site_path: docpro
   show_docpro: true
 guide-2:
+  guide_admin: true
   portal_id: 2
   portal_slug: admin
   portal_user: Administrator
@@ -25,6 +27,7 @@ guide-2:
   site_path: admin
   show_admin: true
 guide-3:
+  guide_dev: true
   portal_id: 3
   portal_slug: dev
   portal_user: Developer

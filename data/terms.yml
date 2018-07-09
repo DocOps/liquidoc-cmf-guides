@@ -1,6 +1,6 @@
 terms:
-- term: artifact Test
-  def: A digital package (file or archive) representing a discrete component of a product. Here we use _artifact_ to describe a descrete instance of output, such as a single HTML or PDF file, or a Jekyll website or Deck.js slide presentation.
+- term: artifact
+  def: A digital package (file or archive) representing a discrete component of a product. Here we use _artifact_ to describe a discrete instance of final content output, such as a single HTML or PDF file, or a Jekyll website or Deck.js slide presentation.
 - term: AsciiDoc
   def: Dynamic, lightweight markup language for developing rich, complex documentation projects in flat files.
   ref: http://asciidoctor.org/docs/user-manual
@@ -9,12 +9,14 @@ terms:
   def: Suite of open source tools used to process AsciiDoc markup into various rendered output formats.
   ref: http://asciidoctor.org
 - term: build
-  def: The (usually automated) series of actions necessary to compile and package software or documentation.
+  def: As a _noun_, the (usually automated) series of actions necessary to compile and package software or documentation artifacts. As a _verb_, the act of performing a build operation.
   aliases: [build procedure]
+- term: DRY
+  def: Acronym for “don't repeat yourself”; refers to techniques for single-sourcing content and data so no information, illustration, explanation, etc is repeated in the source (threatening divergence).
 - term: Liquid
   def: Open source templating markup language maintained by Shopify
-  ref: https://help.shopify.com/themes/liquid
+  ref: https://shopify.github.io/liquid/
 # end::sample[]
 - term: YAML
-  def: a slightly dynamic, semi-structured data format for nested data
+  def: a slightly dynamic, semi-structured format for nested data
   ref: http://searchitoperations.techtarget.com/definition/YAML-YAML-Aint-Markup-Language

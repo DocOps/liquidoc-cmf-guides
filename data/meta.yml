@@ -1,10 +1,16 @@
+# This common meta file must remain "flat" -- only simple key/value pairs allowed
+# Values may be boolean, string, number, or float -- no arrays or structures
 project_name: LiquiDoc/LDCMF User Guides # The name of THIS project repo
+project_subjects_list: AJYL docstack, LiquiDoc, and LiquiDoc CMF
 product_suite_name: LiquiDoc and LiquiDoc CMF
 product_suite_name_short: LiquiDoc and LDCMF
 # if your docs are in your product repo, the next line will match the previous
 space_type: repo
 project_root:
 docs_root_path:
+
+project_config_dir: _configs
+project_config_file: build-docs.yml
 
 # Company info
 company_name: LiquiDocOps Collective
@@ -13,6 +19,9 @@ address_street: 12 Nowhere Lane
 address_city: Placeville
 address_state: New York
 address_zipcode: 12121
+
+# AJYL variables
+ajyl_list: AsciiDoc, Jekyll, YAML, and Liquid
 
 ### URLs
 # Keepers (These URLs apply to most LDCMF projects)
@@ -25,14 +34,6 @@ liquidoc-docs_github_project_git_uri: git@github.com:DocOps/liquidoc-gem.git
 this_github_project_url: https://github.com/DocOps/liquidoc-docs
 liquidoc-gem_github_project_url: https://github.com/DocOps/liquidoc-gem
 liquidoc-cmf_github_project_url: https://github.com/DocOps/liquidoc-cmf
-
-
-portals:
-  - docpro
-  - admin
-  - dev
-
-index_file: portal-index.adoc
 
 # instructions
 docs_build_path_def: _configs/build-docs.yml

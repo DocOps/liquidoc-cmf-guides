@@ -1,0 +1,39 @@
+
+
+== Documentarian Capabilities
+// tag::docpro[]
+* link:get-started-liquidoc[Get started with a liquidoc-ready repository]
+* link:write-edit-asciidoc[Write and edit content in asciidoc]
+* link:manage-source[Find and manage source files]
+* link:write-edit-asciidoc[Commit files to source control]
+* link:write-edit-yaml[Write and edit small-data in yaml]
+* link:submit-data-content[Submit and iterate data/content commits for publication]
+* link:review-data-content[Review and approve data/content commits for publication]
+* link:build-docs-basic[Build a preconfigured docset]
+* link:build-docs-advanced[Build a preconfigured docset with additional options]
+// tag::docpro[]
+
+== Administrator Capabilities
+// tag::admin[]
+* link:write-edit-yaml[Write and edit small-data in yaml]
+* link:build-docs-basic[Build a preconfigured docset]
+* link:build-docs-advanced[Build a preconfigured docset with additional options]
+* link:build-docs-dev-test[Build docs for development and testing]
+* link:initialize-liquidoc-build-env[Initialize a liquidoc build environment]
+* link:buld-docs-basic[Configure a simple docs build]
+* link:buld-docs-advanced[Configure a sophisticated docs build]
+* link:buld-docs-advanced[Parse]
+* link:run-alternate-gem[Run liquidoc using an alternate gem]
+// tag::admin[]
+
+== Developer Capabilities
+// tag::dev[]
+* link:build-docs-basic[Build a preconfigured docset]
+* link:build-docs-advanced[Build a preconfigured docset with additional options]
+* link:build-docs-dev-test[Build docs for development and testing]
+* link:initialize-liquidoc-dev-env[Initialize a liquidoc development environment]
+* link:extend-liquidoc[Extend liquidoc's capabilities without modifying its source]
+* link:modify-liquidoc[Modify liquidoc's behavior by hacking its source code]
+* link:submit-code[Submit code commits for incorporation into liquidoc or ldcfm]
+* link:run-alternate-gem[Run liquidoc using an alternate gem]
+// tag::dev[]

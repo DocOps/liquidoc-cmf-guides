@@ -1,7 +1,7 @@
 include::{page_meta}[tags="manage-source"]
 
 Understanding the architecture of any file- or content-management scheme takes time.
-Clarity and accessibility are aided by the strict use of conventions and standards shared _teamwide_.
+Clarity and accessibility are aided by the strict use of conventions and standards shared _team-wide_.
 
 So that you can *find content and data* when you need it, and so you can *determine where to save new content* as you create it, we offer LiquiDoc CMF's content and file management conventions.
 These are the rules governing how and where to store content and data of various types.

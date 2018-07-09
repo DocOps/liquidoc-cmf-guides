@@ -104,5 +104,5 @@ Once you experience it's potential in the world of documentation, you will under
 // tag::admin-edit[]
 In the case of the {project_name} project itself, we're generating a PDF “manual” and an HTML “portal” for each of the following “guides”:
 
-include::../README.adoc[tags="artifact-links"]
+include::../../README.adoc[tags="artifact-links"]
 // end::admin-edit[]

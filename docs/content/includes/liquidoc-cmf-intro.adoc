@@ -1,0 +1,4 @@
+LiquiDoc CMF (LDCMF) is a “content management _framework_” -- a set of tools, conventions, and standards for sensibly organizing and maintaining source content and data as well as producing deliverable artifacts.
+LDCMF is neither a content management _system_ (CMS) nor a _component_ CMS (CCMS), mainly because it does not revolve around a database or a user interface designed for a specific kind of document management.
+LDCMF's sources of data and content are far simpler, stored in flat files and directories rather than relational databases.
+It's user interface is command-line tools (CLIs) and free, open-source text/code editors.

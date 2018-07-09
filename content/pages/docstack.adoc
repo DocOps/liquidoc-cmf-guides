@@ -1,0 +1,127 @@
+= The AJYL Docstack Manifesto
+
+I talk to a lot of people who would rather be developing their product than dealing with me.
+In fact, they'd even rather be documenting their product than talking to me.
+Unfortunately for them, documentation planning was never a high priority.
+If they have product docs, they're in something that one of the engineers thought was what they used at their last shop, or whatever the technical writer was trained in or convinced by ads or a salesperon was the way to go.
+Understandably, these folks have put hundreds of times as much thought into the product than they have put into the instructions and references for it, even as they've been dutifully documenting their work in some form or another right along.
+Early adopters are notoriously tolerant of bad docs, but most customers have higher expectations.
+Product developers, meanwhile, tend to have little patience or respect for documentation platforms that add to rather than relieving their documentation burden.
+
+Now that these clients are scaling operations around a validated product, it's time for real docs, which means a real docs platform.
+Of course, new growth means everybody has even less bandwidth for “side projects”; there's no time to shop around, and there's no bandwidth to custom build.
+Worst of all, the world of techical documentation has an ironic dearth of resources guiding you through the process.
+There are a handful of companies peddling proprietary platforms, but the open-source stuff is mostly off in the shadows.
+
+This must change.
+
+It's time the world of technical documentation got its first free, open-source solution stack -- a combination of extensible technologies that work cohesively to solve a full range of problems in the target space: in this case, the _documentation of software products_.
+
+As a first entrant into the new world of FOSS documentation stacks, I propose a set of technologies that meet the following challenges:
+
+* Solve highly complex documentation problems.
+* Scale down gracefully to still be a sensible choice for simple documentation challenges.
+** Suitable for open-source and hobbyist projects as well as for major enterprises.
+** Include a flexible framework to enable easy startup with low overhead.
+* Integrate with engineering best practices.
+** Use Git.
+** Store docs code in or near product code.
+** Align product and docs code.
+** Enable programmatic builds and data preprocessing.
+** Facilitate code reviews of docs content.
+** Perform continuous integration and deployment.
+* Accommodate fierce extensibility.
+** Peripheral technologies have excellent APIs and free options for noncommercial/low-volume use.
+** Everything sourced in accessible languages, and underlying components should be designed for extensibility.
+* Minimize the number of nonstandard tools to be learned.
+** Technical writers may need to become proficient with some markup as well as standard tools like Git, but nothing much deeper, in order to become productive.
+** Front-end development must be highly standard (HTML, CSS/LESS/SASS, and JS) backend should require only one language.
+* Integrate well with the most popular and/or best tools in the ecosystem.
+
+If you are choosing a platform on which to build technical documentation, you should consider the open-source toolchain I have been working with for the past couple of years.
+This goes for anyone looking to migrate away from a restrictive proprietary platform or other conventional documentation systems, such as wikis or CMSes that don't play nice with Git.
+
+Building a complex technical document is very much like developing a software product.
+The more carefully you choose your foundational technologies, the better they will solve your problem now and adapt to new problems down the road.
+You can tie yourself to a proprietary, closed-source technology that seemingly does everything you need now, only to find your docs heavily influenced by that product's features, limitations, and hacky workarounds.
+We should all be able to agree that the product you're documenting so _you_ can make money should have more influence on your docs than the tools you're making and publishing that document with, which is after all designed to make _somebody else_ money.
+
+
+If you want to build great docs but don't have months and months to explore the documentation tooling ecosystem, you can do an awful lot worse than the AJYL docstack--and you probably will.
+Most tooling systems are dead ends.
+Their applications are limited and extensibility takes a level of technical skill most documentation teams do not have and most engineering team lack the bandwidth to build.
+Worse still, they're proprietary technologies are restrictive and heavy handed.
+
+So you need a highly complex and powerful documentation platform, but you can't build it yourself, and nobody wants to spend six months researching the tooling in this very under-served, widely overlooked sub-field of engineering.
+
+I make my living setting up collaborative, open-source documentation platforms for software engineering teams (and hopefully someday for less-technical professions).
+My favorite projects are complex and require a robust underlying toolchain that can be readily adapted to accommodate new complexity.
+For this reason, I have spent the past couple of year trying to design a framework that will make setting up documentation projects purely a work of _configuration_ rather then custom _development_.
+While I have the skills to manipulate the underlying tools and do so as needed, I'd prefer they work right out of the box.
+
+No single product is going to solve my problems today.
+What I am using at the moment is a custom script (a Ruby gem) that combines four underlying technologies.
+Again, these exist so I can configure my way through big documentation challenges instead of hacking my way through them.
+*LiquiDoc* is a command-line utility that reads a configuration file and builds documentation from flat files in lightweight markup.
+Content is stored in the *AsciiDoc* dynamic lightweight markup format; data is stored in *YAML* format.
+(We'll talk more about these distinctions shortly.)
+LiquiDoc invokes two other Ruby gems -- *Asciidoctor* and *Jekyll* -- to pull all of these disparate source files together and render rich-text output in HTML, PDF, and more.
+A final markup component is *Liquid* templating format and parsing engine, used to shape data into technical content (such as tables and lists drawn from data files) and site theming matter (like HTML which generates page layouts and navigation menus).
+
+Jekyll, Asciidoctor, and LiquiDoc are extremely open-ended utilities without strong standards for implementation.
+What I mean by this is that they give users tremendous configuration latitude in order to flexibly match any technical environment or content challenge.
+This makes them excellent for people with extremely simple needs, as defaults or casual conventions may well suffice.
+If you're using Jekyll for a standard blog, there's a tutorial for you.
+If you're building a standard book or separate distinct documents, Asciidoctor will do it out of the box.
+
+However, if you have a highly complex project, you may need to mix a bunch of technologies.
+That means you need a high degree of familiarity to choose and implement your stack.
+This is by design, as architecture between implementations varies greatly, not least because the process involves marrying tools to other tools in ways that would not go smoothly were the tools
+
+ heavily engages our four key free, open-source (FOSS) dependencies -- Asciidoctor, Jekyll, YAML, and Liquid -- that work decidedly well in concert with one another.
+
+One commonality is that these tools are Ruby-centric.
+Asciidoctor, Jekyll, and Liquid are all sourced in Ruby.
+YAML is a specification with rich implementation in Ruby toolchains.
+
+The heavyweight in this toolchain is Asciidoctor.
+It is simply one of the strongest open-source projects in the world of documentation tooling.
+Its community is small but growing based on the merit of AsciiDoc language and the strong, growing suite of Asciidoctor processors.
+
+Jekyll is the second heavyweight, and possibly the strongest point of divergence in this stack.
+
+== Making AsciiDoc Truly Dynamic
+
+
+
+== Making YAML Truly Dynamic
+
+YAML is technically “dynamic” in that it can carry variables for substitution, but its variables are nearly useless.
+And frankly, variables are not good enough; a format purposed around structuring data needs to be able to loop and test for conditions in order to produce specialized and concatenated output.
+
+Alas, that is probably asking too much of any datasource formatting system.
+Luckily, we can parse our YAML with Liquid templates to generate new data.
+Our purpose here is to create variables that can be used in future Liquid or AsciiDoc parsing operations.
+So we can generate variables that are conditional, for instance with different values per build environment, such as staging vs production.
+We can also concatenate values or even key names for new variables out of the values of previous variables.
+Finally, we can iterate through arrays or even structs to generate all new variables, combining the above programmatic functions with the power of looping.
+
+The AJYL docstack does not cover all your documentation challenges, but it can be readily extended to handle most.
+If you need a search engine, API documenation,
+
+== Friends of AJYL
+
+These four components are not enough to form a complete documentation platform.
+You will need a deployment platform, a search solution, and of course a source-control solution.
+We believe AJYL adapts extraordinarily well to other open-source solutions or services with strong APIs.
+
+Assuming you likely have preferences for source control an deployment platforms, we will make recommendations that we believe are excellent options, as well as list and review some alternatives in each case, as appropriate.
+Again, this meant as a guide, because we strongly believe these solutions are suitable for a vast array of cases.
+
+=== Ruby
+
+=== Git
+
+=== Algolia Search
+
+=== Netlify Deployment
