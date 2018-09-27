@@ -1,1 +1,115 @@
-include::{page_meta}[tags="ldcmf-structure-this"]
+include::{topic_page_meta}[tags="ldcmf-structure-this"]
+
+ifdef::show_cheats[]
+[TIP.admin]
+This topic describes the project in which the topic resides.
+If the _current project_ is the LDCMF Guides, the following text is accurate in the canonical (prime) repository.
+If the _current project_ is your own LDCMF implementation, documenting your own project or your own docs system, you will want to edit everything on this page to be a descriptor of _your_ implementation.
+endif::show_cheats[]
+
+The LDCMF Guides project is itself a complex implementation of the LiquiDoc Content Management Framework, so it serves as a good example via which we can examine some of LDCMF's various features.
+
+== A Quick Review
+
+The files in this repository are _written_ and _edited_ in the AsciiDoc and YAML lightweight markup formats, using your code editor of choice.
+Then they are compiled into rich-text output (“artifacts”) by LiquiDoc during the _build_ procedure.
+During this build, LiquiDoc engages Liquid (template parsing engine), Asciidoctor (AsciiDoc rendering engine), and Jekyll (static-site generator) to generate HTML files and build them into a configurable array of pages for publication.
+The text files comprising the source content are _managed_ using Git.
+
+The rest of this topic breaks that process down in some detail, but here is a bit more orientation.
+
+The end products of this source code are a website containing multiple “portals”--one for each <<user-roles{sfx},user role>>, the broad personas expected to engage with LDCMF.
+Those portals share a tremendous amount of content in common, but they vary from one another in a number of significant ways.
+Therefore, their source matter is stored predominantly in common files, differentiated where the products diverge, then processed into separate, collocated sites.
+
+== Repo Tour
+
+Review this partial exposure of the standard LDCMF directory tree.
+
+.Basic LDCMF File Structure
+include::{snippetsdir}/README.adoc[tags="repo-structure-listing"]
+
+Now let's dig into the particulars.
+
+_build/::
+This is where all processed files end up, whether we're talking migrated assets, prebuilt source, or final artifacts.
+This directory is _not_ tracked in source control, so you will not see it until you run a build routine, and you cannot commit changes made to it.
+It is always safe to fully delete this directory in your local workspace.
+We will explore the `_build/` directory more fully later.
+
+ifdef::guide_admin[]
+_configs/::
+This folder is where the brains go.
+The `build-docs.yml` config file belongs here, as does anything that is more about programming the build procedure than about informing the content.
+The `asciidoctor.yml` file is for non-content AsciiDoc attributes that pertain to the structure or process of rendering with Asciidoctor.
+This is also the home of various Jekyll configuration files, usually one for each guide and one for each guide type (e.g., `attributes-portal.yml` and `attributes-manual.yml`).
+endif::guide_admin[]
+
+_ops/::
+This is a secondary “configs” location, for utilities and routines that support the _use_ of LDCMF by admins and documentarians.
+For instance, the `init-topic.yml` config instructs the creation of topic files and schema entries.
+
+_templates/liquid/::
+Here we store most of our prebuilding templates.
+These are _not_ Jekyll theming templates.
+These are the ones we use for generating new YAML and AsciiDoc source files from other source files and external data.
+
+content/::
+The first of our publishable directories, `content/` is the base path for documentarians' main work area.
+Everything inside the `content/` directory will be copied into the `_build/` directory early in the build process.
+
+content/assets/:::
+For content assets, rather than theming assets.
+If it illustrates your product, it probably goes here.
+If it brands your company, it probably goes in `theme/assets/`.
+
+content/pages/:::
+For AsciiDoc files of the _page_ content type.
+See <<{XREF_source-content-types}>>.
+
+content/snippets/:::
+For content _snippets_.
+See <<snippets>>.
+
+content/topics/:::
+For AsciiDoc files of the core _topic_ content type.
+
+data/::
+All YAML small-data files that contain content-relevant information go here.
+These data files differ from those that belong in `_configs/` (or `_ops/`) in important ways, essentially revolving around whether the data needs to be available for display.
+If it is not establishing settings or used to inform non-build functions (like in `_ops/`), the data file probably belongs in `data/`.
+Let's look at some key data files standard to LDCMF.
+
+data/meta.yml:::
+For general information about your company, URL and path info.
+This file usually contains just simple data: a big (or small) column of basic key-value pairs to create simple variables.
+
+data/products.yrml:::
+For subdivided information about your products in distinct blocks.
+Each block can be called for selective ingest during build routines using the colon signifier, such as by calling `data/products.yml:product-1`, where `product-1:` is a top-level block in the `products.yml` file.
+
+data/guides.yml:::
+This block is for content-oriented data that is distinct between the different portals or guides you're producing.
+This is often redundant to your `products.yml` file, if product editions themselves are the major point of divergence in your docs, and it is formatted the same way.
+For _this project_ (LDCMF Guides), the _guides_ are oriented toward _audiences_ (documentarians, admins, and developers), but the products (LiquiDoc and LDCMF) are distinct from this and actually documented/instructed _together_ in each guide.
++
+[TIP]
+Favoring the filename `products.yml` is conventional when products and guides (portals) have a 1:1 relationship and `guides.yml` file is superfluous.
+
+data/schema.yml:::
+Can also be `data/manifest.yml`, this crucial file provides, central manifest of all page-forming content items (pages, topics) and how they are organized (metadata such as categories into which content items fall).
+The schema file carries essential build info that lets us see relationships between topics and build content-exclusive portals from otherwise fairly dumb, decontextualized repositories.
+
+data/terms.yml:::
+By no means a required file, `terms.yml` is a great example of a file that is really just for content.
+You can have as many of these key-value files, serving whatever purposes you may wish.
+
+products/::
+This is an optional path for LDCMF projects.
+If you plan to embed your product repos as submodules, the `products/` directory is the base path to stick them in.
+For LDCMF Guides, this path effectively leads to symlinks for the LiquiDoc and LDCMF repos, so any files within those repos are accessible to be drawn into our docs.
+
+theme/::
+All the files that structure your output displays go here.
+This mainly includes Jekyll templates (`themes/<theme-name>/_includes.yml` and `themes/<theme-name>/_layouts.yml`) and asset files such as stylesheets, front-end javascripts, and of course theme-related images.
+This would also be the home of PDF and slideshow output theme configurations, as applicable.

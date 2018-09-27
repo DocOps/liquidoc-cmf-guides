@@ -1,1 +1,0 @@
-include::{page_meta}[tags="understand-reviews-policy"]

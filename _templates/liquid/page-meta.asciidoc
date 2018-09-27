@@ -1,39 +1,21 @@
-{% for story in topics %}
+{% assign these_topics = topics | where_exp: "item","item.guides contains vars.guide" %}
+{% for story in these_topics %}
 // tag::{{ story.slug }}[]
-{%- capture roles -%}
-{%- for r in story.roles -%}{{ r }}{%- unless r == story.roles.last -%},{%- endunless -%}
+{%- capture guides -%}
+{%- for r in story.guides -%}{{ r }}{%- unless forloop.last -%},{%- endunless -%}
 {%- endfor -%}{%- endcapture -%}
 {%- capture categories -%}
-{%- for c in story.categories -%}{{- c -}}{%- unless c == story.categories.last -%},{%- endunless -%}
+{%- for c in story.categories -%}{{- c -}}{%- unless forloop.last -%},{%- endunless -%}
 {%- endfor -%}{%- endcapture -%}
 {%- capture tags -%}
-{%- for t in story.tags -%}{{ t }}{%- unless t == story.tags.last -%},{%- endunless -%}
+{%- for t in story.tags -%}{{ t }}{%- unless forloop.last -%},{%- endunless -%}
 {%- endfor -%}{%- endcapture %}
 = {{ story.title }}
 :page-title: {{ story.title }}
-:page-permalink: {site_path}/{{ story.slug }}
-:page-roles: [{{ roles }}]
+:page-permalink: {guide_site_path}/{{ story.slug }}
+:page-guides: [{{ guides }}]
 :page-categories: [{{ categories }}]
 :page-tags: [{{ tags }}]
-
-[cols="1,5"]
-|===
-| User story
-|
-ifeval::["{portal_slug}" == "docpro"]
-include::{includes_dir}/_built_user-stories-full.adoc[tags="docpro-{{ story.slug }}"]
-endif::[]
-ifeval::["{portal_slug}" == "admin"]
-include::{includes_dir}/_built_user-stories-full.adoc[tags="admin-{{ story.slug }}"]
-endif::[]
-ifeval::["{portal_slug}" == "dev"]
-include::{includes_dir}/_built_user-stories-full.adoc[tags="dev-{{ story.slug }}"]
-endif::[]
-|===
 // end::{{ story.slug }}[]
-
-{% if story.subtopics %}
-
-{% endif %}
 
 {% endfor %}

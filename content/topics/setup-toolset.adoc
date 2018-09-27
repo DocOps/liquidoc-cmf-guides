@@ -1,1 +1,1 @@
-include::{page_meta}[tags="setup-toolset"]
+include::{topic_page_meta}[tags="setup-toolset"]

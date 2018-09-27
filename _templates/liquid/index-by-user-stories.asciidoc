@@ -1,20 +1,13 @@
-{%- assign all_roles = "docpro,admin,dev" | split: "," -%}
-{%- for this_role in all_roles -%}
-// tag::{{ this_role }}[]
-{%- for cat in categories -%}
-{%- assign cat_found = false -%}
-{%- for story in topics -%}
-{%- unless cat_found == true -%}
-{% if story.categories.first == cat and story.roles contains this_role %}
-= {{ cat | capitalize }}
-{% assign cat_found = true %}
-{%- endif -%}
-{%- endunless -%}
-{% if story.roles contains this_role and story.categories.first == cat %}
-include::topics/{{ story.slug }}.adoc[leveloffset=+1]
-<<<
+{% assign these_topics = topics | where_exp: "item", "item.guides contains vars.guide" -%}
+{%- for story in these_topics -%}
+{%- assign slug_array = story.slug | split: "_" -%}
+{%- if slug_array[0] == "meta" %}
+ifdef::ldcmf_prime[]
 {% endif %}
-{%- endfor -%}
-{%- endfor -%}
-// end::{{ this_role }}[]
+[[{{story.slug}}]]
+include::./topics/{{ story.slug }}.adoc[]
+{% if slug_array[0] == "meta" %}
+endif::ldcmf_prime[]
+{% endif %}
+<<<
 {% endfor %}

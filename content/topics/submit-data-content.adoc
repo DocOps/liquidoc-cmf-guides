@@ -1,1 +1,0 @@
-include::{page_meta}[tags="submit-data-content"]

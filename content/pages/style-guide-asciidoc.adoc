@@ -1,4 +1,5 @@
 = AsciiDoc Style Guide
+:page-permalink: /writing-style-guide
 
 LiquiDoc's official “AsciiDoc Style Guide” is coming soon.
 

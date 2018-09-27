@@ -8,8 +8,10 @@ exclude:
   - snippets/
   - site/
   - index.html
+{% assign keep_topics = topics | where_exp: "item","item.guides contains 'dev'" %}
+{%- assign keepers = keep_topics | map: "slug" -%}
 {%- for story in topics -%}
-{% unless story.roles contains "dev" %}
+{% unless keepers contains story.slug %}
   - topics/{{ story.slug }}.adoc
 {%- endunless -%}
 {% endfor %}

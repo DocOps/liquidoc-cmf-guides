@@ -1,3 +1,0 @@
-include::{page_meta}[tags="build-docs-basic"]
-
-There are some special tricks for running tests during docs builds.

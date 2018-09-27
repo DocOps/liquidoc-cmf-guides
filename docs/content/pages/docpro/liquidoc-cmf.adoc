@@ -1,7 +1,0 @@
-= Maintaining Docs with LiquiDoc CMF
-
-include::{includes_path}/liquidoc-cmf-intro.adoc[]
-
-As a content contributor, your interactions with LDCMF are fairly basic, but it will likely feel like quite a departure from content management _systems_ you have used, so a full orientation is in order.
-
-You won't need to know how to set up or hack LiquiDoc, but you will need to get comfortable with the following LDCMF topics and procedures.

@@ -1,0 +1,82 @@
+= LiquiDoc CMF
+:page-layout: landing
+:page-permalink: /liquidoc-cmf
+:page-hide_sidebar: true
+
+You know your next *software documentation project* will require lots of custom configuration and hacking,
+
+and you *don't* want to *reinvent the wheel* by scripting your own platform from scratch
+
+any more than you want to get locked into an expensive, proprietary platform
+
+or bang your head against the limitations of SaaS/cloud offerings.
+
+You need a *portable, open source toolchain and framework* that can handle most of the key *single-sourcing challenges* of technical documentation, including:
+
+* version tracking
+* parallel, overlapping, smartly cross-referenced editions
+* divergent user roles
+* internationalization/localization
+* edition-specific search
+* PDF and HTML builds
+* output configurations:
+** user/developer portals
+** help sites
+** knowledge bases
+** multiple manual-style volumes
+** API references
+** demonstration slide decks
+
+All this from a *DRY*, developer-friendly codebase, with *no databases* and *no proprietary nothing* -- true *docs as code*.
+
+And wouldn't it be great if the same framework could accommodate *your next project, too*?
+
+[quote]
+Your product is complicated, but you handle divergence and variability with *DevOps* -- now *your docs can work the same way* with *DocOps*.
+
+Consider a *content management framework* designed for *Git-controlled docs* with *open-ended requirements*
+
+an *extensible framework* that will handle tomorrow's documentation challenges, as well
+
+based on the exceptionally awesome *AsciiDoc lightweight markup* format favored by discerning technical communications pros, from *RedHat* to *O'Reilly* and now even *Drupal*
+
+plus the explosively popular *Jekyll static site generator* for outputting crisply themed, well-organized user portals at `docs.yourdomain.com/<edition>`
+
+with key product info, from company name to API endpoint reference objects, stored elegantly and accessibly as *small data in YAML, JSON*, XML, CSV, or other convenient flat-file formats
+
+all of it *freely transformed* using the powerful *Liquid template parsing* format
+
+as well as *JAMstack, API-based* apps and remote *REST services* to resolve any remaining limitations of *your new docs platform*.
+
+[quote]
+There is more than one *right way* to build great software docs; this one is ours, iteratively designed with care, and yours for the taking and hopefully sharing.
+
+== Introducing LiquiDoc CMF,
+
+a modern technical documentation framework for establishing *distributed, controlled, flexible docs source codebases* that build attractive, *deployment-ready rich-text artifacts*.
+
+[quote]
+LiquiDoc CMF is the *developer- and writer-friendly toolchain and conventions* you have been putting off coming up with.
+
+We want this framework to at least give you something to demand of any solution you consider.
+Put any solution up against the link:{ldcmf-proving-grounds_url}[LDCMF Proving Grounds FAQ] to see if it passes muster, learning in the process how much of LDCMF's power and complexity you actually need.
+
+We make no claim that our framework is best, but we do insist it is:
+
+* *enjoyable* to use
+* based on *accessible*, widely loved and supported *open source* upstream platforms
+* refreshingly consistent with *developer logic and tooling preferences*
+* at least broadly aligned with the *way of the future* in software docs
+* *smoothly degradable* to *source components*, and therefore easily convertible to *other AsciiDoc-based platforms*
+
+== Learn More!
+
+To get more background on the component technologies, check out the link:{ajyl_landing_url}[AJYL Docstack Overview].
+
+Explore LiquiDoc CMF through its own, LDCMF-powered docs!
+Start with the link:{docpro_portal_url}[Contributor Guide] or the link:{docpro_portal_url}[Administrator Guide] (built along with _this site_).
+Get the _meta_ view from the README and source code of the link:{docs_git_url}[LDCMF Guides repo] (__this site__'s source), or sit back and take a link:{ldcmf-video-tour_url}[*video tour*] of the whole package.
+
+Peruse the first real-world implementation of LDCMF covering a serious engineerig project, the Digi ConnectCore Embedded product docs link:https://docops.org/demos/digi[documentation demo].
+
+Read link:https://codewriting.org[Codewriting], an open source book-in-progress by the main developer of LDCMF, with detailed rumination on the frontiers of DocOps engineering and docs-as-code technical writing, from appreciating *dynamic lightweight markup* as a writer to becoming a *docs hacker*, solving real-world docs challenges with open source platforms.

@@ -1,5 +1,0 @@
-backend:
-  name: github
-  repo: DocOps/ldcmf-guides # Path to Github repository
-  branch: master # Branch to update
-publish_mode: editorial_workflow

@@ -6,7 +6,7 @@ entries:
 {%- assign cat_found = false -%}
 {%- for story in topics -%}
 {%- unless cat_found == true -%}
-{%- if story.categories.first == cat and story.roles contains "docpro" -%}
+{%- if story.categories.first == cat and story.guides contains "docpro" -%}
 {%- assign cat_found = true %}
     - title: {{ cat | capitalize }}
       output: web
@@ -14,7 +14,7 @@ entries:
 {%- endif -%}
 {%- endunless -%}
 {%- if story.title_short -%}{%- assign this_title = story.title_short -%}{%- else -%}{%- assign this_title = story.title -%}{%- endif -%}
-{%- if story.roles contains "docpro" and story.categories.first == cat %}
+{%- if story.guides contains "docpro" and story.categories.first == cat %}
         - title: {{ this_title }}
           url: {{ story.slug }}
           output: web

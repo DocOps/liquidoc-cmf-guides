@@ -1,0 +1,18 @@
+include::{topic_page_meta}[tags="source-markup-liquid-basics"]
+
+LiquiDoc CMF *_administrators_* will likely spend considerable time wading through Liquid template files, either to _generate_ (1) layout, structural, and metadata elements of the _website_ or (2) iterative elements of the _content_ (prebuilding).
+In each case, templating serves the purpose of mixing small data and <<source-markup-variables-tokens#,_tokenized_>> markup, substituting _parameterized_ data for embedded tokens.
+
+Liquid is a fairly light, tag-based markup format that enables conditional flows, iteration/looping, and powerful variable substitution.
+
+.Example -- Conditionally looping variables in Liquid
+[source,liquid]
+----
+{% for p in pages %}
+{% if p.categories contains "tutorials" %}
+<li><a href="{{ p.url }}">{{ p.title }}</a></li>
+{% endif %}
+{% endfor %}
+----
+
+We'll delve deeper into Liquid later on (see <<{XREF_theming-jekyll-liquid}>>), but it is probably already becoming clear that we need to get all these different kinds of variables under control.

@@ -1,39 +1,131 @@
 # This common meta file must remain "flat" -- only simple key/value pairs allowed
 # Values may be boolean, string, number, or float -- no arrays or structures
-project_name: LiquiDoc/LDCMF User Guides # The name of THIS project repo
-project_subjects_list: AJYL docstack, LiquiDoc, and LiquiDoc CMF
+################################################################################
+# LIQUID VAR ASSIGNMENTS
+{% unless vars.domain_url %}
+  {% case vars.environment %}
+    {% when "development" %}
+      {% assign domain_url = "http://127.0.0.1:4009" %}
+    {% when "staging" %}
+      {% assign domain_url = "https://liquidoc-cmf-guides.netlify.com" %}
+    {% when "production" %}
+      {% assign domain_url = "https://www.ajyl.org" %}
+  {% endcase %}
+{% else %}
+  {% assign domain_url = vars.domain_url %}
+{% endunless %}
+{% assign github_base_url = "https://github.com/DocOps" %}
+# The name of THIS project repo is the project_name.
+# This is usually something like 'Acme Project Docs'
+# In the prime LiquiDoc CMF Guides repo, this says
+# project_name: LiquiDoc/LDCMF User Guides
+# This is because the LDCMF Guides codebase repo is self-documenting.
+# In all other cases, forks of this codebase should be covering either
+# (1) a product or (2) an implementation of LDCMF which in turn documents
+# a product.
+# See https://ajyl.org/liquidoc-cmf-guides/admin/meta_adapt-these-docs
+project_name: LiquiDoc/LDCMF User Guides
+# The products/technologies documented by THIS docs project, as a phrase:
+project_subjects_list: AJYL docstack, LiquiDoc, and LiquiDoc CMF (LDCMF)
+# The proper name for the products/technologies documented, as a phrase
+# (may be same as project_subjects_list:
 product_suite_name: LiquiDoc and LiquiDoc CMF
-product_suite_name_short: LiquiDoc and LDCMF
-# if your docs are in your product repo, the next line will match the previous
+# An optional shorter version of product_suite_name:
+product_suite_name_short: LiquiDoc/LDCMF
+# The space_type refers to where/how THIS project resides, either:
+# * repo   | Docs have their own repository with no parent.
+# * colo   | Docs are collocated inside the product repository.
+# Note:    Docs with their own repo may contain product repos as submodules.
+#          For collocated (colo) setups, this project may have its own folder
+#           or reside in a submodule (subordinate repository).
 space_type: repo
-project_root:
-docs_root_path:
-
+# The subj_rel defines how THIS docs repo relates to the documented subjects:
+# * parent    | Products are all submodules of the docs (recommended)
+# * submod    | Docs are in a Git submodule subordinate to all product repos
+# * folder    | Docs are in a dir w/in the (solely documented) product repo.
+# * none      | The product repo and docs repo are technically unrelated.
+# * mashup    | It's complicated.
+subj_rel: parent
+# The path to THIS project from repository root if space_type == 'colo'
+# docs_root_path: docs
+# Location of THIS project's config files (LiquiDoc, Jekyll, Asciidoctor, etc):
 project_config_dir: _configs
+# THIS project's LiquiDoc build configuration file:
 project_config_file: build-docs.yml
+# The above entries will generate project_config
+project_home_dir: liquidoc-cmf-guides
+portals_base_path: liquidoc-cmf-guides
+docs_path: ''
+# THIS project's build root directory
+build_dir: _build
 
-# Company info
-company_name: LiquiDocOps Collective
-company_name_short: LiquiDocOps
+# Company info:
+company_name: AJYL DocLabs
+company_name_short: AJYL DocLabs
 address_street: 12 Nowhere Lane
 address_city: Placeville
 address_state: New York
 address_zipcode: 12121
 
-# AJYL variables
-ajyl_list: AsciiDoc, Jekyll, YAML, and Liquid
+# Technology content variables:
+ajyl_list: AsciiDoc, JAMstack, YAML, and Liquid
 
-### URLs
-# Keepers (These URLs apply to most LDCMF projects)
-project_git_repo_web_url: https://github.com/DocOps/liquidoc-docs # The URL of your GitHub or other interface
-docs_git_repo_uri: git@github.com:DocOps/liquidoc-docs.git
+### URIS
+##  PRIME URIs
+# These URLs are used judiciously to differentiate
+# between (1) any fork or instance of these docs and
+# (2) the "prime" LDCMF Guides repository.
+# Leave these values hard-coded
+ldcmf-guides_github_project_url: https://github.com/DocOps/liquidoc-cmf-guides
+ldcmf-guides_git_origin_uri: git@github.com:DocOps/liquidoc-cmf-guides.git
 
-# Product-specific URL vars
-liquidoc-docs_github_project_url:  https://github.com/DocOps/liquidoc-gem
-liquidoc-docs_github_project_git_uri: git@github.com:DocOps/liquidoc-gem.git
-this_github_project_url: https://github.com/DocOps/liquidoc-docs
-liquidoc-gem_github_project_url: https://github.com/DocOps/liquidoc-gem
-liquidoc-cmf_github_project_url: https://github.com/DocOps/liquidoc-cmf
+##  COMMON URIS (These URIs apply to most LDCMF projects)
+#   The URL of your GitHub or other interface
+docs_git_url: {{github_base_url}}/liquidoc-cmf-guides
+docs_git_origin_uri: git@github.com:DocOps/liquidoc-cmf-guides.git
 
-# instructions
+##  PRODUCT-SPECIFIC URLS
+#   Make these your own
+site_base_url: {{domain_url}}
+gem_github_project_url: {{github_base_url}}/liquidoc-gem
+gem_git_origin_uri: git@github.com:DocOps/liquidoc-gem.git
+cmf_github_project_url: {{github_base_url}}/liquidoc-cmf
+cmf_git_origin_uri: git@github.com:DocOps/liquidoc-cmf.git
+liquidoc-cmf_landing_url: {{domain_url}}/liquidoc-cmf
+ldcmf-proving-grounds_url: {{domain_url}}/ldcmf-proving-grounds
+liquidoc_landing_url: {{domain_url}}/liquidoc
+liquidoc_onesheet_url: {{domain_url}}/liquidoc.pdf
+ajyl_landing_url: {{domain_url}}/ajyl
+ajyl_onesheet_url: {{domain_url}}/liquidoc.pdf
+docpro_portal_url: {{domain_url}}/docpro
+docpro_manual_pdf_url: {{domain_url}}/docs/docpro-manual.pdf
+docpro_manual_html_url: {{domain_url}}/docs/docpro-manual.html
+admin_portal_url: {{domain_url}}/admin
+admin_manual_pdf_url: {{domain_url}}/docs/admin-manual.pdf
+admin_manual_html_url: {{domain_url}}/docs/admin-manual.html
+dev_portal_url: {{domain_url}}/dev
+dev_manual_pdf_url: {{domain_url}}/docs/dev-manual.pdf
+dev_manual_html_url: {{domain_url}}/docs/dev-manual.html
 docs_build_path_def: _configs/build-docs.yml
+
+##  GENERAL/SUPPORTING URLS
+jekyll-asciidoc_url: https://github.com/asciidoctor/jekyll-asciidoc
+
+### PATHS
+##  COMMON
+guides_index_file: guides-index.adoc
+product_dir: products
+
+##  PRODUCT-SPECIFIC PATHS
+product_gem_path: products/gem
+product_cmf_path: products/cmf
+
+### SPECIAL UBER-META SETTINGS FOR THE LDCMF GUIDES PROJECT
+#
+#   These parameters establish preferences regarding the covered implementation
+#   of LDCMF. That is, they determine which aspects of the LDCMF conventions are
+#   in use by the team whose documentation repo this covers, in order to define
+#   whether/how to document those conventions.
+#   Uncomment the line for any setting you wish to establish
+#
+#use_types_in_topic_slugs: true

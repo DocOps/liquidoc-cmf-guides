@@ -1,0 +1,197 @@
+include::{topic_page_meta}[tags="meta_divergence-types"]
+
+Technical documentation management is all about identifying and handling divergence.
+Where factors like subject matter and output formats diverge, problems associated with maintaining multiple sources arise.
+The alternative to maintaining two, then four, then a dozen copies of nearly identical content and data sources is to manage a single, canonical source elegantly.
+
+Before we can resolve divergence, we need to identify and classify its various forms.
+Each time we encounter divergence in our product docs, we want to choose the least intrusive yet most forward-looking solution available.
+
+== Why Divergence Planning Matters
+
+If you're doing enterprise-scale product docs right, you're mostly balancing divergence in order to maintain nimble but thorough single-sourcing.
+This is a lot of high-level work made fundamentally easier with proper planning for divergence cases.
+
+Handle instances of divergence consistently throughout your docs.
+Sometimes this means merely noting a choice you've made in your custom LDCMF Style Guide.
+Other times will call for using preprocessing to design strings or snippets in order to fulfill your needs across cases of divergent output.
+In some cases, it will necessitate generating a whole new portal (or set of portals).
+
+In LiquiDoc CMF parlance, your points of divergence are either _superficial_ or _radical_.
+Superficial divergences usually warrant handling _within_ an artifact, rather than by generating an additional artifact.
+Radical divergences are handled by building another doc, or another set of docs, in order to distinguish sufficiently between the variants.
+
+.Getting the most out of this topic
+****
+As you go through the below list of divergence types, keep your product in mind.
+When you discover one that applies, make a note of it.
+In <<{XREF_meta_divergence-handling}>>, you will consider each handling strategy across each point of divergence to determine the best approach.
+****
+
+Each website or PDF document we build during the render phase is an artifact, even if we're going to combine them seamlessly with others, in the case of our multi-portal web output.
+Our primary concern is that every radical point of divergence creates a potential point of user or reader confusion.
+Any time there is a risk that users will so much as try to use the wrong document, we have created a problem.
+
+Radical divergences present the biggest challenges (and likely take up a larger share of your work).
+We will explore radical divergence quite thoroughly here, first and foremost by helping you recognize which severity of divergence you're looking at as we discuss each type, and then again as we discuss applying strategies.
+
+We will explore this kind of divergence more when we talk about applying strategies, but for now let's establish why it matters.
+There are four types of divergence we'll explore: product divergence, output-format divergence, audience divergence, and localized divergence, which is often a combination of product and audience divergence.
+
+[[product]]
+== Product Divergence
+
+Product divergence occurs when the thing we're documenting needs to be documented as two or more products.
+Whether they are marketed separately is a completely different matter; the question is, do you need to do anything special to report all the information to the user in a reasonable format?
+
+Let's say you are only supporting three versions of a single software product, and two of them are patch versions of the first.
+You want users to update because it will clear up some bugs that don't have anything to do with the documentation, other than the Release Notes.
+The docs aren't really changing, other than to note the new current version and display the release notes of your three releases.
+Congratulations: you are documenting three points of superficial divergence, and you don't even need special code.
+
+A more complicated form of superficial divergence is when the product number of each of your released versions matters throughout the docs.
+Suddenly we are in dire need of a variable, since that's surely the cleanest way to handle this.
+(An alternative would be to change that value everywhere throughout the docs on each of several branches in Git, for instance. Not cool for such a cosmetic change.)
+
+Let's look at the actual sites of product divergence.
+
+=== Product Editions/Flavors
+
+These types of changes are as likely to be radical as superficial, so take them seriously.
+
+If you are releasing three heavily overlapping products that have significant differences between them, you will likely want to generate distinct artifacts, each documenting a different edition of he product.
+As big a deal as it may be to decide to generate a new artifact to handle divergence, in a way it removes constraint.
+Suddenly you're not trying to figure out how to make multi-product content work in one place -- you're freed up to document each product independently wherever they vary from each other.
+
+Contrary to expectations, sometimes figuring out an elegant way of documenting divergent subject matter without confusing readers is harder than building a distinct set of docs.
+Handling divergence between editions or flavors of a product superficially can be very challenging.
+
+In some cases, however, splitting our products would risk more customer confusion than keeping them together.
+Such an arrangement may make even less sense from a marketing perspective.
+For instance, let's consider a Basic and a Premium version of the same product, where functionality is mainly the same but premium has a couple of features that are easy to note, even if they need to be noted in many places throughout the text.
+
+Imagine an admonition used exclusively to announce your premium features.
+
+.Example -- Premium-edition admonition
+====
+[NOTE.premium]
+The _premium edition_ features 100gb of storage!
+
+====
+
+This can be handled in one artifact--the marketing department will be much happier if you keep customers apprised of what they're gaining or missing at the current subscription level.
+
+Even if divergence between product editions is your entire bread and butter like it is for the “freemium” model, if your product offering is straightforward, your divergence case may be incredibly _superficial_ from a documentation standpoint.
+This is very commonly the case for SaaS products.
+
+In software, product diversion comes in numerous forms.
+One challenging case is installable consumer applications (especially desktop) with release versions across operating systems.
+At least two elements of these apps will usually differ, even if functionality is nearly identical: the installation and the interface.
+If you're releasing a Windows and MacOS variant of the same product, both functioning nearly identically, superficial divergence is likely the appropriate category.
+
+Are your product editions drastically different?
+Can they possibly be handled in the same web portal without confusing or flustering your users?
+
+=== Bespoke Documentation
+
+This is a unique subset of product editions where the documentation matches a customized installation of a certain product--in other words, a one-off edition targeted for a particular customer.
+This mainly applies to enterprise applications, which have many users in multiple roles for each on-premises installation instance.
+Even if you are not building them their own version of your software, but you can always provide them bespoke docs.
+This could also be thought of as extreme <<localization,localization>>.
+
+These applications may be so heavily customized that it makes more sense for the provider or the customer to generate a custom set of docs that do the following:
+
+* Provide actual values for settings in the product by ingesting data set by the customer (possibly drawn from their own database or config files!).
+* Add custom notations and auxiliary documents specific to their implementation, including environment-specific installation instructions, and so forth.
+* Exclude content the customer is not using, so their users are not confused by it.
+
+These docs are an example of this model, where you may be reading a version customized for your implementation of the product (LiquiDoc CMF).
+
+ifdef::prime-build[]
+Since you can read this text, you are either reading the original, generic LDCMF guide or your fork has not been customized yet.
+endif::[]
+ifndef::prime-build[]
+It looks like these docs have been customized!
+endif::[]
+
+If the software you're documenting is for enterprise setups (whether SaaS or on-premises, frankly), you can provide customers with the docs source and let them sync it with their customized versions.
+If the customization is minimal, this may be a service you can consider providing, giving them built docs as artifacts they can deploy on their own infrastructure, taking advantage of VPN and/or SSO authentication as they see fit.
+
+=== Product Versions
+
+Product versions can be tricky cases.
+Unlike editions, which can be thought of as “parallel” releases, versions are sequential releases of the same product.
+
+[NOTE]
+It is important to standardize around some terms rather than trying to force a framework to conform to your organization's marketing or internal verbiage.
+Even if you use some of these terms differently, I advise adopting or influencing the standard rather than diverting from it and risking more confusion when discussing complicated concepts like divergence.
+
+There are some considerations for version divergence that may reduce the need for radical solutions, which we discuss at some strength when addressing strategies in <<{XREF_meta_divergence-handling}>>.
+Typically, with versioning we are trying to align content with the version it covers.
+This may or may not correlate directly to how developers see the product; it is strictly a matter of how the product is best referenced in documentation, from the user's vantage point.
+
+Here are the versions you may need to consider.
+
+Subject Product::
+Your own product's currently supported versions.
+
+Dependency Product::
+Currently supported versions of so-called “upstream” products your product depends on.
+
+As you will see when we explore strategies, the key will be finding ways to handle an reference multiple versions per artifact, as best as possible.
+If you are lucky, your upstream dependencies don't affect your docs too much from version to version.
+However, if the different dependency versions alter your product's capacity or performance, or when integration methods differ, you will need to communicate those differences to users without confounding the matter.
+
+[[output-format]]
+== Output Format Divergence
+
+It's quite likely that if you're going to output in different contexts or formats, you're going to need at least some content to differentiate between target platforms.
+The general and starkest case of divergence here is between HTML website (“portal”) output an whole-document HTML/PDF (“manual”) output, which are built separately but can be generated from the exact same source files.
+Because the document type differs, some elements will need to be excluded, added, or differently formatted between output variants.
+Moreover, there might be still more differences between the way HTML and PDF source must be formatted.
+In LiquiDoc, all of this is handled in the source using conditionals.
+
+=== Portals
+
+// TODO
+
+=== Manuals
+
+// TODO
+
+==== PDF vs HTML
+
+// TODO
+
+=== Other Output Formats
+
+// TODO
+
+[[audience]]
+== Audience Divergence
+
+Perhaps second only to product divergence, audience divergence can present some of the largest content shifts.
+Whether you're targeting users based on what they can see and do with your product or how you expect them to use your product, audience divergence can mean significant overlap but often hugely different content across portals.
+
+=== User Roles or Permissions
+
+How many different user roles do you expect to need to instruct?
+Are the differences more like tips here and there, or will they require hiding some content or showing totally different content depending on the user.
+For instance, if your product restricts data depending on the user's rank or department, there may be a need to hide the documentation for entire features or samples from the product.
+If these map more to user permission classes than to product roles (such as admin vs end user), you're looking at audience divergence by role or permission.
+
+=== User Proficiency
+
+This is very similar to user roles.
+Do you wish to provide different information for basic, intermediate, or advanced users of your product?
+Are we talking about “Pro Tips” that can be sprinkled throughout?
+Otherwise, maybe we need to make sure our beginner users don't get confused by advanced stuff, and our advanced users don't have to wade through lots of simplistic content they no longer need?
+In that case, we're probably looking at radical divergence, and thus different artifacts.
+
+[[localization]]
+== Local Divergence
+
+*Localization* consists of settings for specific populations of users.
+These localities may be particular regions/countries, often where product features may be restricted, have different defaults, and so forth.
+The other case is *internationalization*, or translation of the docs into different spoken languages other than English and serving the appropriate version to the appropriate audience.
+Sometimes both are combined.

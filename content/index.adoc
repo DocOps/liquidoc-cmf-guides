@@ -1,0 +1,37 @@
+---
+layout: landing
+hide_sidebar: true
+permalink: /
+---
+= Technical Documentation the AJYL Way
+
+This site presents a complete approach to writing, managing, building, and deploying technical documentation, all using *free, open-source* software and the same *distributed collaboration* methods that agile teams building functional software depend upon.
+This strategy and toolchain are especially well-suited for *documenting extraordinarily complex product suites*.
+
+== Home of AJYL Docstack and LiquiDoc CMF
+
+The four core components of this approach to building great docs are *Asciidoctor*, *JAMstack*, *YAML*, and *Liquid*.
+Our strategy ties these _“AJYL”_ technologies together using more open source tooling and conventions.
+LiquiDoc CMF is an _implementation framework_ for managing and publishing technical content using the AJYL docstack, sourcing content in link:https://asciidoctor.org/docs/what-is-asciidoc/[AsciiDoc], data in link:https://en.wikipedia.org/wiki/YAML[YAML], and tying it all together with link:https://jekyllrb.com/[Jekyll] static-site generator and Shopify's link:https://shopify.github.io/liquid/[Liquid] template parsing engine.
+
+*LiquiDoc* is a command-line utility and Ruby gem that invokes these various engines for document processing.
+*LiquiDoc CMF (LDCMF)* is a set of conventions for flexibly using AJYL to build rich-text documents in endless permutations of editions, versions, and localizations, all from a single-sourced codebase.
+
+The link:{ajyl_landing_url}[*AJYL landing page*] and the link:{liquidoc_landing_url}[*LiquiDoc homepage*] are also part of this site, for those just finding AJYL/LDCMF, but the core offering is the <<guides-links,LiquiDoc CMF User Guides>>, which both model and document an AJYL-based, LDCMF-framed documentation set.
+
+=== Still Unconvinced?
+
+We've organized some presentation material geared toward helping you decide if AJYL and LiquiDoc CMF are right for your project.
+
+include::./snippets/README.adoc[tags="artifact-links-extras"]
+
+[[guides-links]]
+== The LDCMF User Guides
+
+Choose the portal or manual most appropriate to your relationship with this LiquiDoc CMF-based codebase and your preferred format.
+
+include::./snippets/README.adoc[tags="artifact-links-guides"]
+
+All LDCMF Guides are built from DRY source, including markup originating in the codebases of the dependent technologies covered in these Guides (LiquiDoc and the LDCMF framework files), to ensure _canonical accuracy at build time_.
+
+Copyright (c) 2018 Brian Dominick & LiquiDoc Contributors

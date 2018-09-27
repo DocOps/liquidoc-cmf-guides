@@ -1,0 +1,160 @@
+include::{topic_page_meta}[tags="source-prebuild-yaml"]
+
+We use YAML prebuilding to create new data sources from existing ones.
+Original sources can be anything, but we aim for YAML output so we can re-use the data for other operations.
+
+The `_templates/liquid/nav-sidebar-prtl.yaml` file is an example of prebuilding data files from other data files.
+Look inside `_build/data/built/nav/` -- you'll find files built from `data/schema.yml` using the above `.yaml` Liquid template during prebuilding: {built_nav_yaml_files_list}.
+These files are arranged such that additional (Jekyll) templating can convert them into HTML for its corresponding portal's nav menu.
+See <<{XREF_theming-jekyll-liquid>> for more on post-processing with Liquid during a Jekyll render phase.
+
+This is YAML prebuilding: the generation of YAML source files from other datasources, pressed into new/dependent forms using Liquid templates.
+
+In addition to the prebuilt sidebar data files, one of the more interesting use cases for YAML prebuilding is reflected in the `_build/data/built_x-platform.yml` file.
+This file allows us to include any topic's counterparts across platforms.
+Since we don't have a relational database to query, we reinterpret our own data from `data/schema.yml` so that we can insert links to a representation of the same topic in another portal (documenting another platform).
+The template `_templates/liquid/x-platform-rels.yaml` contains the fairly complex programmatic logic that performs that interpretation and orchestrates the dependent `build_x-platform.yml` output.
+
+== String Generation
+
+Another key implementation of YAML prebuilding is string generation.
+The prefered method for handling this is to generate string variables/attributes for use in AsciiDoc or Jekyl code during rendering, which we'll explore in the next two subsections.
+
+For instance, using YAML, we can create portal-specific <<compound-variables,_compound variables_>>, concatenated from previouly sourced data during prebuilding.
+Also, some variables need to work differently in different portals.
+We'll call these <<split-expression-variables>>.
+
+Both types of strings are constructed in a Liquid template called `data/string_vars.yaml`, which generates `_build/data/built/strings.yml`.
+The parameters in `string.yml` are ingested by Asciidoctor and made available in AsciiDoc templates as `{variable-name}`.
+They are not available, however, in Jekyll templates, as they cannot yet be ingested per-portal.
+Remember, Jekyll variables are for navigation and contextualization, not for product details.
+
+[[compound-variables]]
+=== Compound (Concatenated) Variables
+
+We store core product info in the `data/products.yml` file, but dependent data parameters can be dynamically generated from the original data and through concatenation.
+YAML's dynamic capabilities are poor, so we add the power of Liquid templates to generate whole new values to assign to new keys.
+
+Take this URL, for example: `ftp://ftp1.example.com/support/digiembeddedyocto/2.4/r3/images/ccimx6ulsbc-installer.zip`.
+This is the toolchain installer for the 6UL Pro.
+In AsciiDoc, we use the attribute token `{toolchain-url}` to express this variable.
+That variable is constructed from three other variables expressed as Liquid tokens, along with some hard-coded strings to tie it all together.
+
+.From _templates/liquid/string_vars.yaml -- the default/Pro toolchain URL
+[source,yaml]
+----
+  toolchain-url: ftp://ftp1.example.com/support/digiembeddedyocto/{{prod.dey-version}}/{{prod.dey-release}}/images/{{prod.prod-codename-pro}}-installer.zip
+----
+
+Inside `_templates/liquid/string_vars.yaml`, we loop through each portal's setting from `data/products.yml` using a scope called `prod.`, which you can use to express a portal's settings in YAML format.
+Here the double-braced tokens set each platform's DEY version, release, and platform indicator strings.
+
+[TIP]
+The parameter keys can also be made dynamically, if the need ever arises.
+Simply add Liquid tokens into the key portion of the `string_vars.yaml` file.
+
+[[split-expression-variables]]
+=== Split-expression Variables
+
+Some ConnectCore platforms have both a Pro and Express board, each with different features.
+For this reason, there is sometimes structural divergence between how we would reference a 1-board portal vs a 2-board portal, meaning the same question (e.g., “What is the platform indicator code?”) might have more than one answer for a given platform, which we would want to present together.
+
+One way we handle this is by *creating additional variables* so that we can express more than one value in the appropriate environment, which we will perform manually using a conditional.
+
+Remember our pro/default `{toolchain-url}` attribute?
+For certain platforms, we also need this URL for the Express board's toolchain.
+In that case, we'll use `{toolchain-exp-url}`, which we'll set using the alternate platform indicator: `{{prod.prod-codename-exp}}` to form a unique value.
+
+.From _templates/liquid/string_vars.yaml -- the Express toolchain URL
+[source,yaml]
+----
+{%- if prod.prod-exp %}
+  toolchain-exp-url: ftp://ftp1.example.com/support/digiembeddedyocto/{{prod.dey-version}}/{{prod.dey-release}}/images/{{prod.prod-codename-exp}}-installer.zip
+{% endif -%}
+----
+
+This is a conditionalized compound variable.
+The _condition_ is whether an Express option exists on the platform.
+Inside `string_vars.yaml`, we see the Liquid conditional `{%- if prod.prod-exp %}`.
+The parameter `prod-exp` is only set (and thus only returns `true` in Liquid) for certain portals (guide-2 and portal-3), so this section will not be generated for the guide-1 portal.
+The next section of `string_vars.yaml`, by contrast, denoted by the `{%- unless prod.prod-exp %}`, is a very explicit way of doing the opposite: establishing settings _only_ for the guide-1 portal.
+
+When it comes time to express this second attribute in an AsciiDoc file, we need to be careful, as this attribute does not even exist on all platforms.
+In AsciiDoc, we use the macro `ifdef::prod-exp[]` to test for the existince of an Express option.
+
+.Sample AsciiDoc markup for presenting a conditionalized variable
+[source,asciidoc]
+----
+* link:{toolchain-exp}[{prod-name-pro}]
+ifdef::prod-exp[]
+* link:{toolchain-exp-url}[{prod-name-exp}]
+endif::[]
+----
+
+The first line builds an link based on an attribute that exists in all portals.
+The second line establishes a condition.
+If this condition is _truthy_ (the attribute is defined), we'll display the conditionalized content, in this case the link for the Express toolchain
+Don't forge to close your conditionals with `endif::[]`.
+
+[TIP]
+Variables will only test as _defined_ when they've been set for the portal being rendered.
+This is true for AsciiDoc (`ifdef::variable-name[]`) as well as for Liquid (`{% if variable-name %}`).
+So in cases like `prod-exp`, we want to leave the variables undefined (in `data.yml` and prebuilt output `built_strings.yml`) for the portals where they do not apply.
+
+Another approach is to construct a variable that substitutes different combinations of variables depending on the portal.
+The AsciiDoc attribute `{boards-and}` is such a variable.
+In the portal-3 portal, it resolves to `ConnectCore 8X SBC Express and SBC Pro boards`, while in the guide-1 portal it resolves to `ConnectCore 6 SBC board`.
+
+This way we can set the value of `boards-and` two different ways for the different platform board arrangements.
+Here is where the compound part comes in.
+We want `boards-and` to express both boards for the two-board platforms, so we etablish it as:
+
+.From `string_vars.yaml`
+[source,yaml]
+----
+{% if prod.prod-exp %}
+  ...
+  boards-and: {{prod.prod-name-som}} {{prod.prod-name-exp}} and {{prod.prod-name-pro}} boards
+  ...
+{% endif %}
+----
+
+This would not make sense for the guide-1 portal, however, since the CC6 SBC offering only has one board.
+So we place he code for generating that parameter in the _unless_ section.
+
+.From `string_vars.yaml`
+[source,yaml]
+----
+{% if prod.prod-exp %}
+  ...
+  boards-and: {{prod.prod-name-som}} {{prod.prod-name-pro}} board
+  ...
+{% endif %}
+----
+
+Now we can say things like `On the {boards-and}, you'll find...`.
+
+Let' examine another example.
+In the `products.yml` file, all three portals have a setting called `prod-filesystem`, though the value in guide-2 and portal-3 (`ubifs`) differs from the value in guide-1 (`vfat`).
+What if we wanted to divide portals according to whether their platform uses vfat or ubifs, just the way these platforms are already divided by whether they have an Express option?
+Maybe we want to be able to conditionalize content around this divide.
+
+When prebuilding the YAML our string data file, we conditionalize by platform.
+
+[source,yaml]
+----
+{% if prod.prod-fileystem == "vfat" %}
+  fs-vfat: true
+{% elseif prod.prod-filesystem == "ubifs" %}
+  fs-ubifs: true
+{% endif %}
+----
+
+Now we can segregate content anywhere in our AsciiDoc files using the `ifdef` macro.
+
+[source,asciidoc]
+----
+\ifdef::fs-vfat[]
+Content that applies only to vfat filesytems.
+\endif::[]
+----

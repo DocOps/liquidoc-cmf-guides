@@ -1,3 +1,0 @@
-include::{page_meta}[tags="build-docs-basic"]
-
-The standard build command for an LDFMC project is +bundle exec liquidoc -c {project_config_path}+.

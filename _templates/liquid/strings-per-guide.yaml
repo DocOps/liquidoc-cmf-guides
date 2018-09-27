@@ -1,0 +1,3 @@
+this_guide_manual_pdf_url: '{site_base_url}/docs/{{vars.guide}}-manual.pdf'
+this_guide_manual_html_url: '{site_base_url}/{{vars.guide}}-manual'
+this_guide_portal_url: '{site_base_url}/{portals_base_path}/{{vars.guide}}/home'

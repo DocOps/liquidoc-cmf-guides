@@ -1,4 +1,23 @@
-# # Move critical files to the temporary build directory
+# Move critical files to the temporary build directory
+# If located at ./_configs/build-docs.yml, this is the ORIGINAL file.
+# If located at ./_build/pre/build-docs.yml, this is the PREPROCESSED file.
+{% case vars.env  %}
+  {% when "dev" or "development" %}
+    {% assign env = "development" %}
+  {% when "staging" "stage" %}
+    {% assign env = "staging" %}
+  {% when "prod" or "production" %}
+    {% assign env = "production" %}
+  {% else %}
+    {% assign env = "development" %}
+{% endcase %}
+{% assign build_guides = "dev,docpro,admin" | split: "," %}
+{% if vars.nodev %}
+  {% assign build_guides = "docpro,admin" | split: "," %}
+{% endif %}
+{% if vars.build_guides %}
+  {% assign build_guides = vars.build_guides | split: "," %}
+{% endif %}
 - stage: migrate-content
   action: migrate
   source: content/
@@ -11,49 +30,96 @@
   source: theme/
   target: _build/
   reason: so theme/ dir will be subordinate to the SSG source path
+- stage: migrate-gem-readme
+  action: migrate
+  source: products/gem/README.adoc
+  target: _build/products/gem/
+- stage: migrate-cmf-readme
+  action: migrate
+  source: products/cmf/README.adoc
+  target: _build/products/cmf/
 - action: migrate
   source: data/
   target: _build/
   reason: |
-    in order to have a copy available for includes (as snippets, not data sources). Note: We'll also be adding generated data files into this directory, including in the next stage
+    making our `data/` dir available for Jekyll operations inside `_build/` and also for direct source _inclusion_ into AsciiDoc files (as file snippets rather than ingested attributes)
+- stage: parse-metafile
+  action: parse
+  data: data/products.yml
+  reason: to perform light parsing within the meta.yml file
+  builds:
+    - template: data/meta.yml
+      output: _build/data/meta.yml
+      variables:
+        environment: {{env}}
 - stage: parse-schema
   action: parse
-  data: data/meta.yml
+  data: _build/data/meta.yml
   builds:
     - template: data/schema.yml
       output: _build/data/schema.yml
       variables:
+        build_guides: {{build_guides}}
         project:
           name: LDCMF Guides
-- stage: parse-stories-data-1
+
+- stage: parse-stories-data
   action: parse
   data: _build/data/schema.yml
   message: . Performs the first round of product-data parsing to build two structurally vital files, sourcing data in `data/schema.yml`.
   builds:
+{% for slug in build_guides %}
     - template: _templates/liquid/index-by-user-stories.asciidoc
-      output: _build/_built_index-stories.adoc
+      output: _build/_built_index-stories_{{slug}}.adoc
+      variables:
+        guide: {{slug}}
       message: |
-        .. Builds the stories index file used to give order to the PDF index file's inclusion of topic files (`_build/includes/_built_page-meta.adoc`)
+        .. Builds the {{slug}}-specific stories index file used to give order to the manual index file's inclusion of topic files (`_build/snippets/_built_page-meta.adoc`)
     - template: _templates/liquid/page-meta.asciidoc
-      output: _build/includes/_built_page-meta.adoc
+      output: _build/snippets/_built_page-meta-{{slug}}.adoc
+      variables:
+        guide: {{slug}}
       message: |
-        .. Builds the metadata file `_build/includes/_built_page-meta.adoc` based on the user stories in `schema.yml`, looping over them as directed in `_templates/liquid/page-meta.asciidoc`.
+        .. Builds the metadata file `_build/snippets/_built_page-meta.adoc` based on the user stories in `schema.yml`, looping over them as directed in `_templates/liquid/page-meta.asciidoc`.
+{% endfor %}
+    - template: _templates/liquid/snippets_misc.asciidoc
+      output: _build/snippets/topics_misc.adoc
+
 - stage: parse-metadata
   action: parse
   data: _build/data/meta.yml
   builds:
-  - output: _build/includes/_built_company-info.adoc
+  - output: _build/snippets/_built_company-info.adoc
     template: _templates/liquid/company-info.asciidoc
-  - output: _build/data/built/strings.yml
-    template: _templates/liquid/strings-new.yaml
+  - output: _build/data/built/strings-meta.yml
+    template: _templates/liquid/strings-meta.yaml
+    variables:
+      guides: {{build_guides}}
+  - output: _build/data/built/strings-portal.yml
+    template: _templates/liquid/strings-guide-type.yaml
+    variables:
+      type: portal
+  - output: _build/data/built/strings-manual.yml
+    template: _templates/liquid/strings-guide-type.yaml
+    variables:
+      type: manual
+{% for slug in build_guides %}
+  - output: _build/data/built/strings-{{slug}}.yml
+    template: _templates/liquid/strings-per-guide.yaml
+    variables:
+      guide: {{slug}}
+{% endfor %}
+
 # Generate glossary of terms source
-- action: parse
+- stage: parse-jargon-glossary
+  action: parse
   data: data/terms.yml
   builds:
-    - output: _build/includes/_built_terms.adoc
+    - output: _build/snippets/_built_terms.adoc
       template: _templates/liquid/terms.asciidoc
       reason: to be included into the 'jargon guide'
 # tag::regex-notice[]
+
 # Generate structured NOTICE output
 - action: parse
   data:
@@ -62,38 +128,52 @@
     pattern: ^(?<name>.*)\s\|\s(?<license>[a-zA-Z0-9\.\s]+)\s(\(http(?<license_url>.*\))\s)?\|\s\(c\)\s(?<author>.*)\s\|\s(?<package_url>.*)$
   builds:
     - template: _templates/liquid/dependencies.asciidoc
-      output: _build/includes/_built_dependencies_table.adoc
+      output: _build/snippets/_built_dependencies_table.adoc
       reason: using a regular expression pattern to extract data from the plaintext source file before passing the results to Liquid
 # end::regex-notice[]
-# Move migrated (and possibly preprocessed) theme files to common site root
+
+# Move migrated (and possibly prebuilt) theme files to common site root
 - action: migrate
   source: _build/theme/
   target: _build/site/ # => _build/site/theme
   reason: to be in place for Jekyll builds
-# Preprocess product data
+# Prebuild product data
 - action: parse
   data: _build/data/schema.yml
-  reason: to have user-stories content in convenient includes
+  reason: to establish rich content includes and variables from existing schema data
   builds:
-    - output: _build/includes/_built_user-stories-bulleted-by-role.adoc
+    - output: _build/snippets/_built_user-stories-bulleted-by-role.adoc
       template: _templates/liquid/user-stories-bulleted-by-role.asciidoc
-    - output: _build/includes/_built_user-stories-full.adoc
+    - output: _build/snippets/_built_user-stories-full.adoc
       template: _templates/liquid/user-stories-full.asciidoc
+{% for slug in build_guides %}
+    - output: _build/data/built/xrefs-{{slug}}-portal.yml
+      template: _templates/liquid/xref-attributes.yaml
+      reason: to establish variables for xrefs for {{slug}} portal
+      variables:
+        guide: {{slug}}
+        type: portal
+    - output: _build/data/built/xrefs-{{slug}}-manual.yml
+      template: _templates/liquid/xref-attributes.yaml
+      reason: to establish variables for xrefs for {{slug}} manuals
+      variables:
+        guide: {{slug}}
+{% endfor %}
+
 - action: parse
   stage: parse-excludes-files
   data: _build/data/schema.yml
   reason: |
     to build lists of files to _exclude from_ a given guide's Jekyll build (otherwise it would grab all our `topics/` source files for every guide)
   builds:
-    - output: _build/data/excludes-docpro.yml
-      template: _templates/liquid/excludes-docpro.yaml
-    - output: _build/data/excludes-admin.yml
-      template: _templates/liquid/excludes-admin.yaml
-    - output: _build/data/excludes-dev.yml
-      template: _templates/liquid/excludes-dev.yaml
-# Preprocess menus
+{% for slug in build_guides %}
+    - output: _build/data/excludes-{{slug}}.yml
+      template: _templates/liquid/excludes-{{slug}}.yaml
+{% endfor %}
+
+# Prebuild menus
 - action: parse
-  data: data/meta.yml
+  data: _build/data/meta.yml
   builds:
     - output: _build/data/topnav.yml
       template: _templates/liquid/topnav.yaml
@@ -102,102 +182,93 @@
   data: _build/data/schema.yml
   reason: the source files for the guide-specific sidebars
   builds:
-    - template: _templates/liquid/sidebar-docpro.yaml
-      output: _build/data/sidebars/docpro.yml
-    - template: _templates/liquid/sidebar-admin.yaml
-      output: _build/data/sidebars/admin.yml
-    - template: _templates/liquid/sidebar-dev.yaml
-      output: _build/data/sidebars/dev.yml
+{% for slug in build_guides %}
+    - template: _templates/liquid/sidebar.yaml
+      output: _build/data/built/sidebar/{{slug}}.yml
+      variables:
+        guide: {{slug}}
+{% endfor %}
+
+# Final migrations (now that all target dirs are made)
+- stage: migrate-readme
+  action: migrate
+  source: README.adoc
+  target: _build/snippets
+
 # Begin Asciidoctor-driven render operations
+{% unless vars.norender %}
 # tag::render-block[]
-# Build the 'DocPro' guide
-- stage: render-guide-1
+#
+# LOOP through the array of guides to build, rendering artifacts for each
+#
+  {% for slug in build_guides %}
+# Render guides
+    {% unless vars.nojekyll %}
+      {% assign build_dev_guide = true %}
+- stage: render-portal-{{slug}}
   action: render
   data:
-      - _configs/asciidoctor.yml
-      - data/meta.yml
-      - data/guides.yml:common
-      - data/guides.yml:guide-1
-      - _build/data/built/strings.yml
-  source: _build/portal-index.adoc
+    - _configs/asciidoctor.yml
+    - _configs/attributes-portal.yml
+    - _build/data/meta.yml
+    - data/guides.yml:guide-{{slug}}
+    - data/guides.yml:common
+    - _build/data/built/strings-meta.yml
+    - _build/data/built/strings-{{slug}}.yml
+    - _build/data/built/xrefs-{{slug}}-portal.yml
   builds:
-    - output: _build/docs/docpro-guide.pdf
-      doctype: book
-      attributes:
-        portal_term: Manual
-        is_pdf: true
-        reason: to create a PDF customized for the 'docpro' user base
     - backend: jekyll
       properties:
         files:
           - _configs/jekyll-global.yml
           - _configs/jekyll-guides-common.yml
-          - _configs/jekyll-guide-1.yml
-          - _build/data/excludes-docpro.yml
+          - _configs/jekyll-guide-{{slug}}.yml
+          - _build/data/excludes-{{slug}}.yml
         arguments:
           destination: _build/site/
       attributes:
-        portal_term: Portal
-      reason: the static files for the 'docpro' web portal
+        guide_term: Guide
+        {% if vars.prime %}
+        build_prime: true
+        {% endif %}
+      reason: the static files for the '{{slug}}' web portal
+    {% endunless %} # END nojekyll
+- stage: render-manuals-{{slug}}
+  action: render
+  data:
+    - _configs/asciidoctor.yml
+    - _configs/attributes-manual.yml
+    - _build/data/meta.yml
+    - data/guides.yml:guide-{{slug}}
+    - data/guides.yml:common
+    - _build/data/built/strings-meta.yml
+    - _build/data/built/strings-{{slug}}.yml
+    - _build/data/built/xrefs-{{slug}}-manual.yml
+  source: _build/guides-index.adoc
+  builds:
+    - output: _build/site/{{slug}}-manual.html
+      doctype: book
+      attributes:
+        guide_term: Manual
+        {% if vars.prime %}
+        build_prime: true
+        {% endif %}
+      reason: to create a single-page HTML manual customized for the '{{slug}}' user
+    {% unless vars.nopdf %}
+    - output: _build/docs/{{slug}}-manual.pdf
+      doctype: book
+      attributes:
+        guide_term: Manual
+        pdf: true
+        {% if vars.prime %}
+        build_prime: true
+        {% endif %}
+      reason: to create a PDF customized for the '{{slug}}' user
+    {% endunless %}
+  {% endfor %}
+{% endunless %}
 # end::render-block[]
-# Build the 'Admin' guide
-- stage: render-guide-2
-  action: render
-  data:
-      - _configs/asciidoctor.yml
-      - data/meta.yml
-      - data/guides.yml:common
-      - data/guides.yml:guide-2
-      - _build/data/built/strings.yml
-  source: _build/portal-index.adoc
-  builds:
-    - output: _build/docs/admin-guide.pdf
-      doctype: book
-      attributes:
-        portal_term: Manual
-        is_pdf: true
-      reason: to create a PDF customized for the 'admin' user
-    - backend: jekyll
-      properties:
-        files:
-          - _configs/jekyll-global.yml
-          - _configs/jekyll-guides-common.yml
-          - _configs/jekyll-guide-2.yml
-          - _build/data/excludes-admin.yml
-        arguments:
-          destination: _build/site/
-      attributes:
-        portal_term: Portal
-      reason: the static files for the 'docpro' web portal
-# Build the 'Developer' guide
-- stage: render-guide-3
-  action: render
-  data:
-      - _configs/asciidoctor.yml
-      - data/meta.yml
-      - data/guides.yml:common
-      - data/guides.yml:guide-3
-      - _build/data/built/strings.yml
-  source: _build/portal-index.adoc
-  builds:
-    - output: _build/docs/dev-guide.pdf
-      doctype: book
-      attributes:
-        portal_term: Manual
-        is_pdf: true
-      reason: to create a PDF customized for the 'admin' user
-    - backend: jekyll
-      properties:
-        files:
-          - _configs/jekyll-global.yml
-          - _configs/jekyll-guides-common.yml
-          - _configs/jekyll-guide-3.yml
-          - _build/data/excludes-dev.yml
-        arguments:
-          destination: _build/site/
-      attributes:
-        portal_term: Guide
-      reason: the static files for the 'developer' web portal
+
 # Make a copy of the theme/ dir inside site/
 - action: migrate
   source: _build/theme/
@@ -208,30 +279,38 @@
   source: _build/assets/
   target: _build/site/
   reason: to create a common assets base for all portals
-# Make a copy of the PDFs inside site/ dir for convenient serving
-- action: migrate
-  source: _build/docs/
-  target: _build/site/
-  reason: the downloadable PDF artifacts
-- action: migrate
-  source: content/index.html
-  target: _build/site/
-  reason: the HTML splash page for the whole shabang, like it's 1999
+
+# Build one-sheets
 - action: render
-  source: content/pages/ajyl-landing.adoc
+  source: content/pages/landing-ajyl.adoc
   data: _configs/asciidoctor.yml
   builds:
     - output: _build/docs/ajyl-intro.pdf
       attributes:
-        is_pdf: true
+        pdf: true
       style: theme/pdf-theme.yml
+- action: render
+  source: content/pages/landing-liquidoc.adoc
+  data: _configs/asciidoctor.yml
+  builds:
+    - output: _build/docs/liquidoc-docs.pdf
+      attributes:
+        pdf: true
+      style: theme/pdf-theme.yml
+
+# Make a copy of the PDFs inside site/ dir for convenient serving
+  {% unless vars.nopdf %}
+- action: migrate
+  source: _build/docs/
+  target: _build/site/
+  reason: for the downloadable PDF artifacts
+  {% endunless %}
+
 - action: migrate
   source: _build/pre/config-explainer.adoc
-  target: _build/includes/
+  target: _build/snippets/
   reason: |
     which is, like, the actual step that places the very file you're probably reading (unless you're reading `build-docs.yml`, the source file), logged throughout the build process and then stashed in `_build/pre/` to be picked up by Asciidoctor during the next build... kind of cheating, but also kinda cool, you gotta admit.
-# - action: migrate
-#   source: _build/site
-#   target: ../liquidoc-www
-#   options:
-#     inclusive: false
+    +
+    [TIP]
+    Perform this without first cleaning the build directory (don't run `rm -rf _build`).

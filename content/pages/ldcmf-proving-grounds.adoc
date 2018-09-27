@@ -1,0 +1,112 @@
+= DocOps Platform Proving Grounds
+:page-permalink: /ldcmf-proving-grounds
+:page-layout: landing
+:page-hide_sidebar: true
+
+The *DocOps Proving Grounds* will soon include a gallery of proof-of-concept or real-world link:{liquidoc-cmf_landing_url}[*LiquiDoc Content Management Framework*] and other link:{ajyl_landing_url}[AJYL] and related projects.
+
+For now, to help you assess what LiquiDoc CMF (LDCMF) can and cannot readily handle, a FAQ that can be applied to any solution vendor.
+
+What markup formats does your platform depend on, and why?::
+
+Core LiquiDoc CMF depends on AsciiDoc, YAML, and Liquid markup.
+*AsciiDoc* is chosen as the strongest, most extensible and elegant technical documentation language available.
+It's like a super-powerful and even-prettier version of Markdown, or a somewhat user-friendlier version of reStructuredText.
+Like rST, AsciiDoc handles semantic, structured formatting and dyanamic features like variables, conditionals, and inclusion.
+*YAML* is the simplest, most-forgiving semi-structured data format, and it plays nice with the others like JSON.
+*Liquid* is one of the most popular and accessible markup templating engines, so we use it to transform and reshape source text and data.
+These technologies nicely address most markup needs we have encountered--content, data, and transformation--with the exception of review markup, which is usually done in a Git-management platform like GitHub, GitLab, or BitBucket, typically in *Markdown* format, with which most developers and a great many technical writers are already comfortable.
+
+Is your platform open and extensible?::
+
+Yes.
+All component technologies are released under the highly permissive MIT License.
+They are free and modular, and designed to be hacked, configured, extended, and integrated.
+We are also obsessed with open standards and opposed to product lock-in, so we are always thinking of ways to ensure you'll be able to migrate your data and content elsewhere.
+
+How does your platform store company and product info to avoid duplication of source data?::
+
+Information about the company and products is handled as *small data*, primarily as flat files formatted in YAML, but also in any formats required for product development.
+Structured data files that define canonical product settings and functionality can also be ingested into any LDCMF docs build directly as variables.
+Say goodbye to maintaining multiple sets of versioned data between the product codebase and the docs source.
+Everything in Git, available everywhere, using all the same logic and labels as your product versioning.
+
+What output formats and types does your platform handle natively?::
+
+Right now, LDCMF builds linear, *book-style documents* in *HTML* and *PDF* formats, both highly stylable.
+It also invokes Jekyll to generate portal-style sites arranging topics as nested articles, like an advanced Knowledge Base or other CMS, but from a static source.
+Very soon, your canonical documentation source can also be used to generate templatized *slide presentations using Reveal.js*.
+
+[WARNING]
+PDF output using Prawn or DocBook XSLT is highly configurable and themable, but only to the extent PDF-formatted documents can be automated as part of a build.
+Unfortunately, as is the nature of PDF, the generated artifacts are difficult to manipulate with post-processing.
+
+What output formats can your platform be readily extended to support?::
+
+Right now LDCMF can organize and produce sourcee files for HTML/JavaScript-based *slide deck generators*, such as Reveal.js or Deck.js.
+While not technically an LDCMF implentation, link:https://github.com/briandominick/a-medic[this repo] is AJYL-based, with a CSV file thrown in, demonstrating the versatility of AsciiDoc, Liquid, and YAML.
+In addition, any publishing tool that accepts *AsciiDoc, YAML, JSON, or XML* could derive source from LiquiDoc pre-built files.
+LiquiDoc can even share the same source files as your GUI or Web interface, so product labels will always be correct in the docs.
+Basically anything in the link:https://jekyllrb.com/docs/plugins/[Jekyll] and link:https://asciidoctor.org/docs/extensions/[Asciidoctor] extended ecosystems is within the reach of an LDCMF installation.
+
+How technical must contributors be to effectively use your platform?::
+
+LDCMF is a very technical platform.
+It takes advantage of Git, which requires considerable competence.
+LDCMF also depends on markup handled in flat files rather than form-based and WYSIWYG interfaces many writers are used to and dependent upon.
+This is a deliberate choice to provide superior quality docs that developer SMEs can contribute to directly, but any non-developer engaging with it will have to be comfortable with Git, basic file management, and lightweight markup.
+
+What does it take to administer an instance of your platform solution?::
+
+Administering an LDCMF implementation additionally requires comfort with Liquid, as templating for content generation and for build-routine manipulation is fairly important.
+A major advantage is that more templates are always being created and contributed, so extending LDCMF may often mean editing existing templates.
+HTML, CSS, and JavaScript chops will help you make an instance of LDCMF your own, using the pool of plugins and extensions available to Asciidoctor, Jekyll, and Web more broadly.
+General content-management skills are highly advantageous, but because LDCMF is a framework with conventions, many architectural decisions are spelled out.
+DevOps chops come in very handy, and we have no intention of overselling our free framework: teams that can devote some real resources to making LDCMF work for them will find it most useful.
+
+How does your platform work with Git?::
+
+LDCMF was entirely formulated to work with Git.
+All content and data is stored in Git-manageable flat files.
+Versions and variations can be managed with tags and branches, just like your product, keeping your docs totally in line with your product.
+
+How is your platform priced?::
+
+It's completely free.
+You are welcome to use it however you see fit.
+
+How strong is the developer community around your platform?::
+
+This is one of our weak points.
+Although component technologies like Jekyll and Asciidoctor have vibrant and growing contributor pools, LiquiDoc is very new, and LDCMF is designed by just two people.
+However, we will be making a big effort to spread LDCMF in 2019, and we are committed to (im)proving it for the foreseeable future.
+
+How well does your platform scale?::
+
+Scale in terms of contributor pool size is theoretically consistent with the software products it documents.
+There is no reason to restrict users from the distributed codebase, especially if there is coordination support for newer Git users.
+In terms of the number of products that can be covered by a single implementation of LDCMF, this has not yet been tested.
+We imagine logical limits that coincide with product ownership, and that interrelate similarly to how product managers do in a given environment.
+LDCMF can be used as a component of a larger build procedure, usually invoked from a build or deploy tool that can handle a complex routine of its own, often as part of the product build, package, and deploy operations.
+These tools can be used to manage external repositories and migrate files even more powerfully than LiquiDoc, centralizing source files.
+
+How is your platform itself documented?::
+
+Here LDCMF excels.
+Because it is a dynamic, highly modular framework, its own documentation can be readily forked and adapted to reference _your LDCMF-based product docs_ instead of the LiquiDoc utility and the LDCMF framework themselves.
+That means you'll have the full LDCMF Guides reference set, or whichever volumes are relevant to your implementation -- probably the Documentarian Guide and Administrator Guide -- only they will reference your actual docs environment, workflow, and even variables and configuration settings!
+This means no more referencing the platform provider's generic docs while none of the people working on your instance of that platform know how those docs map to your customized implementation.
+LDCMF “eats its own dog food” so recursively, you can literally use LDCMF to document your LDCMF instance, keeping it in sync with the upstream “prime” source, absorbing patches and updates relevant to your version of LDCMF as you see fit.
+It's like having a consistent feed from a professionally curated wiki, with diffs showing you what updates you can accept or reject, with references to the PRs that contributed them to the prime trunk, along with release notes and explanations as conventions change and bugs get fixed.
+In this way, *LDCMF Guides* is _software_ that can be customized to document your documentation platform: an instance of *LDCMF*.
+
+Does this mean our implementation of your platform can be used as the _prime_ edition of our own enterprise product documentation, and all of our clients and customers can have their own, readily customizable version of our main docs, reflecting their _actual implementation_ of our product?::
+
+Isn't it about time we started referring to LDCMF as _our platform_?
+As you can see, an LDCMF docs platform requires a significant commitment of development and technical writing resources.
+What it saves you is potentially thousands of hours of cobbling together a suitable patchwork of truly open and reliable tools that have complex products, developer, and writer interests in mind.
+
+How do I get started with your platform?::
+
+LiquiDoc CMF has an bootstrapping link:{cmf_github_project_url}[quickstart script] that will set you up with the initial files.
+Alternatively, you can clone and fork an existing LDCMF project.

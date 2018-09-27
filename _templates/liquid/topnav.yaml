@@ -4,7 +4,7 @@ topnav:
 - title: Topnav
   items:
     - title: GitHub
-      external_url: {{ this_github_project_url }}
+      external_url: {{ ldcmf-guides_github_project_url }}
 
 #Topnav dropdowns
 topnav_dropdowns:
@@ -15,20 +15,20 @@ topnav_dropdowns:
         - title: Jekyll Documentation Theme
           external_url: https://github.com/tomjoht/documentation-theme-jekyll
         - title: LiquiDoc
-          external_url: https://github.com/briandominick/liquidoc-gem
+          external_url: {{liquidoc_landing_url}}
         - title: LiquiDoc CMF
-          external_url: https://github.com/DocOps/liquidoc-cmf
+          external_url: {{liquidoc-cmf_landing_url}}
         - title: Asciidoctor User Manual
           external_url: http://asciidoctor.org/docs/user-manual/
         - title: Jekyll Docs
           external_url: https://jekyllrb.com/docs/home/
         - title: Shopify Liquid Docs
           external_url: https://shopify.github.io/liquid/
-    - title: LiquiDoc Portals
+    - title: LDCMF Guides
       folderitems:
         - title: DocPro Portal
-          external_url: ../docpro/home
+          external_url: {{docpro_portal_url}}
         - title: Admin Portal
-          external_url: ../admin/home
+          external_url: {{admin_portal_url}}
         - title: Developer Portal
-          external_url: ../dev/home
+          external_url: {{dev_portal_url}}

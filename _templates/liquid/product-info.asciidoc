@@ -1,4 +1,4 @@
-{% for p in product %}
+{% for p in data %}
 // tag::product-{{ p.slug }}[]
 == {{ p.name }}
 

@@ -1,22 +1,69 @@
 terms:
+- term: AJYL docstack
+  def: A combination of technologies (Asciidoctor, Jekyll, YAML, and Liquid) ideal for managing highly complex single-sourced technical documentation needs.
+  ref: https://ajyl.org
+
 - term: artifact
   def: A digital package (file or archive) representing a discrete component of a product. Here we use _artifact_ to describe a discrete instance of final content output, such as a single HTML or PDF file, or a Jekyll website or Deck.js slide presentation.
+
+# tag::sample[]
 - term: AsciiDoc
   def: Dynamic, lightweight markup language for developing rich, complex documentation projects in flat files.
   ref: http://asciidoctor.org/docs/user-manual
-# tag::sample[]
+
 - term: Asciidoctor
   def: Suite of open source tools used to process AsciiDoc markup into various rendered output formats.
   ref: http://asciidoctor.org
+# end::sample[]
+
 - term: build
   def: As a _noun_, the (usually automated) series of actions necessary to compile and package software or documentation artifacts. As a _verb_, the act of performing a build operation.
   aliases: [build procedure]
+  see: [build config]
+
+- term: build config
+  def: Refers to the file that defines a LiquiDoc build routine. I.e., {config_path}.
+  see: [build]
+
+- term: code source
+  def: In LiquiDoc projects, _code_ refers to markup other than data and content source. For instance, theming templates are code, as are config files.
+
+- term: content source
+  def: Material, mostly formatted in AsciiDoc, including pages, topics, and snippets, but also including image assets that pertain to the project's subject matter, such as illustrations and diagrams (as opposed to themeing assets).
+  see: [matter,data]
+
+- term: data source
+  def: Structured information, usually in YAML format, used to define variables, which can replace tokens in Liquid templates and AsciiDoc content source.
+
+- term: DocOps
+  def: An engineering discipline that focuses on integrated tooling and workflows to create optimal documentation environments. Similar to and derived from DevOps.
+  ref: https://devrel.net/developer-experience/docops-engineering-great-documentation
+
+- term: docset
+  def: A collection of technical documents sourced from the same codebase, covering generally the same subject through different editions, possibly in multiple versions of each in multiple formats. For instance, an Administrator Manual and a User Manual sourced in the same Git repository, with overlapping content, each generated in HTML and PDF.
+
 - term: DRY
   def: Acronym for “don't repeat yourself”; refers to techniques for single-sourcing content and data so no information, illustration, explanation, etc is repeated in the source (threatening divergence).
+
 - term: Liquid
   def: Open source templating markup language maintained by Shopify
   ref: https://shopify.github.io/liquid/
-# end::sample[]
+
+- term: prebuilding
+  def: Using Liquid templates to press small data into new source files (usually YAML or AsciiDoc) in preparation for further parsing and rendering.
+
+- term: prime
+  def: As in _prime edition_ or _prime repository_, references the _canonical_ edition or source of a particular docset that has been forked. The _prime repo_ of the {project_name} project can be forked and adapted to suit _your project's_ needs.
+
+- term: slug
+  def: A unique identifier made only of lowercase alphanumeric characters, as well as `-` (hyphen) and `_` (underscore) symbols.
+
+- term: source matter
+  def: Either or both of _content_ and _data_; any plaintext source files or database records used _in_ the substance of generated output, therefore not including assets such as layout images or theming code.
+
+- term: theming
+  def: Code used for styling and shaping output artifacts. In LiquiDoc CMF and AsciiDoc/Jekyll projects generally, _theming_ code is kept separate from _source matter_ (content and data), mainly so content can be created agnostic to the “look and feel” it will take in various possible output formats.
+
 - term: YAML
-  def: a slightly dynamic, semi-structured format for nested data
+  def: A slightly dynamic, semi-structured data format for key-value pairs and nested objects
   ref: http://searchitoperations.techtarget.com/definition/YAML-YAML-Aint-Markup-Language

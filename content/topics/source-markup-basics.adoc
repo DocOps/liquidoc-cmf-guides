@@ -1,0 +1,125 @@
+include::{topic_page_meta}[tags="source-markup-basics"]
+
+This project is made up of structured information that comes in two forms: *content* and *small data*.
+Each of these forms of info is stored (sourced) in a respective lightweight markup format: *AsciiDoc* (for content) and *YAML* (for small data).
+Along the way to being built into richtext documents, data markup and content markup are mixed using *Liquid* templates, generating still more AsciiDoc-formatted source files for the final build.
+
+Basic familiarity with AsciiDoc and YAML is required is required, but most of the work contributors perform will be carried out using a range of markup elements that can be learned very quickly.
+Most people find basic AsciiDoc as easy to learn and use as Markdown, and YAML is generally considered more human-friendly than JSON.
+Liquid is also just a markup format, but it has still more elements of a programming language, such as iteration, text manipulation, and advanced conditionals.
+With increased complexity comes tremendous power to reshape documents from any plaintext format to any other plaintext format.
+
+ifdef::guide_admin[]
+As an administrator, you will need to mix all three markup languages.
+Definitely complete this {topic_unit}, but see <<{XREF_source-prebuild-basics}>>.
+endif::[]
+
+So let's start with the _what_ and _why_ before moving on to the _how_.
+
+[[asciidoc]]
+== Content: AsciiDoc Basics
+
+*_Documentarians_* will likely spend most of their _writing_ time in AsciiDoc files.
+Whether you're an SME or a technical writer, _content_ is where _data_ is contextualized and explained for the end user.
+So while you will have data at your disposal during your writing (in the form of <<source-markup-variables-tokens#,variables>>), you will actually be somewhat removed from the substance of that data until you perform a build operation and check it in its rendered context.
+That's when conditionals and variables get evaluated and output gets real.
+
+Yet content is not just the words that connect data, either.
+Content includes an internal _structure_ that gives _semantic relevance_ to every element in the final output.
+*Semantic structure* includes headings; block names in addition to section titles; admonition blocks like tips, warnings, and notes; code and shell-command listings; examples; sidebars; definition lists; and numerous other types of elements.
+These elements can be sourced as plaintext but rendered in various rich-text display formatting to denote different purpose, importance, or relevance.
+For more on the subject of semantics in technical writing: link:http://ericholscher.com/blog/2016/oct/6/authoring-documentation-with-semantic-meaning[Semantic Meaning in Authoring Documentation].
+
+ifdef::xref_source-markup-asciidoc-write-edit[]
+Elsewhere we explore the nitty gritty of <<{XREF_source-markup-asciidoc-write-edit}>>.
+endif::[]
+
+[[yaml]]
+== Small Data: YAML Basics
+
+AsciiDoc is to _written content_ as YAML is to _structured data_.
+Whenever possible, we prefer YAML for *small data* because it's easy and elegant, unlike JSON and XML, though we can fall back to these formats as needed.
+Additionally, we may use CSV format, since it is easy to manage in collaborative tooling.
+It may not be obvious what should be stored in data files, versus what should be written directly in AsciiDoc files.
+
+A piece of source matter qualifies as _small data_ that should be handled in a YAML file if it meets _both_ of the following conditions:
+
+. It will appear in more than one place in the docs.
+. It can be expressed as a simple string or integer.
+
+We will address how we decide _where_ to store such data shortly.
+
+The first type of structured information that qualifies as small data is *simple key-value pairs*, which is trivial to identify.
+Here is an example of simple variables that qualify under the above conditions:
+
+[[simple-variables]]
+[source,yaml]
+.Simple variables in YAML
+----
+support_phone_number: 888-923-1342
+company_site_url: https://www.example.com/
+comany_site_domain: example.com
+----
+
+If you find yourself typing any specific piece of information that needs to be exact but that you might not want to memorize, you have a candidate for small data that should be stored in a file in the `data/` directory.
+
+[NOTE]
+A piece of content that will appear in more than one place but is _not_ suitably expressed as a simple string or numeral is most likely a _snippet_, which is handled differently (see <<{XREF_content-snippets}>>).
+
+[TIP]
+If you are a [.role.docpro]#documentarian#, you can skip to <<what-goes-where>>.
+
+The above simple variables are globally applicable throughout a document and can be called in AsciiDoc or Liquid like so:
+
+* `\{company_name}` (AsciiDoc)
+* `{{ company_name }}` (Liquid)
+
+[TIP]
+Use of variables is covered more fully in <<{XREF_source-markup-variables-tokens}>>.
+
+There are other conditions under which more complex forms of data might be suitable for handling as small-data in YAML files.
+This is the kind of data *_administrators_* are responsible for setting up ahead of time.
+
+highly discrete & simple::
+  Here we mean each datum is a small, contained piece of information, lightly formatted with markup if at all.
+  Code samples longer than a line would not qualify, nor would multi-paragraph content.
+
+restricted scale::
+  Nobody wants to manage more than a few hundred records in a flat-file format like YAML.
+  If your serialized data will eventually contain thousands of currently valid entries, it's time to look into an engine-backed database.
+
+minimal relationships::
+  Unlike relational databases that can be queried using SQL, YAML has no concepts such as _tables_, and no way to relate them like unions and joins.
+  If your data relies on external references, it's database time.
+  YAML does allow nesting, however, so simple would-be cross references can be accommodated.
+
+consistently serialized::
+  If the content is part of a series of repeated items with similar makeup, it can be better represented in YAML than AsciiDoc.
+  The terms in a glossary are serialized as multiple entries that are siblings to one another, each fulfilling the same purpose (defining a term).
+
+benefits from parameterization::
+  The data has enough structure that it is best modeled using clusters of key-value pairs.
+  We explore this concept momentarily in <<{XREF_data-params-tokens}>>.
+
+All information that qualifies as small data should be organized in YAML or CSV files.
+It will either be prebuilt into includable content (snippets) or flattened into simple variables accessible by documentarians in AsciiDoc files.
+
+== Source Prebuilding: Liquid
+
+The third markup language in the AJYL toolchain is Liquid.
+ifdef::guide_docpro[]
+LDCMF documentarians typically do not write much Liquid, but it can be helpful to understand what it is for, how it is employed, and where the templates are stored.
+endif::guide_docpro[]
+In the LiquiDoc toolchain, Liquid templates serve two purposes: *source prebuilding* via LiquiDoc and *site theming* via Jekyll.
+
+include::{snippetsdir}/_built_terms.adoc[tags="prebuilding,theming"]
+
+Liquid templates used for prebuilding are stored in `_templates/liquid/`, and by LDCMF _convention_ their file extension is the most explicit form of the target file extension.
+Here you will find `company-info.asciidoc`, which converts YAML data into AsciiDoc-formatted files with the `.adoc` extension.
+Likeqise, `xref-attributes.yaml` generates a new YAML file with a `.yml` extension.
+
+Liquid templates can also be found in the `theme/<theme-name>/_layouts/` and `theme/<theme-name>/_includes/` directories.
+These will reflect `.html` extensions, as they are used to generate page templates and partials for HTML rendering.
+
+In the interest of keeping content and presentation source separate, content source files (AsciiDoc) should never contain Liquid markup.
+Prebuilding maintains the integrity of the content source markup format (AsciiDoc only) and properly segregates page layout and formatting elements from content and data.

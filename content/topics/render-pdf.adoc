@@ -1,1 +1,1 @@
-include::{page_meta}[tags="render-pdf"]
+include::{topic_page_meta}[tags="render-pdf"]

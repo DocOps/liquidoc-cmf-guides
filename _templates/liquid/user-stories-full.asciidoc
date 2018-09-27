@@ -1,5 +1,5 @@
 {% for story in topics %}
-{% for this_role in story.roles %}
+{% for this_role in story.guides %}
 {% case this_role %}
   {% when "docpro" %}
     {% assign role_full = "documentarian" %}

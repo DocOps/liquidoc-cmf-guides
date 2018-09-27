@@ -1,0 +1,24 @@
+This Developer's {guide_term} will get you started modifying and hopefully contributing back to LiquiDoc and the LiquiDoc Content Management Framework.
+
+In this context, a _developer_ is someone who hacks the core tooling of a docs project, whether in coordination with the core LD team or on their own, as anyone is welcome todo.
+We hope you find these docs helpful.
+
+If your job is to _implement_, _configure_, or _design_ a content project _using_ LiquiDoc or LDCMF, this is probably not the guide for you.
+Those tasks are associated with the *administrator* roll.
+
+If you are contributing to a product's documentation as a developer, you almost certainly want the Contributor's {guide_term}.
+
+.Who is this {guide_term} for?
+****
+In the context of this guide, a _developer_ is someone who works to modify the codebase or extend the capacities of {product_suite_name}.
+Some of the material in {guide_term} overlaps with the {docpro_guide_link} and/or the {admin_guide_link}.
+
+As a developer contributing to {product_suite_name_short}, you need to understand the basic contribution workflow; plus, you should probably document your changes in the proper place and format.
+Therefore, a great deal of the material in the {docpro_guide_name} is reproduced here, sometimes with modifications tailored to the developer experience.
+
+Likewise, if you are hacking or adding to LiquiDoc, you likely need a good understanding of {product_suite_name_short} architecture and configuration, so we've included a lot of {admin_guide_name} content in this {guide_term}, as well.
+****
+
+In this guide, you will learn to...
+
+include::{snippetsdir}/_built_user-stories-bulleted-by-role.adoc[tags="dev-bullets"]

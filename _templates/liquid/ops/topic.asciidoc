@@ -1,5 +1,5 @@
 include::{topic_page_meta}[tags="{{vars.slug}}"]
 {%- if vars.parent %}
 
-include::../includes/_built_container_{pfm-slug}.adoc[tags="{{vars.slug}}"]
+include::../snippets/_built_container_{prod-slug}.adoc[tags="{{vars.slug}}"]
 {% endif -%}

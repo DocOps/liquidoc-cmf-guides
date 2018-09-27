@@ -1,13 +1,13 @@
 = Jargon Guide
-:page-permalink: '{site_path}/jargon-guide'
+:page-permalink: '/jargon-guide'
 
 This is the full list of specialized terms used in this product documentation.
 They are also generated as JSON at `/data/terms.json` so we can highlight them in the text when we get to it.
 This is just to show the power of storing data in flat files reusable throughout product docs.
 
-include::{includes_dir}/_built_terms.adoc[]
+include::{snippetsdir}/_built_terms.adoc[]
 
-ifdef::cheat[]
+ifdef::show_cheats[]
 [[glossary-sourcing]]
 .How this glossary was sourced
 ****
@@ -19,7 +19,7 @@ The contents of this appendix were drawn from a semi-structured “small data”
 include::{data_dir}/terms.yml[tags="sample"]
 ----
 
-This data is combined with the template at `_templates/liquid/terms.asciidoc` to build an AsciiDoc formatted file (`build/includes/_built_terms.adoc`).
+This data is combined with the template at `_templates/liquid/terms.asciidoc` to build an AsciiDoc formatted file (`_build/snippets/_built_terms.adoc`).
 ****
 
 [TIP]

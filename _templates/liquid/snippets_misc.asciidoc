@@ -1,0 +1,6 @@
+{%- assign advanced_templating_topics = topics | where_exp: "topic", "topic.tags contains 'liquid' and topic.guides contains 'admin'" %}
+// tag::advanced-templating-xrefs[]
+{% for topic in advanced_templating_topics %}
+* <<{XREF__{{ topic.slug }}}>>
+{% endfor %}
+// end::advanced-templating-xrefs[]

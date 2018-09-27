@@ -1,0 +1,15 @@
+include::{topic_page_meta}[tags="meta_adapt-these-docs"]
+
+include::{snippetsdir}/admonitions.adoc[tags="warning-heavy-meta"]
+
+More than likely, the documentation you are reading now started life in the liquidoc-docs repo for which it was originally created.
+Every other file in this set is primarily oriented toward instructing the use and development of _LiquiDoc's own instance of LiquiDoc and LDCMF_.
+
+But each and every file in the original repository is also written with _your product environment_ in mind.
+That is, with relatively minor editing, these documents about how to use, administer, and hack a LiquiDoc instance can be reoriented to serve as the canonical documentation for your _entire product_.
+These docs do not just cover your _documentation_ environment, tooling, and workflow, but also your _product-development_ environment, tooling, and workflow.
+Furthermore, this one repository can document your product itself, which is probably what you were looking for when you found it.
+
+So to put it differently, LiquiDoc CMF is much more than a powerful solution for documenting your amazing software product no matter your development language or environment.
+The files in this {project_name} repository also happen to be a customizable set of instructions for how to use _your actual LDCMF instance_.
+And as long as it's teaching your developers tech writers how to contribute code and docs, your modified version of these docs can be extended to serve as policy, workflow, and style guides for the entire product team!

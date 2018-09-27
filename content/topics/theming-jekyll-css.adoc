@@ -1,0 +1,6 @@
+include::{topic_page_meta}[tags="theming-jekyll-css"]
+
+Jekyll incorporates SASS compilation out of the box, but a link:https://github.com/zroger/jekyll-less[LESS converter] can be readily added.
+Our current theme is not Sassified or Lessified yet.
+
+// TODO (Needs more)

@@ -580,11 +580,11 @@ This is established in your build-config block
       properties:
         files:
           - _configs/jekyll-global.yml
-          - _configs/jekyll-portal-1.yml
+          - _configs/jekyll-guide-2.yml
         arguments:
           destination: build/site/user-basic
       attributes:
-        portal_term: Guide
+        guide_term: Guide
 ----
 
 The *backend* designation of `jekyll` is required, and at least one file under *properties* > *files* is strongly encouraged for proper Jekyll behavior.

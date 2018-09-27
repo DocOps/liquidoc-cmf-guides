@@ -1,0 +1,19 @@
+// tag::nonstandard-asciidoc[]
+[WARNING.nonstandard]
+This section _extends_ standard AsciiDoc usage with instructions set up to work in a properly configured LiquiDoc CMF environment.
+These practices may not apply in all AsciiDoc environments.
+// end::nonstandard-asciidoc[]
+
+// tag::warning-jargon[]
+[WARNING]
+This document contains lots of jargon.
+See the <<{XREF_jargon-guide}>> if you get lost.
+// end::warning-jargon[]
+
+// tag::warning-heavy-meta[]
+[WARNING]
+.HEAVY META AHEAD
+The following material is highly abstract.
+It relates to conceptualizing how the {project_name} repository can be adapted to suit your product and documentation environments.
+*This topic should be excluded* from or heavily edited for any instance of LiquiDoc Docs Project that is modified to cover a different product.
+// end::warning-heavy-meta[]

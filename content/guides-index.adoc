@@ -1,0 +1,84 @@
+= {guide_product} {guide_user} {guide_term}
+// Bump header levels for all subsequent includes
+:page-permalink: '{guide_site_path}/home'
+:copyright_line: Copyright (C) 2018 {company_name}
+:toc: macro
+:page-topnav: topnav
+ifeval::["{guide_term}" == "Manual"]
+:manual: true
+ifndef::pdf[]
+:toc: left
+endif::[]
+ifdef::pdf[]
+toc::[]
+endif::[]
+{copyright_line}
+endif::[]
+
+ifdef::manual[]
+The latest and greatest version of this manual can be found in many formats at {this_guide_base_url}.
+endif::[]
+ifndef::manual[]
+This portal has manual-formatted editions, as well, in link:{this_guide_manual_html_url}[HTML] and link:{this_guide_manual_pdf_url}[PDF].
+endif::[]
+
+// tag::example-include[]
+// include intro text common to all portals
+include::snippets/intro_portal_common.adoc[]
+// end::example-include[]
+
+ifdef::show_cheats[]
+[TIP]
+--
+The content above appears in all editions, but some of it is variable.
+Many of the strings (e.g., _{guide_product}_ and even _{guide_user_verb}_, etc) are variables (`\{guide_product}` and `\{guide_user_verb}`) are dynamically substituted with AsciiDoc attributes at build time.
+The content is included from a common file, like so:
+
+[source,asciidoc]
+ include::snippets/intro_portal_common.adoc[]
+--
+endif::show_cheats[]
+
+// include intro text specific to current portal
+include::snippets/intro_portal_{guide_slug}.adoc[]
+
+ifdef::show_cheats[]
+[TIP]
+--
+The above text is from a dynamically included file using:
+
+[source,asciidoc]
+ \include::portal/intro_portal_{guide_slug}.adoc[]
+
+Where `\{guide_slug}` is a variable defined in a block of a YAML file (`_configs/guides.yml`) that is only passed to one designated portal during the build config file (`_configs/build-docs.yml`), where it is designated as `data: data/portals.yml:portal-{guide_id}`.
+--
+endif::show_cheats[]
+
+// insert 'jargon ahead' warning
+include::./snippets/admonitions.adoc[tags="warning-jargon"]
+
+// for non-PDF, include the copyright line here
+ifndef::pdf[{copyright_line}]
+
+// for book-formatted output, include the remainder of the portal's contents in this document
+ifdef::manual[]
+
+include::_built_index-stories_{guide_slug}.adoc[leveloffset=+1]
+
+= Appendices
+
+:leveloffset: +1
+
+[[jargon_guide]]
+[appendix]
+include::pages/jargon-guide.adoc[]
+
+[[config_explainer]]
+[appendix]
+include::pages/config-explainer.adoc[]
+
+[[notice]]
+[appendix]
+include::pages/notice.adoc[]
+
+endif::manual[]

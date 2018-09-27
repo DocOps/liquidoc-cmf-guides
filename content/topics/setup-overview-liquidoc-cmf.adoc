@@ -1,0 +1,113 @@
+include::{topic_page_meta}[tags="ldcmf-overview"]
+
+LiquiDoc CMF (LDCMF) is a “content management _framework_” -- a set of tools, conventions, and standards for sensibly organizing and maintaining source content and data as well as producing deliverable artifacts.
+The {project_name} project covers the general use and maintenance of {product_suite_name}.
+Here we'll preview its main features, focusing on how they're implemented in this project ({project_name}).
+
+== LDCMF: Not Your Daddy's Content Platform
+
+LDCMF is likely to seem unfamiliar.
+It is a publishing platform but not a content management _system_ (CMS) nor a _component_ content management system (CCMS).
+It differs from these mainly in that it does not revolve around a database or a user interface designed for a specific type of content or publishing.
+
+LDCMF is designed for flexibility, in order to meet the demands of complex documentation projects that cover potentially numerous _versions_ of multiple _products_ for various _audiences_, perhaps yielding artifacts in two or more output _formats_, as well as other complicating factors.
+The platform enables a docs-as-code approach to technical content, whereby the documentation source material is tied to the product source code, as well as using tools and methods more familiar to developers than to writers.
+
+.Pros/Cons of LiquiDoc CMF vs Proprietary CMS/CCMS Solutions
+****
+include::{snippetsdir}/ldcmf-vs-proprietary.adoc[tags="dlist"]
+****
+
+== What Do I Need to Learn?
+
+First, be sure you're looking at the guide for the proper role ({guide_user}).
+See {XREF_ldcmf-user-roles} to be sure.
+
+ifdef::guide_docpro[]
+In your role as a documentation contributor, or _documentarian_, you will not need to know the differences between LiquiDoc, LDCMF, and your team's implementation, so this overview should suffice.
+Instead, this {guide_term} will walk you through the procedures necessary to create, edit, and manage content in this particular LDCMF environment.
+endif::guide_docpro[]
+
+ifdef::guide_admin[]
+As a LiquiDoc instance administrator, you'll need to intimately understand the relationship between LiquiDoc and LDCMF.
+The use of Liquid templating will likely be a significant part of your job, with the rest of your technical work being configuration and content management.
+You will also need to be familiar with the *_documentarian_* role, as covered in the LDCMF {docpro_portal_link}.
+endif::guide_admin[]
+
+ifdef::guide_dev[]
+As a developer, you have the ability to extend or modify either the LiquiDoc build utility or the LDCMF content framework.
+
+Each has a distinct Git repository.
+
+* link:{liquidoc-gem_git_repo_url}[LiquiDoc gem repo]
+* link:{liquidoc-cmf_git_repo_url}[LiquiDoc CMF repo]
+
+To modify the *LiquiDoc* Ruby gem, you will need some familiarity with Ruby.
+
+The *LDCMF* repo, on the other hand, is merely a set of directories, static files, and documentation.
+The most complicated languages are YAML, AsciiDoc, and Liquid.
+
+To be most helpful hacking LDCMF, you also need to be familiar with the *_documentarian_* role, as covered in the LDCMF {docpro_portal_link}, and the *_admin_* role, covered by the {admin_portal_link}.
+endif::guide_dev[]
+
+== LiquiDoc and LDCMF Overview
+
+The LiquiDoc CMF platform relies on the LiquiDoc build utility, which in turn employs other open-source applications to process and render rich-text and multimedia documentation output.
+
+As should be clear from the comparisons key to LDCMF-based documentation projects is managing all content and data in plaintext (“flat”) files rather than a database.
+The primary source formats for an LDCMF project like this one ({project_name}) are *AsciiDoc* and *YAML*.
+
+include::{snippetsdir}/_built_terms.adoc[tags="asciidoc"]
+
+include::{snippetsdir}/_built_terms.adoc[tags="yaml"]
+
+ifdef::show_cheats[]
+[.cheat]
+.Prebuilt Includes
+****
+The above definitions are included from this repo's prebuilt terms file.
+In early stages of the build process, AsciiDoc files are generated from the glossary source `data/terms.yml`.
+These can be printed all at once, as with the <<jargon-guide#>>, or else selectively included, as above, using:
+
+[source,asciidoc]
+----
+\include::{snippetsdir}/_built_terms.adoc[tags="asciidoc"]
+
+\include::{snippetsdir}/_built_terms.adoc[tags="yaml"]
+----
+****
+endif::show_cheats[]
+
+These formats are chosen for efficacy, learnability, and readability, and this guide will walk you through the steps you need to get comfortable and proficient with them, including plenty of supplemental resources.
+Before diving into AsciiDoc and YAML, let's keep exploring just what LDCMF is.
+
+LiquiDoc CMF is used to build various types of documentation, but it excels at multi-format output, such as generating a PDF edition and a website _from the same source files_.
+
+
+.The Intimidation Factor
+****
+Instead of web forms with text fields, selectboxes, and WYSIWYG editors; LDCMF offers a bunch of text files.
+The advantages may not be self-evident yet, but let's address the elephant in the room: this all seems a lot harder than it should be.
+It will sometimes take more work to manage docs in plaintext files using what will at first feel like crude editing tools, not to mention that clumsy command line.
+
+While LDCMF's usability will steadily improve, it will always require technical writers and documentation managers who have worked in other fields to reconceive how docs are created and managed.
+But you _will_ be able to get comfortable with your new tooling, and you might even come to appreciate it.
+Nothing we can say here will take the pain away, but rest assured this documentation is written with beginners in mind.
+****
+
+== GitHub
+
+This project is intended to be managed using *link:https://github.com[GitHub]*, the most popular cloud service for Git repository hosting.
+You will need a GitHub account to fully participate as a contributor.
+
+Unfortunately, GitHub's friendly user interface will only handle some of the procedures you need to perform in order to commit to documentation.
+
+which manages source-code in a distributed fashion as the codebase evolves.
+Managing content directly with Git allows documentation to more accurately align with the product it covers, a key objective of LDCMF.
+If you have avoided Git so far, your number may be up.
+There's great news: Git is a highly marketable skill with an ever-widening range of applications in various sectors, fields, and roles.
+Once you experience it's potential in the world of documentation, you will understand what everyone is so excited about.
+
+In the case of the {project_name} project itself, we're generating a PDF “manual” and an HTML “portal” for each of the following “guides”:
+
+include::../../README.adoc[tags="artifact-links"]

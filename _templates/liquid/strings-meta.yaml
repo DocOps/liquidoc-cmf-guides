@@ -1,0 +1,7 @@
+project_config_path: {{project_config_dir}}/{{project_config_file}}
+docpro_portal_link: 'link:{{docpro_portal_url}}[Documentarian Guide]'
+admin_portal_link: 'link:{{admin_portal_url}}[Administrator Guide]'
+dev_portal_link: 'link:{{dev_portal_url}}[Developer Guide]'
+topics_gem_path: '../{{product_gem_path}}'
+topics_cmf_path: '../{{product_cmf_path}}'
+built_nav_yaml_files_list: '{%- for slug in vars.guides -%}`{{slug}}.yml`{%- unless forloop.last -%}, {%- endunless -%}{%- endfor %}'

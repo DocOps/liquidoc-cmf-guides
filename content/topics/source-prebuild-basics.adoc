@@ -1,0 +1,43 @@
+include::{topic_page_meta}[tags="source-prebuild-basics"]
+
+A key strategy of LiquiDoc CMF-based documentation platforms is prebuilding content from semi-structured data sources.
+That is, we form some source content out of prior source content.
+For instance, we can ingest a JSON-formatted file and turn its structured contents into variables that are used throughout our content and even our site navigation and layout.
+
+This approach allows a stable, linear construction of multiple, “parallel” docsets from roughly the same source, all in the same codebase.
+The prebuilt source files used for final Asciidoctor- and Jekyll-driven rendering operations are themselves artifacts of a prepared build.
+They can be examined during troubleshooting like a multi-dimensional stacktrace just by navigating the `_build/`.
+This prebuilt content can also be used as the direct source for conventional Asciidoctor and other static-site build commands as part of an alternate toolchain.
+
+== Liquid Templates in Jekyll vs LiquiDoc
+
+As will be reiterated frequently, we use files written in Liquid templating format to shape our output in two key ways.
+First, we use it for *prebuilding*, usually to generate both AsciiDoc and YAML files out of earlier source files.
+Second, we use it to generate elements of the *layout and metadata* of the Jekyll websites we generate during the later render stage.
+
+Prebuilding AsciiDoc and YAML from the `_templates/liquid/` directory is coordinated by LiquiDoc during `parse` actions.
+Prebuilding of (mostly HTML) files in the `theme/docutheme/_layouts/` directory is performed natively by Jekyll during the Jekyll `render` stage of the LiquiDoc build.
+
+[IMPORTANT]
+We do _not_ use Liquid markup in AsciiDoc files for rendering during Jekyll builds, even though the jekyll-asciidoc plugin does enable parsing of Liquid inside AsciiDoc.
+Prebuilding via LiquiDoc is the preferred method of structuring AsciiDoc source using Liquid templates.
+
+== What Prebuilding is Good For
+
+This strategy is usually only advantageous under two conditions:
+
+. When maintaining *multiple output artifacts* that vary in their content, not just their format, prebuilding allows you to establish segregated sets of variables that apply only to each given artifact.
+
+. When you want to share product information between product source code and doc source, *single-sourcing* this information in semi-structured data files allows the team to maintain one single source of truth.
+
+Content variables (AsciiDoc _attributes_ you call out with `{attribute_name}` inside your content) are most useful under these circumstances.
+
+The third use case for content variables in AsciiDoc is typically just to store repeatedly used data all in one spot -- that is, single sourcing across docs.
+This would be either in a small-data file as described above, or as lots of attributes set at the top of the AsciiDoc index file (*inline definition*).
+These examples do _not_ constitute AsciiDoc prebuilding, as we are passing variables directly into AsciiDoc during the render operation.
+
+[NOTE.tooling]
+.Tooling clarity
+When you perform `asciidoctor` operations via LiquiDoc, you can load attributes from external YAML files (a function of LiquiDoc) _and_ use inline definition (supported by Asciidoctor).
+However, storing variable data in YAML files is preferred because it centralizes important data instead of sprinkling it at the top of individual topic files.
+This external-datasourcing feature is not natively supported by Asciidoctor's own tooling.

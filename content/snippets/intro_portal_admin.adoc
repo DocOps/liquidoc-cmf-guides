@@ -1,0 +1,29 @@
+This guide exists to help you establish and maintain a complicated documentation project that essentially _treats docs source like product code_.
+You will learn to configure a complex docs project in a sensible format using link:https://github.com/DocOps/liquidoc-cmf[LiquiDoc Content Management Framework] (LDCMF).
+LDCMF combines the LiquiDoc open-source build utility with a set of standards and convention for organizing the codebase and proceding.
+
+.Hack These Docs!
+****
+As the LiquiDoc administrator, you are _strongly encouraged_ to edit the source for your own implementation of this very set of documents, assuring that they convey information applicable to _your product environment_.
+
+include::{snippetsdir}/admonitions.adoc[tags="warning-heavy-meta"]
+
+The original edition of this docset describes and instructs the management of LiquiDoc itself; as the administrator of a distinct product's documentation, you can reorient this guide to suit your needs in _two key ways_.
+
+Customize for your docs::
+Content in these docs oriented toward “documentarians” instructs the use of LDCMF, the platform your docs team now uses.
+Make a few adjustments to suit your instance, and -- _voila!_ -- and your own internal documentation instructions are bootstrapped.
+
+Customize for your dev team::
+The developer-oriented documents in this guide, which instruct how to develop _LiquiDoc and LDCMF itself_, can be replaced with style guides, workflow documents, and other resources oriented to _your team's actual environment_.
+
+Customize for your product::
+What you will actually find in this repository is a docset that instructs
+
+You are in fact encouraged to modify a fork/clone of this repository such that it fits your own product.
+See the <<meta_adapt-these-docs{sfx},complete guide to adapting these docs to your project>>.
+****
+
+In this guide, you will learn to...
+
+include::{snippetsdir}/_built_user-stories-bulleted-by-role.adoc[tags="admin-bullets"]

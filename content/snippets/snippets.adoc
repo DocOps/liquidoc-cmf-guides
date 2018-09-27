@@ -1,0 +1,7 @@
+// This is a file for keeping tagged snippets for inclusion in parent docs
+
+// tag::instruct-gemfile-save-install[]
+. Save your modified Gemfile.
+
+. Run `bundle update` on the command line.
+// end::instruct-gemfile-save-install[]

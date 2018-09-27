@@ -1,4 +1,4 @@
-{% assign all_roles = "docpro,admin,dev" | split: "," %}{% for this_role in all_roles %}
+{% assign all_guides = "docpro,admin,dev" | split: "," %}{% for this_role in all_guides %}
 {% case this_role %}
   {% when "docpro" %}
     {% assign role_full = "documentarian" %}
@@ -16,8 +16,8 @@
 // tag::{{ this_role }}[]
 == {{ role_full_cap }} Capabilities
 // tag::{{ this_role}}-bullets[]
-{% for story in topics %}{% if story.roles contains this_role %}
-* link:{{ story.slug }}[{{ story.action | capitalize }}]{% endif %}{% endfor %}
+{% for story in topics %}{% if story.guides contains this_role %}
+* <<{{ story.slug }}{sfx},{{ story.action }}>>{% endif %}{% endfor %}
 // end::{{ this_role}}-bullets[]
 // end::{{ this_role }}[]
 {% endfor %}

@@ -1,0 +1,96 @@
+include::{topic_page_meta}[tags="data-params-tokens"]
+
+Data management is one of the docs administrator's key responsibilities.
+In the LDCMF context, data management means ensuring that all data is properly organized and readily accessible.
+This includes not just source file management but also built-source generation, or prebuilding.
+
+The documentarian need only know what variables are available and where they came from, the admin must concern oneself with up-front choices about data structure and placement that will ensure the widest usability.
+Sometimes this means manipulating raw source data into new forms of built data, but always this means making sure information gets stored in the right places, and that data objects or records are always only as complex as they need to be, but never too simple to be useful.
+
+== Data Sourcing
+
+TODO: This section will describe what kinds of data goes where.
+
+== Parameterization
+
+Data arranged in key-value pairs is considered _parameterized_.
+Review these three examples and their descriptions first, then we'll discuss the differences and applications for all three.
+
+[[asciidoc-params]]
+.Example A -- Structured content in AsciiDoc
+[source,asciidoc]
+----
+=== Definitions
+
+AsciiDoc:: A wicked cool, dynamic lightweight markup language
+YAML:: A lightweight markup for data
+----
+
+[[simple-params]]
+.Example B -- Minimally parameterized data in YAML
+[source,yaml]
+----
+definitions:
+  AsciiDoc: A wicked cool, dynamic lightweight markup for structured writing
+  YAML: A lightweight markup for data
+----
+
+[[complex-params]]
+.Example C -- Fully parameterized data in YAML
+[source,yaml]
+----
+definitions:
+  - term: AsciiDoc
+    definition: A wicked cool, dynamic lightweight markup for structured writing
+  - term: YAML
+    definition: A lightweight markup for data
+----
+
+The first example (<<asciidoc-params>>) is fairly useful.
+It tells the Asciidoctor rendering engine that the content should be rendered as a definition list, which can then be incorporated into PDF and CSS styling of the resulting document.
+Without us configuring anything else, this source would render a nice little definition list -- something like:
+
+.Minimally styled rendering
+====
+[big]*Definitions*
+
+[frame="none"]
+|===
+a|
+AsciiDoc:: A wicked cool, dynamic lightweight markup language
+YAML:: A lightweight markup for data
+|===
+====
+
+Unfortunately, each item can only be used in place, at least without much more manual work to enable it to appear in other AsciiDoc files -- even then, it cannot be reshaped (such as into table cells instead of a definition list).
+Using AsciiDoc to define small data within the file adds lots of effort as well as complication to AsciiDoc writing, without adding advantages for reuse outside this docset.
+With product info in semi-structured formats like YAML, that data becomes available externally, such as for product code or separate docs.
+
+The second example (<<simple-params>>) is a little more useful, in that it could be accessed by external resources as well as our AsciiDoc files.
+It matches our earlier criteria for <<simple-variables>>, in that they are just a key and a value, with no additional structure and fairly simple strings as values.
+
+In fact, this information is most usefully stored as an _array_ of parameters, as we see in the third example (<<complex-params>>).
+This means we treat each term as a value associated with a key called `term`, and we still treat the definition as a value, now for a key called `definition`.
+
+An array divides its immediate contents into a list of items, but each item can contain many _parameters_, or _key-value pairs_.
+This is serialized data at its most elegant.
+Data formatted like this is much easier to work with in templates, as we will not need to perform any special transformation on the elements in order to rearrange them.
+
+This structure gives administrators significant programmatic potential, but it also gives documentarians an elegant way to work with serialized data independent from the pages it will eventually appear in.
+All this without the overhead of databases designed for much larger and more-complex forms of data, and without their clunky interfaces, to boot.
+
+This format also enables us to add additonal parameters to each or any element down the line without having to restructure the whole collection.
+
+[[fully-parameterized]]
+.Fully parameterized data, now with categories
+[source,yaml]
+----
+- term: AsciiDoc
+  definition: A wicked cool, dynamic lightweight markup for structured writing
+  categories: markup, writing
+- term: YAML
+  definition: A lightweight markup for data
+  categories: markup, data
+----
+
+We revisit the way small data is handled in <<(XREF_source-prebuild-basics}>> and <<{XREF_theming-jekyll-liquid}>>.

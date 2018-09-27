@@ -1,0 +1,60 @@
+= DocOps Tooling Evaluator
+
+Nobody benefits from the projects using the wrong free technology stack or toolchain.
+This guide is for ensuring your project is a good match for AJYL and LiquiDoc CMF, or else referring you to potentially more suitable options.
+Precisely because LDCMF is free software, we are eager to make sure it's right for your needs.
+
+== Questions
+
+Who will contribute to your docs?::
+
+Authorship and collaboration are key attributes of a documentation system.
+
+The Whole Team:::
+
+LiquiDoc CMF is an all-hands-on-deck collaborative writing, editing, and publishing platform.
+It does not mix well with user-friendlier systems as yet, but its flexibility does offer powerful solutions alien to must such systems.
+
+Writers only:::
+
+If it is just a bunch of writers who are not themselves developers, LiquiDoc may be too steep of a learning curve.
+We find that technical writers have the easiest time picking up complex platforms if the more advanced members of their team are able to help them learn.
+This is as true for Git as it is for LiquiDoc.
+And while writers can usually rely on devs to hold their hands through the harder Git challenges, unless they're also using LDCMF, they might not be as eager or able to troubleshoot with struggling writers.
+
+Who will manage the docs?::
+
+What do your docs cover?::
+
+The subject you're documenting makes a big difference.
+
+Simple SaaS Product:::
+
+If your product does not have lots of versions and editions, you probably don't need LiquiDoc CMF.
+However, if you already know you wish to work in AsciiDoc and Jekyll, the LiquiDoc tool and at least some of the LDCMF conventions might still make a sensible starting point.
+
+APIs:::
+
+If you're only or mainly documenting a developer API, and there is no other product and perhaps just a few concept topics/pages outside the API reference, LiquiDoc CMF may be overkill.
+AsciiDoc excels at long-form technical writing and inline formatting and tables, whereas API docs generators are mostly tables derived directly from templates customized to the covered API.
+You would likely want to incorporate an API docs generator in such a case anyway, so perhaps look there first and come back here only if those solutions will not suffice.
+
+Complex Product Suites:::
+
+LiquiDoc CMF is ideal for managing multi-edition, multi-version products, where source matter is largely overlapping but divergent in key ways.
+Divergence management is the name of the game, and familiarity with LDCMF even on simple problems will bring complexity handling into your toolchain.
+Starting any project with AJYL components is a good way to ensure you will be able to solve any problem you encounter with free open-source software.
+
+Who will configure, modify, and extend your AJYL/LDCMF platform?::
+
+Configuring an LDCMF instance is a lot like developing a software product, but it does not require a senior developer to implement.
+
+What output formats do you need to provide from a unified codebase?::
+
+HTML:::
+
+Website:::
+
+PDF:::
+
+Do you have access to developers with Ruby skills and available bandwidth?::

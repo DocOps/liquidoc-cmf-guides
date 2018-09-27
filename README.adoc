@@ -1,118 +1,386 @@
-= LiquiDoc User Guides
-// tag::settings[]
-:liquidoc-gem_github_project_url: https://github.com/DocOps/liquidoc-gem
-:liquidoc-docs_github_project_url: https://github.com/DocOps/liquidoc-gem
-:liquidoc-docs_github_project_git_uri: git@github.com:DocOps/liquidoc-gem.git
-:liquidoc-cmf_github_project_url: https://github.com/DocOps/liquidoc-cmf
-:liquidoc_landing_url: https://docops.org/liquidoc
-:docpro_portal_url: https://docops.org/liquidoc/docs/docpro
-:docpro_manual_url: https://docops.org/liquidoc/docs/docpro-manual.pdf
-:admin_portal_url: https://docops.org/liquidoc/docs/admin
-:admin_manual_url: https://docops.org/liquidoc/docs/admin-manual.pdf
-:dev_portal_url: https://docops.org/liquidoc/docs/dev
-:dev_manual_url: https://docops.org/liquidoc/docs/dev-manual.pdf
-:docs_build_path_def: _configs/build-docs.yml
-// end::settings[]
+= LiquiDoc CMF Guides Project
+// This AsciiDoc file must be rendered to be properly viewed.
+// The easiest way to view it rendered is on GitHub at
+// https://github.com/DocOps/liquidoc-cmf-guides
+// OR copy and paste these contents into
+// https://asciidoclive.com
+// BELOW is all AsciiDoc formatting:
+// https://asciidoctor.org/docs/what-is-asciidoc/
 
-The contents of this repository provide self-documentation of the link:{liquidoc-gem_github_project_url}[LiquiDoc utility].
-This repo contains the source content and data files as well as the LiquiDoc configuration (dependencies bundle and LiquiDoc config) necessary to build the docs source into robust artifacts with two commands.
+// NOTE, if using this README as the basis for a forked repo, note that several
+// sections below are intended to be include::[]ed into the main output, making
+// your project README file itself the canonical source of crucial data that
+// appears further below as well as in your docs output.
+//
+// THESE ATTRIBUTES ARE FOR THE README file specifically
+// They will be replaced in the main build by data from
+// data/meta.yml and other files
+:project_name: LiquiDoc CMF Guides
+:project_subjects_list: AJYL docstack, LiquiDoc, and LiquiDoc CMF
+:product_suite_name: LiquiDoc and LDCMF
+:product_suite_name_short: LiquiDoc/LDCMF
+// SPECIFIC SUBJECT-PRODUCT URLs
+:gem_github_project_url: https://github.com/DocOps/liquidoc-gem
+:gem_git_origin_uri: git@github.com:DocOps/liquidoc-gem.git
+:cmf_github_project_url: https://github.com/DocOps/liquidoc-cmf
+:cmf_git_origin_uri: git@github.com:DocOps/liquidoc-cmf.git
+// MORE URLS
+:site_base_url: https://www.ajyl.org
+:ldcmf-guides_github_project_url: https://github.com/DocOps/liquidoc-cmf-guides
+:ldcmf-guides_git_origin_uri: git@github.com:DocOps/liquidoc-cmf-guides.git
+:liquidoc_landing_url: {site_base_url}/liquidoc
+:liquidoc-cmf_landing_url: {site_base_url}/liquidoc-cmf
+:ldcmf-proving-grounds_url: {site_base_url}/ldcmf-proving-grounds
+:ajyl_landing_url: {site_base_url}/liquidoc
+:docpro_portal_url: {site_base_url}/liquidoc/docs/docpro
+:docpro_manual_pdf_url: {site_base_url}/liquidoc/docs/docpro-manual.pdf
+:docpro_manual_html_url: {site_base_url}/liquidoc/docs/docpro-manual.html
+:admin_portal_url: {site_base_url}/liquidoc/docs/admin
+:admin_manual_pdf_url: {site_base_url}/liquidoc/docs/admin-manual.pdf
+:admin_manual_html_url: {site_base_url}/liquidoc/docs/admin-manual.html
+:dev_portal_url: {site_base_url}/liquidoc/docs/dev
+:dev_manual_pdf_url: {site_base_url}/liquidoc/docs/dev-manual.pdf
+:dev_manual_html_url: {site_base_url}/liquidoc/docs/dev-manual.html
+// KEY settings for the repo covered by THIS README
+:project_git_origin_uri: {ldcmf-guides_git_origin_uri}
+:project_git-platform_project_url: {ldcmf-guides_github_project_url}
+:project_config_path: _configs/build-docs.yml
+:project_build_command_basic: "bundle exec liquidoc -c {project_config_path} -v prime=true"
+:portals_base_path: liquidoc-cmf-guides
+:project_home_dir: liquidoc-cmf-guides
+:docs_path: ''
+:local_serve_port: 4009
 
-[source,bash]
-----
-bundle
-bundle exec liquidoc -c _configs/build-docs.yml
-----
-
-(Detailed <<build,installation instructions below>>.)
+This codebase is the source for publishable artifacts that document three subjects: {project_subjects_list}.
+The entire canonical output of this repo is hosted at link:{site_base_url}[], with specific <<core-artifacts,artifact URLs below>>.
 
 == Overview
 
 You will find in this repo the source for numerous artifacts, including differently formatted “editions” of our core user guides, as well as outreach materials intended to help introduce and popularize LiquiDoc.
 
 [NOTE]
-The source data and content for this repository are oriented toward LiquiDoc, but the entire project was developed with _your own project_ in mind.
-If you are developing or administering a LiquiDoc-based documentation project, the contents of this repo may not _only_ be instructional.
-<<clone_adapt,Instructions are provided>> for cloning this repo and reorienting it to provide internal and customer-facing docs for your project.
+The source data and content for this repository are oriented toward {project_subjects_list}, but the entire project was developed with _your own project_ in mind.
+If you are developing or administering a LiquiDoc-based documentation project, the contents of this repo may not _only_ be instructional. <<clone-adapt,Instructions are provided>> for cloning this repo and reorienting it to provide internal and customer-facing docs for your project.
 
-[[core_attributes]]
+=== This README
+
+// ADMINS EDIT THIS
+Please note that the file you're reading contains instructions for setting up an instance of the LDCMF Guides docs, _NOT_ your documentation repo itself (unless you're working on the LDCMF docs).
+The docset these instructions establish (see <<core-artifacts>>) is a duplicate of everything hosted at link:{site_base_url}[ajyl.org].
+Those documents are meant to orient and instruct general use, installation, configuration, and modification of LiquiDoc and LiquiDoc CMF.
+If you are getting set up with another implementation of the LiquiDoc Content Management Framework--such as a docset instructing the use, installation, and hacking of a product you help develop/document--see the README for that implementation.
+// ALTERNATE TEXT FOR YOUR PRODUCT
+// IF FORKING THIS REPO FOR YOUR OWN PROJECT, REMOVE ABOVE PARAGRAPH AND UNCOMMENT/EDIT BELOW
+// This repository builds the documentation for our documentation platform: the docs for our docs.
+// This is a fork of the LDCMF Guides Project, which documents the framework we use--our fork of that project documents our bespoke implementation of the same framework.
+// Therefore, these docs simultaneously general use of LDCMF as well as our specific architecture, conventions, and so forth.
+
+[[core-artifacts]]
 === Core Artifacts
 
-These documents are the rendered final output of this source repository.
-They each provide direct information _about_ LiquiDoc and instructing its _usage_.
+The codebase in this repository generates the following artifacts.
 
 // tag::artifact-links[]
-* LiquiDoc Documentarian's Guide (link:{docpro_portal_url}[Web Portal]) (link:{docpro_manual_url}[PDF Manual])
-* LiquiDoc Administrator's Guide (link:{admin_portal_url}[Web Portal]) (link:{admin_manual_url}[PDF Manual])
-* LiquiDoc Developer's Guide link:{dev_portal_url}[(Web Portal]) (link:{dev_manual_url}[PDF Manual])
+// tag::artifact-links-guides[]
+* *Documentarian Guide* link:{site_base_url}/{portals_base_path}/docpro/home[Web Portal]
+| link:{site_base_url}/docs/docpro-manual.pdf[PDF Manual]
+| link:{site_base_url}/docpro-manual.html[HTML Manual]
+
+* *Administrator Guide* link:{site_base_url}/{portals_base_path}/admin/home[Web Portal]
+| link:{site_base_url}/docs/admin-manual.pdf[PDF Manual]
+| link:{site_base_url}/admin-manual.html[HTML Manual]
+
+* *Developer Guide* link:{site_base_url}/{portals_base_path}/dev/home[Web Portal]
+| link:{site_base_url}/docs/dev-manual.pdf[PDF Manual]
+| link:{site_base_url}/dev-manual.html[HTML Manual]
+// end::artifact-links-guides[]
 // end::artifact-links[]
 
-[NOTE]
-The Documentarian's Guide provides general instructions for using LiquiDoc to build your project's documentation, mainly in the form of _actual instructions_ for contributing content to the LiquiDoc User Guides project (_this repo!_) itself.
+The *Documentarian Guide* provides general instructions for using LiquiDoc to build your project's documentation, mainly in the form of _actual instructions_ for contributing content to the LiquiDoc CMF Guides project (_this repo!_) itself.
 That is to say, if you read the Documentarian's Guide you'll be able to contribute effectively to this very project, and your contributions will be welcomed.
+
+The *Developer Guide* meanwhile instructs how to extend or contribute to the subject producs: LiquiDoc and LiquiDoc CMF.
+That's the guide for anyone interested in hacking the products.
+This DevGuide is not always included in other implementations, as in that context it would need to be replaced with content covering contributing code to your product itself.
+
+The *Administrator Guide* contains an overview of the admin role as well as in-depth use cases, configuration strategies, and LiquiDoc references.
 
 The following artifacts are still in the works but listed here to provide context for the breadth of this project:
 
-* LiquiDoc Landing Page
-* LiquiDoc Documentarian's Overview (Slides) (Onesheet)
-* LiquiDoc Administrator's Overview (Slides) (Onesheet)
-
-// === Instructional Artifacts
-//
-// Each of the above artifacts has an “instructional” correspondent.
-// That is, for every document above, there is a “behind the scenes” version that includes notes exposing how various components are sourced and built.
-//
-// The following documents are “cheat sheets” annotating the core artifacts, intended to teach _how_ LiquiDoc is documented in the course of, you know, documenting it.
-//
-// * LiquiDoc Documentarian's Guide (Portal) (PDF Manual)
-// * LiquiDoc Administrator's Guide (Portal) (PDF Manual)
-// * LiquiDoc Developer's Guide (Portal) (PDF Manual)
-// * LiquiDoc Landing Page
-// * LiquiDoc Documentarian's Overview (Slides) (Onesheet)
-// * LiquiDoc Administrator's Overview (Slides) (Onesheet)
+// tag::artifact-links[]
+// tag::artifact-links-extras[]
+* LiquiDoc CMF link:{liquidoc-cmf_landing_url}[Landing Page]
+* AJYL link:{ajyl_landing_url}[Landing Page] | link:{site_base_url}/docs/ajyl-intro.pdf[Onesheet]
+* LiquiDoc link:{liquidoc_landing_url}[Homepage] | link:{site_base_url}/docs/liquidoc-docs.pdf[Onesheet]
+* LiquiDoc CMF Documentarian's Overview (Slides) (Onesheet)
+* LiquiDoc CMF Administrator's Overview (Slides) (Onesheet)
+* A Tour of the ajyl.org LDCMF Repo
+* A Tour of the Digi Embedded LDCMF Repo
+* DocOps Evaluator Decision Matrix
+* LDCMF Proving Grounds (link:{ldcmf-proving-grounds_url}[FAQ]) (Demos)
+// end::artifact-links-extras[]
+// end::artifact-links[]
 
 [[build]]
 == Build
 
-The following procedure invokes the LiquiDoc tool to build just the documentation.
+All project artifacts are generated by a sequential build procedure.
+This section instructions acquiring the files, preparing the build tooling, and performing a basic local build.
+For more thorough documentation instructions, see the docs appropriate to your role.
 
-. Clone or download this repository to your local machine and switch to the new directory.
+=== Prerequisites
+// tag::prerequisites-body[]
+This procedure invokes the LiquiDoc tool and in turn Asciidoctor, Jekyll, and other dependencies to build all documentation and other artifacts.
+
+The only prerequisite software packages you may need are Ruby runtime and Git.
+You will also need a terminal application.
+The rest will be installed during the basic setup instructions.
+
+=== Terminal
+
+If you are a Linux user, hopefully you already know your favorite terminal.
+For *MacOS*, use spotlight to find your `terminal`, or try link:https://www.iterm2.com/[*iTerm2*].
+
+Windows users should use the *GitBash* terminal installed the next step.
+
+=== Git
+
+If you are just getting started with Git, this link:https://try.github.io/[GitHub resource guide] may have something for your learning style.
+
+For setting up *Git on Windows*, use the link:https://gitforwindows.org/[GitForWindows guide].
+
+=== Ruby Runtime Environment
+
+If you're on *Linux or MacOS*, you probably have Ruby runtime.
+Using your preferred terminal application, check your Ruby version with `ruby -v`.
+
+If you're on Windows, use this link:https://rubyinstaller.org/downloads/[download page].
+Ruby version must be 2.3.0 or higher; 2.5+ recommended, development kit not required.
+
+Anne Gentle has provided excellent instructions for getting link:https://www.docslikecode.com/learn/02-jekyll-ruby-gh-pages/[up and running on Windows with Ruby and Jekyll].
+(There are some good *MacOS* tips there as well.)
+// end::prerequisites-body[]
+
+=== Install and Build
+// tag::quickstart-body[]
+// tag::quickstart-basic[]
+// ADMIN NOTE: When embedded in the docs generated by this repo, the following
+//             code will be parsed using parameters set in other files, namely:
+//             data/meta.yml
+
+Open your preferred terminal, and navigate to a workspace in which you can create a new subdirectory for the local repository (“repo”).
+
+. Clone this repo.
 +
-[source,bash,subs="attributes"]
+[source,shell,subs="+attributes"]
 ----
- git clone {github_project_git_uri}
- cd acmedoc-poc
-----
-
-. Obtain the required Ruby dependency gems.
-+
- bundle install
-
-. Run the configured build.
-+
-[source,bash,subs="attributes"]
-----
- bundle exec liquidoc -c {docs_build_path_def}
+git clone {docs_git_origin_uri} {project_home_dir}
 ----
 +
-LiquiDoc will compile PDFs (see `build/docs/`) then builds parallel Jekyll sites under `build/site/`.
+Now you have a local copy of the repository files.
 
-. (Optonal.) To serve your built Jekyll sites as one:
+. Change your working directory to the docs directory.
 +
+.Example
+[source,shell,subs="+attributes"]
 ----
- bundle exec jekyll s --destination _build/site --config _configs/jekyll-global.yml --skip-initial-build
+cd {project_home_dir}/{docs_path}
 ----
 
-[[clone_adapt]]
-== Cloning & Adapting These Docs
+. Run Bundler to install dependencies.
++
+[source,shell]
+----
+bundle install
+----
++
+If Ruby says you don't have Bundler installed, run `gem install bundler`.
 
-The LiquiDoc Docs project has two purposes:
+. Run your first build of these docs.
++
+[source,shell,subs="+attributes"]
+----
+bundle exec liquidoc -c {project_config_path}
+----
++
+This executes a specific build routine using the LiquiDoc utility through Bundler, basing the build procedure on a config file.
 
-. Describe and instruct the LiquiDoc utility, especially in the context of the LiquiDoc CMF framework.
-. Provide a boilerplate for other software documentation projects to clone and adapt.
+. Serve the website locally.
++
+[source,shell,subs="+attributes"]
+----
+bundle exec jekyll serve --destination build/site \
+  --config _configs/jekyll-global.yml --skip-initial-build --no-watch
+----
 
-It is highly unlikely your own product lines up seamlessly with LiquiDoc even just in terms of documentation structure.
-Nevertheless, there is a good chance cloning this repo and making lots of content and even structural changes will be more convenient and efficient than starting from scratch.
+Now you're able to view the {project_name} web portals and associated artifacts, right on your local machine.
+Browse link:http://127.0.0.1:{local_serve_port}[http://127.0.0.1:{local_serve_port}].
 
-The content is highly modular, and much of it is drawn from distinct data sources that can be edited.
-In many instances, even terms like _LiquiDoc_ are drawn from variables designated in data files.
-The Administrator's Guide contains details for forking or adapting this repo to suit your needs.
+==== Full Command
+
+Use this command to execute a clean, build, and serve operation locally.
+
+[source,shell,subs="+attributes"]
+----
+rm -rf _build && bundle exec liquidoc -c {project_config_path} && bundle exec jekyll serve --destination _build/site --config _configs/jekyll-global.yml --skip-initial-build
+----
+// end::quickstart-basic[]
+
+==== Special Build Options
+
+Here are some special flags that work with this project's primary build config (`{project_config_path}`).
+
+[source,shell,subs="+attributes"]
+.Build without Asciidoctor rendering (Jekyll or PDF)
+----
+bundle exec liquidoc -c {project_config_path} -v norender=true
+----
+
+[source,shell,subs="+attributes"]
+.Build without rendering website files
+----
+bundle exec liquidoc -c {project_config_path} -v nojekyll=true
+----
+
+[source,shell,subs="+attributes"]
+.Build without rendering PDFs
+----
+bundle exec liquidoc -c {project_config_path} -v nopdf=true
+----
+// end::quickstart-body[]
+
+== Repository Structure
+
+A functional overview of key directories and files.
+For details, see the appropriate documentation.
+
+// tag::repo-structure-listing[]
+[source,ascii]
+----
+ldcmf-guides/
+├── _build/
+├── _configs/
+│   ├── asciidoctor.yml
+│   ├── build-docs.yml
+│   ├── jekyll-global.yml
+│   ├── jekyll-guide-admin.yml
+│   ├── jekyll-guide-dev.yml
+│   ├── jekyll-guide-docpro.yml
+│   └── jekyll-guides-common.yml
+├── _ops/
+├── _templates/
+│   └── liquid/
+├── content/
+│   ├── assets/
+│   │   └── images/
+│   ├── snippets/
+│   ├── pages/
+│   ├── special/
+│   │   └── assets/
+│   │       ├── css/
+│   │       ├── fonts/
+│   │       ├── images/
+│   │       └── js/
+|   ├── topics/
+│   └── guides-index.adoc
+├── data/
+│   ├── guides.yml
+│   ├── meta.yml
+│   ├── products.yml
+│   ├── schema.yml
+│   └── terms.yml
+├── products/
+│   ├── cmf/
+│   └── gem/
+├── theme/
+│   ├── css/
+│   ├── docutheme/
+│   │   ├── _includes/
+│   │   └── _layouts/
+│   ├── fonts/
+│   └── js/
+├── Gemfile
+├── Gemfile.lock
+├── NOTICE
+└── README.adoc
+----
+// end::repo-structure-listing[]
+// For detailed descriptions
+
+[NOTE]
+In this (prime) repository, the paths `products/cmf/` and `products/gem/` are submodule aliases to the link:{cmf_github_project_url}[LDCMF Boilerplate] and link:{gem_github_project_url}[LiquiDoc Gem] repos, respectively.
+
+[[clone-adapt]]
+== Forking & Adapting These Docs
+
+The LDCMF Guides project has two purposes:
+
+. Describe and instruct {project_subjects_list}.
+. Provide a *boilerplate* for other LDCMF documentation projects to clone and adapt.
+
+The first purpose is straightforward: these guides help you understand LiquiDoc and the LDCMF approach to developing docsets with AJYL.
+If that's what you came here for, check out the <<core-artifacts,published artifacts>>.
+
+Among uses for this *repository as boilerplate* (starter) material for your own LDCMF project are:
+
+[upperalpha]
+. _documenting your own product_ itself and
+. _documenting your own LDCMF product docs_ once you have an LDCMF-based docset well underway.
+
+=== Option A: Document Your Own Product
+
+The first option is to fork the LDCMF Guides project and overhaul it until all the content and data reference _your product's_ content and data.
+Unfortunately, it is highly unlikely your own product suite lines up seamlessly with the subjects of this project (a command-line utility and documentation a fledgling framework).
+It is therefore likely you will need to make _major_ modifications to these docs if you want to cover your own product with them.
+Nevertheless, there is a good chance cloning this repo and making lots of content and even structural changes will be more convenient and efficient than starting from scratch, so you are welcome to do so.
+Starting from the standard, more link:cmf_github_project_url[paired-down boilerplate and init scripts] is is definitely an option.
+Starting from the standard, more link:liquidoc-[paired-down boilerplate and init scripts] is is definitely an option.
+In other words, follow the instructions for link:{admin_portal_url}/initialize-docs-env[Creating an LDCMF Project from ‘Scratch’].
+
+=== Option B: Document Your Own Docs
+
+Once your own product is documented in LDCMF, you can fork a version of these guides to use as the manual for your new documentation system.
+Just as these instructions serve to document LDCMF, they can be adopted to document _your instance of LDCMF_.
+You customize it to your implementation of LDCMF, then build and serve to your own site, such as an S3 bucket.
+To keep the docs internal, protect it by placing it on your company VPN or connecting to an authentication API.
+
+In fact, just as this project sources its product info from its subject product repos, _your forked edition of this guide_ can instead ingest data from _your actual LDCMF setup_, just as your LDCMF setup can ingest data from _your own product source_.
+
+For these reasons, a lot of the LDCMF Guides content uses variables for key terms so you can quickly change the subject, audience, and context of these guides to suit your own needs.
+These concepts may seem extremely complex, esoteric, or simply foreign at this point, but the more you use LDCMF Guides to learn about building great documentation environments for your products, the more you will understand the strategy involved.
+And of course, you can always check the source to see what's under the hood wherever we don't explicitly peel layers back.
+
+In this case, you will likely want to keep your fork in sync with the upstream (prime) repository, so you can absorb additions and patches without too much effort.
+For strategies, see link:{}/{portals_base_path}/meta_adapt-these-docs[Adapt these Docs] in the prime Admin Guide.
+
+== Cheats
+
+You can build a version of these guides that contains lots of additional explainer content, digging into the nuts and bolts of this complex docset, all off it built around technologies, standards, and conventions you can adopt for free.
+This information is too noisy and confusing for the standard guides, so we do not even publish them as artifacts.
+You probably shouldn't either, as your users would be even more confused.
+However, you are welcome to build your own copy for reference, and you can edit the cheat notes or add your own to describe your own content and code (instead of the LDCMF Guides codebase).
+
+[source,shell,subs="+attributes"]
+----
+bundle exec liquidoc -c {project_config_path} -v cheats=true
+----
+
+This can be served the same way as the conventional docs.
+
+[source,shell,subs="+attributes"]
+----
+bundle exec liquidoc -c {project_config_path} -v cheats=true && bundle exec jekyll s --destination _build/site --config _configs/jekyll-global.yml --skip-initial-build
+----
+
+== Versioning
+
+The LDCMF Guides project is versioned.
+Each version of the guide corresponds to a version or range of versions of the LiquiDoc utility and LiquiDoc CMF.
+These docs may be updated numerous times in between releases of LiquiDoc or revisions of LDCMF.
+In the case of LDCMF, this documentation is the authoritative reference, whereas the LiquiDoc codebase itself is the source of truth on LiquiDoc utility.
+
+== Licensing
+// tag::copyright[]
+(c) 2018 Brian Dominick and Ajyl Doclabs contributors
+// end::copyright[]
+Released under the MIT License.

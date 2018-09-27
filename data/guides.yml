@@ -1,39 +1,56 @@
 common:
   theme_path: ".."
-  docpro_manual_url: &docpro_manual_url http://docops.org/liquidoc/docs/docpro-manual.pdf
-  docpro_portal_url: &docpro_portal_url http://docops.org/liquidoc/docpro/home
-  admin_manual_url: &admin_manual_url http://docops.org/liquidoc/docs/docpro-manual.pdf
-  admin_portal_url: &admin_portal_url http://docops.org/liquidoc/admin/home
-  admin_manual_url: &admin_manual_url http://docops.org/liquidoc/dev/docpro-manual.pdf
-  admin_portal_url: &admin_portal_url http://docops.org/liquidoc/dev/home
-guide-1:
+  docpro_manual_pdf_url: http://docops.org/docpro-manual.pdf
+  docpro_manual_html_url: http://docops.org/docpro-manual.html
+  docpro_guide_url: http://docops.org/liquidoc-cmf-guides/docpro/home
+  admin_manual_pdf_url: http://docops.org/docpro-manual.pdf
+  admin_manual_html_url: http://docops.org/docpro-manual.html
+  admin_guide_url: http://docops.org/liquidoc/admin/home
+guide-docpro:
   guide_docpro: true
-  portal_id: 1
-  portal_slug: docpro
-  portal_user: Documentarian
-  portal_product: LiquiDoc
-  user_role: documentarian
-  user_verb: write, develop, and manage great docs with
-  site_path: docpro
+  guide_id: 1
+  guide_slug: docpro
+  guide_user: Documentarian
+  guide_user_short: DocPro
+  guide_product: LiquiDoc
+  guide_guide_user_role: documentarian
+  guide_user_role_aan: a documentarian
+  guide_user_verb: write, edit, and manage great documentation
+  guide_site_path: liquidoc-cmf-guides/docpro
+  guide_docpro: true
   show_docpro: true
-guide-2:
+  exposure: docpro
+  topic_page_meta: ../snippets/_built_page-meta-docpro.adoc
+guide-admin:
   guide_admin: true
-  portal_id: 2
-  portal_slug: admin
-  portal_user: Administrator
-  portal_product: LiquiDoc
-  user_role: admin
-  user_verb: build and manage a sophisticated, open-source documentation toolchain
-  site_path: admin
+  guide_id: 2
+  guide_slug: admin
+  guide_user: Administrator
+  guide_user_short: Admin
+  guide_product: LiquiDoc
+  guide_user_role: admin
+  guide_user_role_aan: an admin
+  guide_user_verb: configure and develop the documentation environment
+  guide_site_path: liquidoc-cmf-guides/admin
+  guide_admin: true
   show_admin: true
-guide-3:
-  guide_dev: true
-  portal_id: 3
-  portal_slug: dev
-  portal_user: Developer
-  portal_product: LiquiDoc
-  user_role: developer
-  user_verb: extend and customize a sophisticated, open-source toolchain
-  site_path: dev
   show_docpro: true
+  exposure: docpro,admin,dev
+  topic_page_meta: ../snippets/_built_page-meta-admin.adoc
+guide-dev:
+  guide_dev: true
+  guide_id: 3
+  guide_slug: dev
+  guide_user: Developer
+  guide_user_short: Dev
+  guide_product: LiquiDoc
+  guide_user_role: developer
+  guide_user_role_aan: a developer
+  guide_user_verb: modify and extend the source code
+  guide_site_path: liquidoc-cmf-guides/dev
+  guide_dev: true
+  show_dev: true
   show_admin: true
+  show_docpro: true
+  exposure: docpro,admin,dev
+  topic_page_meta: ../snippets/_built_page-meta-dev.adoc

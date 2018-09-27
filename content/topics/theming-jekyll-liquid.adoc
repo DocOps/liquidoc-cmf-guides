@@ -1,0 +1,22 @@
+include::{topic_page_meta}[tags="theming-jekyll-liquid"]
+
+Jekyll uses Liquid templates for page structure and for generating elements such as nav menus.
+Liquid templates enable data iteration (looping), conditional flows (including switches), variables with transformation (filtering).
+
+Jekyll's particular (modified) implementation of Liquid's templating system is covered in the link:https://jekyllrb.com/docs/templates/[Jekyll docs].
+The official link:https://github.com/shopify/liquid/wiki/Liquid-for-Designers[Liquid for Designers wiki] is very good, but the link:https://shopify.github.io/liquid/[official Liquid manual] is also helpful.
+
+Liquid templates in the `theme/<theme>/_layouts/` and `theme/<theme>/_includes` directories can draw on data from any YAML files in the `data/` directory.
+These variable names are structured as: `site.data.<datafile>.<varpath>.<varname>`, where <datafile> is the name of the file in the `data/` directory, where `<varpath>` is any further hierarchy inside which our intended variable is nested, and where `<varname>` is our final key.
+
+Unlike with content/data <<prebuilding-strategy,prebuilding>>, Jekyll theme processing data must be sourced in YAML only.
+It can contain strings, numerals, arrays, and structs.
+The latter data types apply hierarchical nesting, as they imply subordinate data.
+
+[NOTE]
+Also unlike with content/data prebuilding, layout and include templates all have a `.html` file extension but are called merely using their extensionless filename.
+
+During LiquiDoc build procedures, the data directory used will be `_build/data/`.
+This will contain the migrated contents of the root `data/` dir as well as prebuilt YAML files, all centrally located for Jekyll ingest.
+
+// TODO (Needs more)

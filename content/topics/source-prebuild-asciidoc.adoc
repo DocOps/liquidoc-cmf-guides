@@ -1,0 +1,177 @@
+include::{topic_page_meta}[tags="source-prebuild-asciidoc"]
+
+== When to Prebuild AsciiDoc Source
+
+== How to Prebuild AsciiDoc Source
+
+[[variable-parsing]]
+=== Variable Parsing
+
+Prebuilding involves templates, used to “press” data into another textual output format.
+This output can be any “flat” format, meaning readily savable in a text file as opposed to a complicated binary format.
+Everything from Markdown to XML is a flat format, and HTML is by far the most popular target format for templating engines.
+
+In our case, the output format is AsciiDoc, a format itself associated with *early source* (like Markdown, popularly rendered into HTML for final rendering by a browser) and not *late source* (like HTML, directly rendered by the browser with no need for intermediary processing).
+
+In your LiquiDoc config file, prebuilding looks something like this:
+
+[source,yaml]
+----
+- source: data/mydata.yml
+  builds:
+    - template: _templates/liquid/mytemplate.asciidoc
+      output: _build/includes/_built_my-include.adoc
+----
+
+Since this project builds separate but heavily overlapping sites from a singular codebase, variables are extremely useful.
+AsciiDoc and Liquid are both _tokenized_ markup formats.
+They both provide markup for variable substitution, whereby a token is replaced by its expressed value according to small data passed in during parsing.
+
+In AsciiDoc files, such variables are called _attributes_, and they are simply wrapped in single curly braces:
+
+[source,asciidoc]
+----
+The default is set to `{sysmem_default}`.
+----
+
+In Liquid templates, variables are wrapped in double curly braces.
+Here is an example from the Liquid template used to generate header info for topics.
+This template provides the model for generating AsciiDoc-formatted output from the small data in `data/schema.yml`.
+
+[source,yaml]
+.Sample from data/schema.yml
+----
+topics:
+  - title: Yocto in a nutshell
+    slug: yocto_c_nutshell
+    portals: all
+  - title: Yocto application development
+    slug: yocto_r_application-development
+    portals: all
+----
+
+[source,liquid]
+.topic-page-meta.asciidoc Liquid template
+----
+{% for topic in topics %}
+// tag::{{ topic.slug }}[]
+= {{ topic.title }}
+:page-title: {{ topic.title }}
+:page-permalink: {product_slug}/{{ topic.slug }}
+// end::{{ topic.slug }}[]
+{% endfor %}
+----
+
+The first line initiates a loop procedure to iterate through the given data effectively, as we'll explore shortly.
+
+[TIP]
+The 1-space padding around the token string in Liquid variables (ex: `{{ topic.title }}`) is conventional but not required.
+
+This is pretty much as powerful as it gets in AsciiDoc, but Liquid offers some additional capability.
+Because Liquid can keep track of nested variable structures, its variable references can have multiple tiers.
+
+These can be represented with dots denoting the full data hierarchy path.
+Let's use data arranged in a nested fashion, like so.
+
+[source,yaml]
+.Example dummy-data.yml
+----
+level_one:
+  level_two:
+    - name: item-1
+      number: 1
+      tags:
+        - tag1
+        - tag2
+    - name: item-2
+      number: 2
+      tags:
+        - tag2
+----
+
+Here are some data expressions we can derive from this sample data in Liquid:
+
+[source,liquid]
+----
+* {{ level_one.level_two[1].tags[0] }}
+
+* {{ level_one.level_two[0].tags[1] }}
+----
+
+If you are familiar with arrays, take a moment to see if you can figure out what those two bullet points should resolve to.
+The answer is immediately below.
+
+For anyone who is not already handy with arrays, let's look at the resolution first, and see if you can figure out how arrays work based on this resulting output.
+
+[source,asciidoc]
+----
+* tag2
+
+* tag2
+----
+
+In most software languages (including Ruby and Liquid), array items are numbered starting with index slot `0`.
+Brackets are used to indicate array index slots.
+Since we have two nested arrays, we read the block hierarchy (`level_one.level_two`, where `level_two` is the first array), then we list which index slot we want to express.
+
+Let's take the first variable name: `level_one.level_two[1].tags[0]`.
+By indicating we want the item at index slot `level_two[1]`, we ask for the _second_ item in the array named `level_two`.
+This happens to be the item with `name: item-2`.
+Next, `tags[0]` calls for the _first_ item in that array's `tags:` block, which happens to be the only item, `tag2`.
+
+The second variable, named `level_one.level_two[0].tags[1]`, gets the same result by asking for the _first_ item in the first array (`item-1`) and the _second_ item in the second array (`tag2`).
+
+[NOTE]
+Any number of blocks can be called this way, enabling deeply nested YAML structures.
+
+[[looping-liquid]]
+=== Iterating Through Data
+
+The previous example from `data/schema.yml` used a Liquid `for` loop to iterate through serialized data.
+We use this feature to generate serialized output from multiple items in a list or array.
+It can generate an “unordered” list of bullet points or menu items just as surely as it can output a series of table rows.
+
+This looping feature is only available in Liquid templates, not AsciiDoc templates, at this time.
+This is why AsciiDoc prebuilding happens outside and prior to the stage or stages during which we render with AsciiDoc into final output.
+
+Let's try a looping example, this time on a chunk of familiar sample data.
+
+[source,yaml]
+.Example dummy-data.yml
+----
+level_one:
+  level_two:
+    - name: item-1
+      number: 1
+      tags:
+        - tag1
+        - tag2
+    - name: item-2
+      number: 2
+      tags:
+        - tag2
+----
+
+Here is a way this can be expressed in Liquid:
+
+[source,liquid]
+----
+{% for item in level_one.level_two %}
+* {{ item.name }} ({{ item.tags[0] }})
+{% endfor %}
+----
+
+This Liquid generates the following output:
+
+[source,asciidoc]
+----
+* item-1 (tag1)
+
+* item-2 (tag2)
+----
+
+Where we name our looping index variable `item`, we could be naming it `i` or `itm` or `idx` or `mrhooper` -- we're just designating a name so we can reference its member variables (such as `name` and `tags`).
+This code will iterate through the two items in `level_one.level_two`.
+The variable `name` is a string in each instance, so the string is expressed.
+The variable `tags` is an array, and we're looking for just the first item in that array by calling for `item[0]`.
+This time we get divergent results by asking for the exact same index slot in each `tags` array, since each array has a different value in that slot.

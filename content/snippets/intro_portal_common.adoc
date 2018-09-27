@@ -1,0 +1,9 @@
+Welcome to the {guide_product} {guide_user} {guide_term}!
+
+Here you will learn to {guide_user_verb} for {product_suite_name} as {guide_user_role_aan}.
+
+ifdef::show_cheats[]
+[TIP.cheat]
+The above lines are generated mostly from variables.
+The words _{guide_product}_, _{guide_user}_, _{guide_term}_, and even _{guide_user_verb}_ were all created by these variables, respectively: `{guide_product}`, `{guide_user}`, `{guide_term}`, and `{guide_user_verb}`.
+endif::[]

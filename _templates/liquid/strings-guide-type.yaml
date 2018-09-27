@@ -1,0 +1,5 @@
+# {% if vars.type == "portal" %}
+# topic_unit: article
+# {% elsif vars.type == "manual" %}
+# topic_unit: chapter
+# {% endif %}

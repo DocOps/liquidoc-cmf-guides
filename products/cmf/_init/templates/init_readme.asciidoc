@@ -19,7 +19,7 @@ git clone {{ git_repo_uri }}
 . Change to the proper directory.
 +
 ....
-cd {% if project_root %}{{ project_root }}{% else %}my_project{% endif %}{% if space_type == "directory" %}/{{ docs_root_path }}{% endif %}
+cd {% if project_root %}{{ project_root }}{% else %}my_project{% endif %}{% if space_type == "folder" %}/{{ docs_root_path }}{% endif %}
 ....
 
 . Run Bundler to install dependencies.
@@ -45,4 +45,4 @@ bundle exec liquidoc -c _configs/build-docs.yml
 
 To build, run `bundle exec liquidoc -c _config/build-docs.yml`.
 
-Check out the results in `build/output/`.
+Check out the results in `_build/output/`.

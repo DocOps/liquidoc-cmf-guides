@@ -1,5 +1,5 @@
 # This is the Jekyll configuration file
-title: LiquiDoc & LiquiDoc CMF | The Docs
+title: AJYL DocLabs
 description: A build tool for docs-as-code
 output: web
 source: _build
@@ -64,14 +64,7 @@ whitelist:
 # Jekyll Documentation Theme settings
 sidebars:
 - home_sidebar
-- mydoc_sidebar
-- product1_sidebar
-- product2_sidebar
-- other
 
-topnav_title: LiquiDoc
-# this appears on the top navigation bar next to the home button
-site_title: LiquiDoc Docs-as-Code Platform
 # this appears in the html browser tab for the site title (seen mostly by search engines, not users)
 feedback_disable: true
 

@@ -1,0 +1,10 @@
+include::{topic_page_meta}[tags="source-markup-asciidoc-conditionals"]
+
+The canonical source for technical documentation of modern AsciiDoc conditionals is the link:https://asciidoctor.org/docs/user-manual/#conditional-prebuildor-directives[Asciidoctor User Manual].
+This {topic_unit} covers conventions and strategies for implementing conditionals to manage content the LiquiDoc CMF way.
+
+== When to Use AsciiDoc Conditionals in LiquiDoc
+
+=== When to Use Liquid Prebuilding Instead
+
+include::_docs_asciidoc-conditionals.adoc[]

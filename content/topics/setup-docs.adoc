@@ -1,0 +1,143 @@
+include::{topic_page_meta}[tags="setup-docs"]
+
+You can get started with the LiquiDoc CMF environment used to document *{product_suite_name}* right away.
+This orientation will introduce you to the {product_suite_name_short} _docs_ codebase as well as its tooling, conventions, and workflow.
+
+[NOTE.meta]
+--
+ifdef::ldcmf_prime[]
+This {guide_term} represents the _prime_ LiquiDoc/LDCMF docs, covering the LiquiDoc build utility and the LDCMF framework/strategy.
+All of the implementation examples in this prime edition of the Guides  subject (the product) documented here is the LDCMF docs codebase itself.
+This guide describes generic usage of the LDCMF framework using itself as a source for explanations, examples, instructions, illustrations, code listings, and so forth.
+While the main intent is to teach “the AJYL/LDCMF way” to write and manage great technical documentation, this guide is simultaneously an instruction manual for managing and contributing to its own codebase.
+endif::ldcmf_prime[]
+ifndef::ldcmf_prime[]
+You are currently reading the docs for managing our docs for {project_subjects_list}.
+These guides instruct proper use of our LDCMF implementation, including how to contribute to and manage our product docs, as well as how to administer the LDCMF instance.
+endif::ldcmf_prime[]
+--
+
+== Your Role
+
+ifdef::guide_docpro[]
+ifdef::ldcmf_prime[]
+In addition to explaining general _documentarian_ duties in an LDCMF context, this {guide_term} also instructs how to contribute source matter to this project itself.
+That is, the _{guide_user} {guide_term}_ is one big contributor guide for the {project_name}.
+endif::ldcmf_prime[]
+ifndef::ldcmf_prime[]
+As a _documentarian_, your environment should already be defined, though you may still need to set it up on your workstation.
+The contents of this {guide_term} are customized for your team's needs.
+endif::ldcmf_prime[]
+endif::guide_docpro[]
+
+ifdef::guide_admin[]
+ifdef::ldcmf_prime[]
+The LDCMF _admin_ role is detailed in this {guide_term}, which doubles as the internal docs for administering the {project_name} codebase itself.
+If you manage the documentation for a product other than LiquiDoc/LDCMF, you will want to fork this project and modify it for your own purposes.
+endif::[]
+ifndef::ldcmf_prime[]
+As an LDCMF _admin_ for your own project, you will have to at least initialize an LDCMF environment before building any docs or even sharing the environment with your team.
+This section will get you started, and the rest of this {guide_term} will help you customize the environment to suit your product demands and your team's workflow.
+endif::[]
+endif::guide_admin[]
+
+ifdef::guide_dev[]
+As a {product_suite_name} _developer_, you need a suitable dev and testing environment.
+That starts with building these very docs, but we'll also explore building from test/sample environments as well as your own custom environment, as well.
+endif::guide_dev[]
+
+Once we make sure you have the few prerequisites in place, you can build these docs.
+ifdef::guide_docpro[]
+That will be essentially the entire operation for documentarians.
+You will then be able to start creating or editing content, then rebuilding to see your work in place.
+endif::guide_docpro[]
+
+For more on your role as {guide_user}, see the
+
+== Installing Dependencies
+
+include::{snippetsdir}/README.adoc[tags="prerequisites-body"]
+
+== Quickstart
+
+include::{snippetsdir}/README.adoc[tags="quickstart-body",leveloffset="-1"]
+
+=== What Just Happened?
+
+The only steps you'll need to perform regularly going forward will be the last two.
+But all these steps are relevant to your work, so we'll exlore them one by one.
+
+==== Ruby Runtime
+
+Whether you already had a Ruby runtime environment or just installed it, you're now able to execute packaged Ruby scripts called “gems”.
+ifdef::guide_admin,guide_dev[]
+Gems can be executed via command-line interface or via LiquiDoc's Ruby API, still under development.
+This means you can include LiquiDoc, Asciidoctor, or Jekyll into your own Ruby applications.
+The CLI also makes LiquiDoc available to any build or deployment utility that can work the command line.
+endif::guide_admin,guide_dev[]
+
+Unless you intend to modify (hack) LiquiDoc, Asciidoctor, or Jekyll yourself, you don't need to know anything about the Ruby language to use these utilities.
+However, it is handy to understand a little about how Ruby works on your system and how you will be engaging with it.
+That orientation starts below with <<bundler>>, but first we should set the stage some more.
+
+==== Git
+
+If you were not familiar with Git before, you are about to become intimate.
+We'll be exploring Git operations in the <<meta_overview-liquidoc-cmf#,LiquiDoc CMF Overview>>.
+For now, the relevant aspect of Git is that you have created a local Git repository during the first step above.
+This step executed a Git command (`git clone`) to grab a copy of this repo from the remote address and clone it to your system.
+In so doing, it initialized that root directory as a Git repository--not just any set of files.
+This means your repository is ready for action, and all the powers of Git are at your fingertips.
+You'll be using more of them soon enough.
+
+==== Project Working Directory
+
+Every LiquiDoc CMF project has a base directory from which it is best to run all commands.
+Always navigate into this directory when you begin working on content, so any `liquidoc`, `asciidoctor`, or `jekyll` commands you may find in these instructions are always run from that base.
+
+[TIP.beginner]
+If you ever need to know what directory you are in, enter `pwd` at the prompt and the full path will display.
+
+[[bundler]]
+==== Bundler
+
+The first Ruby “trick” you should be familiar with is `bundle`, the command that invokes the Bundler gem.
+For our purposes, Bundler reads the file simply called `Gemfile`, which you will find in your project root directory.
+Bundler gathers packages, primarily from link:https://rubygems.org/[Rubgems.org], an open-source gem package hosting service.
+This `Gemfile` defines dependencies used by LiquiDoc, Jekyll, and Asciidoctor as they process source code into publications during a build procedure.
+_Engaging Bundler during every execution of these key Ruby gems ensures proper versions of all their prerequisites are in order._
+
+Running `bundle update` on the command prompt will always check for and install the latest gem updates, which should be pretty safe to do from time to time.
+
+==== LiquiDoc build procedure
+
+The `bundle exec liquidoc` command executes the utility that coordinates the complex documentation build procedure.
+This is all instructed in the build-configuration file indicated in the command (`_configs/build-docs.yml`).
+We'll explore that file and the entire build operation much further in the <<meta_overview-liquidoc-cmf,LiquiDoc CMF Overview>>.
+
+ifdef::guide_docpro[]
+For now, it is most helpful to understand the role LiquiDoc plays in the build process, which is mainly just the orderly invocation of more-powerful tools like Liquid, Asciidoctor, and Jekyll.
+The `liquidoc` command accepts a range of options, but you'll be running it under fairly strict instructions.
+endif::[]
+
+At the end of this procedure, we have generated PDF artifacts as well as static HTML files completely parsed, compiled and ready to serve.
+You can always exclude either the PDF artifacts or the Jekyll portals from the build.
+
+----
+bundle exec liquidoc -c _configs/build-docs.yml -v nopdf=true
+----
+
+To skip the PDF build, use `-v nopdf=true`.
+To skip the Jekyll build, use `-v nojekyll=true`.
+
+==== Jekyll Serve Procedure
+
+This step fires up a local “development server”, giving us a proper browser protocol for navigating all those HTML files.
+We look more deeply at the role Jekyll plays in LiquiDoc CMF in <<meta_overview-liquidoc-cmf,LiquiDoc CMF Overview>>.
+
+This specific `jekyll serve` command was run with some special options.
+Without delving into too much detail, these options serve all the pages we want at once, for multiple portals, and disables default Jekyll features that would interfere with our operations.
+
+[TIP]
+The reason we have to run this step separately is that the build we performed in the last step created multiple Jekyll sites (our “portals”), and we have to serve Jekyll with specific commands in order to deploy the artifacts together.
+This step will be integrated into the LiquiDoc configuration when LiquiDoc is better able to accommodate complex Jekyll commands.

@@ -1,0 +1,1 @@
+include::{topic_page_meta}[tags="build-config-dynamic"]

@@ -1,8 +1,10 @@
 = LiquiDoc CMF
 
-This repo contains the boilerplate files for, and rudimentary documentation of, a content mamanagement framework (CMF) for combining open-source tools and workflows for documentation management.
+This repo contains the boilerplate files for, and rudimentary documentation of, a content management framework (CMF) for combining open-source tools and workflows for documentation management.
+// tag::what-is-ldcmf[]
 LiquiDoc CMF (LDCMF) incorporates two excellent lightweight markup languages (link:http://asciidoctor.org/docs/what-is-asciidoc/[AsciiDoc] and link:https://github.com/darvid/trine/wiki/YAML-Primer[YAML]) with open-source build and publish utilities (link:https://git-scm.com/book/en/v2/Getting-Started-Git-Basics[Git], link:http://asciidoctor.org/[Asciidoctor], link:http://idratherbewriting.com/2015/02/27/static-site-generators-start-to-displace-online-cmss/[static site generators], build and deployment tools, and many others) using a wrapper utility called link:https://github.com/briandominick/liquidoc-gem[*LiquiDoc*].
 This creates a truly open, highly portable system for developing and maintaining docs code the way programmers develop and maintain product code.
+// end::what-is-ldcmf[]
 
 == Usage
 
@@ -95,17 +97,16 @@ liquidoc-cmf/
 ├── _configs/
 │   ├── asciidoctor.yml
 │   └── build-docs.yml
-├── _data/
-│   └── meta.yml
 ├── _templates/
 │   └── liquid/
 │       └── company.asciidoc
-├── src/
+├── content/
 │   ├── assets/
-│   ├── includes/
-│   ├── portal/
+│   ├── snippets/
 │   ├── topics/
-│   └── index.adoc
+│   └── index-guides.adoc
+├── data/
+│   └── meta.yml
 └── theme/
 README.adoc
 Gemfile

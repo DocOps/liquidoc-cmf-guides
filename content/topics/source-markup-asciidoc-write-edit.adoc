@@ -1,0 +1,54 @@
+include::{topic_page_meta}[tags="source-markup-asciidoc-write-edit"]
+
+== AsciiDoc and Asciidoctor
+
+== AsciiDoc Basics
+
+== Syntax
+
+=== Literal Expression in LiquiDoc Jargon
+
+Text that appears inside literals is typically not processed by Asciidoctor during rendering operations.
+We have to signal the desire to parse variables inside literals.
+
+Asciidoctor will not parse any non-AsciiDoc code.
+Even syntax highlighting of code examples is handled outside AsciiDoc, other than an indication of which language to highlight.
+
+To indicate that Asciidoctor should parse attributes inside a code listing, flag it with `subs="+attributes"`.
+
+[source,asciidoc]
+------
+[source,asciidoc,subs="+attributes"]
+----
+We can express a {version-number} inside our code listings as long as we've indicated we wish to do so.
+----
+This matters not least because we will need to escape any existing strings in our code samples that happen to contain braces separated by alphanumeric characters, hyphens, or underscores (regex roughly: `[a-zA-Z0-9_\-]{4,50}`).
+------
+
+For one-line examples with no syntax highlighting, merely indent your code by one character.
+
+[source,asciidoc]
+----
+ some shell command
+----
+
+[source,asciidoc]
+-----
+[source,shell]
+Line one of many
+Line two of many
+
+This line will not be expressed as part of the listing block.
+-----
+
+[source,asciidoc]
+-----
+[source,shell]
+----
+#!/bin/sh
+
+some script down here
+----
+
+This line will not be expressed as part of the listing block.
+-----

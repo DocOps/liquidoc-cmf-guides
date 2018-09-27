@@ -1,0 +1,22 @@
+include::{topic_page_meta}[tags="source-management"]
+
+Understanding the architecture of any file- or content-management scheme takes time.
+Clarity and accessibility are aided by the strict use of conventions and standards shared _team-wide_.
+
+So that you can *find content and data* when you need it, and so you can *determine where to save new content* as you create it, we offer LiquiDoc CMF's content and file management conventions.
+These are the rules governing how and where to store content and data of various types.
+
+ifdef::admin_edition[]
+[TIP.admin-meta]
+.Admin Note
+This is a key place for custom instructions.
+You will doubtless establish various data and even content types as you build, and you may prefer to drop some of the features described as standard LiquiDoc CMF conventions.
+Review these instructions carefully and make edits as you see fit.
+
+endif::[]
+
+== Discerning Content vs Data
+
+== Managing Content
+
+== Managing Data

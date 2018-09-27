@@ -27,7 +27,7 @@ As a first entrant into the new world of FOSS documentation stacks, I propose a 
 ** Use Git.
 ** Store docs code in or near product code.
 ** Align product and docs code.
-** Enable programmatic builds and data preprocessing.
+** Enable programmatic builds and data prebuilding.
 ** Facilitate code reviews of docs content.
 ** Perform continuous integration and deployment.
 * Accommodate fierce extensibility.
@@ -46,23 +46,61 @@ The more carefully you choose your foundational technologies, the better they wi
 You can tie yourself to a proprietary, closed-source technology that seemingly does everything you need now, only to find your docs heavily influenced by that product's features, limitations, and hacky workarounds.
 We should all be able to agree that the product you're documenting so _you_ can make money should have more influence on your docs than the tools you're making and publishing that document with, which is after all designed to make _somebody else_ money.
 
+== What Makes a Docstack?
+
+A complete documentation stack must answer a complete set of questions that determines how humans will interface with the docs, from source to consumption.
+And the answers must meet all users' needs, including the product makers, the documentation maintainers, and the eventual audiences--the end users.
+
+management method::
+How will contributors interact with the source?
+Using browser-based tools, a desktop application, command-line tools?
+
+deployment process::
+How will the
+
+delivery methods::
+How will the docs get served to end users?
+For most, the answer is Web.
+
+output formats::
+The end
+
+markup::
+Which source markup formats underlie the system, and how will users interface with them to work with content and data?
+There is a lot to unpack here.
+
+generator::
+
+
+dynamic services::
+How will dynamic functionality such as site _search_, user _authentication_, _comments_ or _ratings_, and similar realtime or interactive elements be handled?
+Some proprietary packages handle _everything_ (or at least, they'd better, since you're stick with them).
+Most platforms handle these functions through extensibility.
+A good docstack--especially any that deploys static websites--should paint clear paths to arrays of answers to the toughest realtime/dynamic challenges.
 
 If you want to build great docs but don't have months and months to explore the documentation tooling ecosystem, you can do an awful lot worse than the AJYL docstack--and you probably will.
 Most tooling systems are dead ends.
-Their applications are limited and extensibility takes a level of technical skill most documentation teams do not have and most engineering team lack the bandwidth to build.
-Worse still, they're proprietary technologies are restrictive and heavy handed.
+Their applications are limited and extensibility takes a level of technical skill most documentation teams do not have and most engineering teams lack the bandwidth to develop.
+Worse still, they're typically proprietary technologies, restrictive and heavy handed.
 
 So you need a highly complex and powerful documentation platform, but you can't build it yourself, and nobody wants to spend six months researching the tooling in this very under-served, widely overlooked sub-field of engineering.
 
 I make my living setting up collaborative, open-source documentation platforms for software engineering teams (and hopefully someday for less-technical professions).
 My favorite projects are complex and require a robust underlying toolchain that can be readily adapted to accommodate new complexity.
-For this reason, I have spent the past couple of year trying to design a framework that will make setting up documentation projects purely a work of _configuration_ rather then custom _development_.
-While I have the skills to manipulate the underlying tools and do so as needed, I'd prefer they work right out of the box.
+No single product is going to solve all my clients' problems today or maybe ever.
+For this reason, I have spent the past couple of years designing a framework that will make setting up documentation projects strictly a work of _configuration_ rather then custom _development_.
+While I have the skills to manipulate the underlying tools and do so as needed, I prefer they work right out of the box.
 
-No single product is going to solve my problems today.
-What I am using at the moment is a custom script (a Ruby gem) that combines four underlying technologies.
-Again, these exist so I can configure my way through big documentation challenges instead of hacking my way through them.
-*LiquiDoc* is a command-line utility that reads a configuration file and builds documentation from flat files in lightweight markup.
+This means either:
+
+* modifying and contributing to the open-source tools I depend on, or
+* scripting around these tools' weaknesses
+
+I prefer writing (and releasing) “workaround” scripts for a host of personal reasons, but mainly because it gives me a sense of control as I wrangle together disparate tools and make them work in heavily varying environments, from client to client.
+For the past year, since I decided not to join Splunk when they acquired the last startup I worked for, I have been tailoring my AsciiDoc- and Jekyll-based toolchain to solve a few of the most challenging problems involved in “single sourcing” complex documentation sets.
+
+Again, my goal is to _configure_ my way through major documentation challenges instead of _coding_ my way through them, even if that requires a lot of programming up front (and even if I recognize I'll never truly surpass the need to write programmatic code to solve ever-evolving docs challenges).
+*LiquiDoc* is a command-line utility that reads a preconfigured build routine (config file) and generates documentation from flat files in lightweight markup.
 Content is stored in the *AsciiDoc* dynamic lightweight markup format; data is stored in *YAML* format.
 (We'll talk more about these distinctions shortly.)
 LiquiDoc invokes two other Ruby gems -- *Asciidoctor* and *Jekyll* -- to pull all of these disparate source files together and render rich-text output in HTML, PDF, and more.

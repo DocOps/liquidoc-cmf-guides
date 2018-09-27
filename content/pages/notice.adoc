@@ -1,11 +1,11 @@
 = NOTICE of Packaged Dependencies
-:page-permalink: '{site_path}/notice'
+:page-permalink: '/notice'
 
 The following open source packages are fully or partially included with LiquiDoc.
 
-include::{includes_dir}/_built_dependencies_table.adoc[]
+include::{snippetsdir}/_built_dependencies_table.adoc[]
 
-ifdef::cheat[]
+ifdef::show_cheats[]
 [[notice-sourcing]]
 .How this appendix is sourced
 ****
@@ -37,4 +37,4 @@ include::_configs/build-docs.yml[tags=regex-notice]
 Here again we find examples of code listings drawn from their canonical source.
 The `NOTICE` file in its entirety, and a segnment of the build configuration YAML using `include::{root_path}/_configs/build-docs.yml[tags=regex-notice]`.
 
-endif::cheat[]
+endif::show_cheats[]

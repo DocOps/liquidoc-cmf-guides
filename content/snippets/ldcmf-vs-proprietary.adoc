@@ -1,0 +1,120 @@
+// tag::dlist[]
+There are several major differences between an open-source docs-as-code approach to creating, managing, and publishing technical documentation.
+Whether they are _pros_ or _cons_ in your book may depend very much on whether your background.
+
+Some assembly required::
+Users are expected to heavily customize and extend their LDCMF environment rather than fall back on “turnkey” features and elements.
+While you can technically write and build a pretty straightforward docset based on existing, freely available LDCMF examples, your needs will almost certainly vary.
+The free-and-open model adhered to by the _framework_ means you will never encounter a dead end imposed by the LDCMF platform.
+Hopefully you won't need to actually _modify or extend_ the base tooling to solve your needs, but you will need to _configure_ a complex docs build if you have complex problems.
+Presumably, that's how you ended up here anyway.
+
+Small data is simple::
+LDCMF's sources of data and content are far simpler than conventional CMS applications.
+Stored in flat files and directories rather than relational databases (RDBs), LDCMF's relatively flexible and casual datasource options have their limitations.
+Most conventional CMS platforms take advantage of RDBs’ powerful indexing and querying capabilities, not only handling _content and data_ but managing large amounts of site and content _metadata_.
+On the other hand, RDBs cannot be used with distributed source-control systems like Git.
+
+GUI? What GUI?::
+LiquiDoc CMF's user interface is command-line tools (CLIs) and free, open-source text/code editors, rather than proprietary desktop programs or web apps.
+For some, this is the epitome of power and freedom.
+For others, these blinking-cursor options are intimidating to the point of paralysis.
+While LDCMF can be deftly operated by _beginners_ with both kinds of tools, there may be some initial discomfort.
+But then: _total freedom and power!_
+
+// end::dlist[]
+
+// tag::table[]
+This table compares LiquiDoc CMF to leading packages of the two competing types: *content management systems* and *component content management systems*.
+Shaded cells indicate one or two solutions have a distinct advantage in the category.
+
+[cols=">2s,5,5,5",subs="+attributes",options="header"]
+|===
+^| Issue / Feature
+^| LiquiDoc CMF
+^| Conventional CMS
+^| Conventional CCMS
+
+| Extensibility
+| LDCMF is open but with a limited API for now
+{set:cellbgcolor:lightgray}
+| FOSS CMS platforms can be readily extended
+| CCMS tools heavily restrict customization
+{set:cellbgcolor!}
+
+| Interface
+| Command line utilities and FOSS code editors
+| Typically a web browser GUI
+| Either a desktop or browser GUI
+
+| Single-sourcing
+| Code can be drawn directly from product and product-friendly datasources
+{set:cellbgcolor:lightgray}
+| Almost all product info duplicated in CMS; very little “component”pass:[*] support
+{set:cellbgcolor!}
+| Content reuse within docs source, but little crossover to product source
+
+| Pricing
+| Free as in _free af_!
+{set:cellbgcolor:lightgray}
+| Most of the best CMS packages are free and open source
+| Most CCMS packages are expensive, licensing by the user (“seat”)
+{set:cellbgcolor!}
+
+| Source control
+| Fully integrated with (& dependent on) Git
+{set:cellbgcolor:lightgray}
+| No product or Git integration
+{set:cellbgcolor!}
+| Usually mixed; rarely integrated with product code
+
+| I18n
+| No built-in internationalization support
+| Often sophisticated internationalization
+{set:cellbgcolor:lightgray}
+| Often sophisticated internationalization
+
+| Document search
+{set:cellbgcolor!}
+| Limited to basic text search
+| Often sophisticated search
+{set:cellbgcolor:lightgray}
+| Often sophisticated search
+
+| Source portability
+{set:cellbgcolor!}
+| Core aim; no need to export, simple conversions
+{set:cellbgcolor:lightgray}
+| Usually exports well; market saturation helpful here
+| Good luck, friend
+{set:cellbgcolor!}
+
+| Web portability
+| Take your static site anywhere!
+{set:cellbgcolor:lightgray}
+| Strict hosting reqs; devops/sysadmins cringe
+{set:cellbgcolor!}
+| Depends on package
+
+| Data sources
+| Flat files, mainly YAML
+| Relational database (RDB)
+| RDB or flat files, mainly XML
+
+| Git Compatible
+| By design!
+| Nope
+| Sometimes, usually as afterthought
+
+| Content sources
+| AsciiDoc in flat files
+| XML or LML** in relational database (RDB)
+| XML or LML, usually RDB, sometimes flat files
+
+|===
+
+pass:[*] The term _component_ is a key differentiator for a CCMS, as well as for LiquiDoc CMF.
+It refers to breaking content down to sensible, reusable items that can be readily _embedded_ or _cross-referenced_ wherever needed without duplicating canonical information in the source.
+
+pass:[**] LML is lightweight markup, in this case usually non-dynamic formats like Markdown or one of the wiki-oriented markups.
+// end::table[]

@@ -1,0 +1,67 @@
+include::{topic_page_meta}[tags="ldcmf-user-roles"]
+:roles_count: two
+ifdef::build_dev_guide[]
+:roles_count: three
+endif::build_dev_guide[]
+
+As reflected in the {roles_count} separate guides this repository generates, there are {roles_count} fairly distinct user-persona categories expected to engage with the documented LiquiDoc/LDCMF instance.
+
+== The Roles
+
+Anyone producing or editing _content_ for this project -- whether their title is _engineer_, _technical writer_, or _documentation manager_ -- is acting in the role of *_documentarian_*: a documentation _contributor_.
+ifdef::guide_docpro[]
+You are currently reading the {guide_user} {guide_term}.
+endif::guide_docpro[]
+
+Another key role is that of *_administrator_*, or *_admin_*.
+This role is responsible for configuration and management of all the technologies underlying the docs build, as well as overseeing adherence to conventions and best practices by documentarians.
+Anyone fulfilling this role must be comfortable with all of the information in both the
+ifdef::guide_admin[]
+link:{docpro_portal_url}[Documentarian] and Administrator Guides.
+You are currently reading the {guide_user} {guide_term}.
+endif::guide_admin[]
+ifndef::guide_admin[]
+Documentarian and link:{docpro_admin_url}[Administrator] Guide.
+You are currently reading the {guide_user} {guide_term}.
+endif::[]
+
+ifdef::build_dev_guide[]
+Finally, there is the *_developer_* role, for people who wish to _modify_ or extend either the LiquiDoc Ruby gem or the associated framework.
+That is, if you want to extend or alter the source code for either project, the {dev_portal_link} is for you.
+endif::build_dev_guide[]
+
+// This note will only show up if the subject of these Guides is LDCMF itself
+ifdef::ldcmf_prime[]
+[NOTE]
+If you are contributing content to the LDCMF Guides project docs, you are acting as a _documentarian_, not as a developer.
+ifdef::guide_docpro[]
+(You are currently reading the proper guide.)
+endif::guide_docpro[]
+ifdef::guide_dev[]
+If you came to the Developer Guide because your job title is _developer_ or _engineer_, but you really just need to learn how to _use_ LDCMF, switch to the {docpro_portal_link}.
+endif::guide_dev[]
+endif::ldcmf_prime[]
+
+== The ({guide_user}) Role
+
+ifdef::guide_docpro[]
+A documentarian contributes to the {project_name} codebase, either as a {product_suite_name} developer reporting new functionality or information, or as a technical writer whose main role is to improve the {product_suite_name_short} docs.
+
+Documentarians generally need to be familiar with AsciiDoc and Liquid markup, as well as the basic ways the files in the docs repository relate to one another.
+Additionally, documentarians should be able to build the output artifacts locally and know how to troubleshoot various problems their changes might introduce.
+endif::guide_docpro[]
+
+ifdef::guide_admin[]
+As an administrator of the {project_name} codebase, your responsibilities are many.
+Because the infrastructure is complex and every documentarian will have opinions, administrators must referee style, formatting, placement, and other conventions.
+
+Administrators are also responsible for maintaining the integrity of the docs build.
+
+Admins are also expected to create and maintain Liquid templates for prebuilding.
+This necessitates familiarity with AsciiDoc and YAML, the latter of which you will use for many other reasons, as well.
+You may be able to get away with not really knowing AsciiDoc, as long as documentarians provide you with the proper AsciiDoc format they need from prebuilding operations.
+endif::guide_admin[]
+
+ifdef::guide_dev[]
+In the context of this guide, a developer modifies, extends, or otherwise contributes to the {product_suite_name} codebases.
+endif::guide_dev[]

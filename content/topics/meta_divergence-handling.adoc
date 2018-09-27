@@ -1,0 +1,348 @@
+include::{topic_page_meta}[tags="meta_divergence-handling"]
+
+Once we have a grasp of <<meta_divergence-types{sfx},divergence points>>, it's time to plan for them.
+You will want to iterate through the divergence points you are aware of and choose methods for handling each of them.
+The more of a Rubik's Cube your product, the more complicated divergences you'll need to manage.
+
+.Getting the most out of this topic
+****
+As you learn about each divergence strategy, consider if it applies to each point of divergence in your list from <<{XREF_meta_divergence-types}>>.
+****
+
+Unfortunately, divergence handling strategies do not line up one to one (or any other way, really) with divergence types.
+For each strategy expressed below, we could (and perhaps eventually will) provide an example of managing a different type of divergence differently.
+The severity of divergence matters a whole lot, but the impact of which type it is has a lot more to do with the significance to your product or users.
+If that could be dictated in a guide here, it could be automated in a docs product, and you wouldn't need to read this.
+Instead, you have to become a strategist and maybe a bit of a tactician to get complex docs right.
+
+== Radical Divergence Handlers
+
+The biggest shifts are usually the easiest to grasp, so we'll start with the stuff that can handle fundamental content or output differences between artifacts.
+We are always trying to accommodate all of our complexity into one codebase, but when that is not possible, we are planning to handle multiple repositories as we assemble a symphony of routines to generate reliable docs that handle our variety and challenges.
+
+[[subject-switches]]
+=== Strategy: Conditional Switches
+
+One of the easiest ways to selectively present content is using conditional blocks to enable or disable parsing of the enclosed content.
+This is true for Liquid parsing, whether templating for preprocessing or Jekyll rendering, just as it is true for AsciiDoc content.
+This sometimes uses up lots of vertical real estate.
+
+Each portal carries a variable named after its slug.
+That is, the variable's key is actually the portal's respective slug: so `guide-1`, `guide-2`, and `portal-3`.
+Now in AsciiDoc code, we can toggle content for these portals on and off by checking for this attribute's existence in each per-portal build context.
+
+A portal-switch block in AsciiDoc looks like this:
+
+[source,asciidoc]
+----
+\ifdef::guide-2[]
+Some _content_ for the *6UL* platform.
+\endif::[]
+----
+
+The `ifdef` macro checks if the named attribute has been set at all, and resolves `true` even if the variable's value is `false`.
+Therefore, we _only_ set these variables when rendering their respective portal.
+That way, they are not defined, and thus resolve as `false`, when other portals are rendered.
+
+Here is its usage: `ifdef::some-attribute[]` where `some-attribute` is the key name of the attribute you're testing for.
+This would of course display only the AsciiDoc-formatted content on Line 2, and only for the 6UL platform.
+This content will be ignored when rendering any other platform.
+
+For content that should display on more than one portal but still not all portals, use multiple attributes separated by commas (or `or`).
+For instance, a variable carried only by the named portals, so ignored when rendering CC6.
+To limit the permutations, we use a strict order for constructing these variables:
+
+[TIP]
+The `ifdef` directive has a negated opposite, `ifndef::some-attribute[]`, which exposes the containing code when the variable is _not_ defined.
+
+There is an *alternative to `ifdef::[]`* in AsciiDoc, good for testing specific values, but probably best used sparingly.
+The format is:
+
+[source,asciidoc]
+----
+\ifeval::["{some-attribute}" == "Subject A"]
+Some content that only should be seen by people looking for Subject A.
+\endif::[]
+----
+
+Again, `some-attribute` is the variable we're testing, but now we're assessing its content, not the matter of its existence.
+If indeed `some-attribute` is set to the string `some value`, the enclosed content will display.
+
+[TIP]
+In AsciiDoc conditionals, _all_ strings must be wrapped in single or double quotation marks, while numbers and floats (decimal-delimited numbers) can be compared to each other only when not quoted.
+
+The `endif::[]` macro closes the last-set `ifdef::[]`, `ifndef::[]`, or `ifeval::[]` macro that has not yet been closed.
+All conditionals must be closed within the current file being processed.
+That is, when a conditional is set in an included file, their conditional does not persist into the calling file.
+AsciiDoc performs a complete parsing of the included file, so it will balk at an un-closed conditional.
+
+[TIP]
+AsciiDoc does not employ _else_ logic, so you have to set up a distinct block like these for any portal on which you want to display particular content.
+
+The Asciidoctor User Manual describes several variations for and details of these link:https://asciidoctor.org/docs/user-manual/#conditional-preprocessor-directives[conditional directives].
+
+=== Cross-portal Attributes
+
+When we looked at <<subject-switches>>, we learned some variables are intentionally not set on certain portals.
+In a sense, every portal is frequently looking for variables that only exist in other portals.
+
+AsciiDoc lets us try to evaluate attributes whether they've been set or not.
+When they have not been set (when `ifdef::some-attribute[]` would return `false`), Asciidoctor will conveniently print the attribute token explicitly in the rendered output.
+So if we ingest the variable `some-attribute` only when rendering the `guide-2` portal and then try to expose it in content parsed by all portals, in the `portal-3` portal output it will render appear as: `{some-attribute}` -- the literal token.
+There are two ways to avoid this, each with a strategic application.
+Let's use the same example challenge for both: evaluating an attribute that should appear in guide-2 but not in portal-3.
+
+==== Set Attributes Strategically
+
+The obvious case is an attribute that is blank in some portals, therefore passing `ifdef` but not actually appearing in the output.
+To achieve this, we would want to set our variables strategically but call them from all portals with the same code.
+In the `products.yml` file, we give `some-attribute` a different value for each portal, such as `(
+
+==== Use conditionals intricately
+
+The other way to handle this that may be a bit more explicit (thus easier to follow) in AsciiDoc markup is unfortunately quite a bit uglier.
+We can handle the same case of divergence
+
+=== Strategy: Per-portal Includes
+
+At any point in your AsciiDoc code, you may embed the complete or partial content of an external document, using the AsciiDoc `include::[]` macro.
+The content of the embedded document can be more AsciiDoc, which will be parsed prior to inclusion.
+
+==== Tactic: Dynamically Including Prebuilt Content Source
+
+Let's look at a line of AsciiDoc code that embeds prebuilt AsciiDoc.
+
+[source,asciidoc]
+----
+\include::{snippetsdir}/built/containers-{guide_slug}.adoc
+----
+
+The `containers-\{guide-slug}.adoc` file was generated during prebuilding.
+It contains lists of subtopics associated with various parent topics.
+Because these can differ across product editions, that is our point of divergence.
+Since the _content is substantial_, we handle it with includes rather than with attributes storing large chunks of AsciiDoc.
+(Please do avoid this tactic.)
+And finally, because there will likely be _many_ of these containers (lists of sibling subtopics), and it is good to be able to check them all in one place rather than across dozens of distinct files, a single file of subdivided includes makes the most sense.
+
+In the above example, we are letting the `guide_slug` attribute determine which portal's prebuilt file to use.
+This type of line is called in manually maintained container pages, including the literal expression of the calling (parent) page's own slug.
+This tag-specific include extracts only the prebuilt chunk marked for association with the calling file.
+
+==== Tactic: Fixed Inclusion of Divergent Content
+
+In some cases, your content may be too divergent to reasonably manage with prebuilding.
+Prebuilding is best at exploiting patterns in the logic of your content, such as producing reference lists from structured data organizing those references.
+When it comes to showing qualitatively different subject matter--be it prose or code samples--it may be time to simply store and manually handle content markup in separate asset files incorporated using dynamic include directives.
+That is, write AsciiDoc prose or instructions in distinct files for each subject platform, and then use conditionals or variables to include the proper source file in the correct rendering.
+
+This approach also works with disparate code or command-line samples.
+An included file can be any non-AsciiDoc source language or text format, best handled literally, as in a code listing, with the source language identified.
+
+=== Strategy: Source Control
+
+Using your source-control system of choice (hopefully Git), you can manage divergence with repos, branches, and tags, much the same way significant variants might be handled in the product itself.
+This is especially useful where you have products broken up into separate repositories.
+
+It is even more common to use source control to manage divergence across sequential product versions.
+Here we store both data and content that is relevant and accurate to the version of the product it is stored alongside (or using a versioning scheme that at least tracks the product's).
+This strategy enables patch backporting--making changes to the docs for previous versions, wherever it applies.
+
+=== Strategy: Distinct File Management
+
+This approach handles many of the same cases that conditional switches handle within a topic file.
+When a topic's content is so highly divergent across portals it does not make sense to manage it within a file, you may create distinct files and flag them for the portals they apply to.
+These topics will still need to be marked in the schema as applying only to certain portals -- the flag in the filename is for you to distinguish your source files; it does not indicate to LiquiDoc which portals that topic belongs in.
+
+== Superficial Divergence Handling Strategies
+
+Superficial divergence does not create as much overhead, but it does require tact and consistency.
+When you choose not to segregate certain divergent content, you're taking on the responsibility of keeping it in one place and managing not to confuse your audience.
+This often means being very explicit, but sometimes it requires being a little clever.
+
+=== Superficial Divergence Scenario
+
+We have two products that share the same core functionality, but one is an on-premises installation and the other is a SaaS product with a feature-limited Basic offering and a Premium offering.
+The on-prem version may be a more complicated product, but if there's only one, full-featured tier for that product, it is easier to handle in this regard.
+On-prem software has distinct versioning, which is very much not the case for SaaS platforms, but that's a radical-divergence matter.
+For this issue, we're looking at superficial divergence between the two tiers of the SaaS solution.
+It doesn't call for us to maintain one site for Basic users and a nearly identical portal for Premium users right next door, which just has some extra content.
+This would risk confusing readers, and besides, we want Basic users to know what they're missing and Premium users to keep using the features that keep them subscribed.
+
+=== Strategy: Explicit Exposure
+
+There are plenty of cases where you can just show users both or all options.
+This is the case when we might use admonitions to show users the capabilities of different editions or privileges.
+
+.Example of dumping data to handle superficial divergence
+[source,asciidoc]
+----
+[TIP.protip]
+This feature must be actively enabled when you upgrade from Basic to Premium, or any time there after.
+----
+
+Again, _superficiality_ is not a measurement of how fundamental or important the difference is to your product or to Hank in Marketing--we're asking how important it is that we document or instruct the difference separately.
+
+Departing from our example for a moment, another form of dumping is just to show every user some data for all the versions.
+We certainly would not want to generate a whole website just to display a different download URL.
+
+[source,aciidoc]
+----
+Download any supported or prior version of our software:
+
+* {downloads-base-url}/1.2.1/installer.msi (latest!) (requires Windows 10)
+* {downloads-base-url}/1.2.0/installer.msi (requires Windows 10)
+* {downloads-base-url}/1.1.2/installer.msi (requires Windows XP)
+* {downloads-base-url}/1.1.1/installer.msi (requires Windows XP)
+* {downloads-base-url}/1.1.0/installer.msi (requires Windows XP)
+* {downloads-base-url}/1.0.1/installer.msi (requires Windows XP)
+* {downloads-base-url}/1.0.0/installer.msi (requires Windows XP)
+* {downloads-base-url}/archived/0.0.11/installer.msi (unsupported) (requires Windows XP)
+* {downloads-base-url}/archived/100.10/installer.msi (unsupported) (requires Windows XP)
+* {downloads-base-url}/archived/100.10/installer.msi (unsupported) (requires Windows XP)
+----
+
+Here's another straightforward dump, reflecting different constraints for documenting the same software.
+
+[source,aciidoc]
+----
+Get the latest version of our software that is compatible with your operating system:
+
+* {downloads-base-url}/1.2.1/installer.msi (requires Windows 10)
+* {downloads-base-url}/1.1.2/installer.msi (requires Windows XP)
+----
+
+Users probably won't be desperately befuddled if they come across content like this in your docs.
+But there are some even better ways to handle this type of content.
+
+[source,aciidoc]
+----
+Get the latest version of our software that is compatible with your operating system:
+
+* {downloads-base-url}/1.2.1/installer.msi (requires Windows 10)
+* {downloads-base-url}/1.1.2/installer.msi (requires Windows XP)
+
+The Guide you are reading documents the {prod-version-minor} product line.
+----
+
+To make this work, each artifact you generate has to have an appropriate `product-version-minor`.
+
+If we were looking at the manual for version 1.1.1, we might see:
+
+====
+Get the latest version of our software that is compatible with your operating system:
+
+* https://example.com/downloads/1.2.1/installer.msi (requires Windows 10)
+* https://example.com/downloads/1.1.2/installer.msi (requires Windows XP)
+
+The Guide you are reading documents the 1.1.0 product line.
+====
+
+As our last variation on the superficial dump, we sprinkle in some conditional code to reassure the user what docs they're even using at the moment.
+
+[source,aciidoc]
+----
+Get the latest version of our software that is compatible with your operating system:
+
+* {downloads-base-url}/1.2.1/installer.msi (requires Windows 10)
+ifeval::["{prod-version-minor}" == "1.2.0"]
+(The User Guide you are reading covers the 1.2.x line.)
+endif::[]
+* {downloads-base-url}/1.1.2/installer.msi (requires Windows XP)
+ifeval::["{prod-version-minor}" == "1.1.0"]
+(The User Guide you are reading covers the 1.1.x line.)
+endif::[]
+----
+
+Attribute dumping works great in tables, as well.
+We'll look at cross-portal
+
+==== Strategy: Tabbed output
+
+This is where content gets fun.
+As long as there are not too many concurrent variants to display, we can manage snippets of content by alternately displaying or hiding a variant of the snippet, depending on which tab is selected.
+This strategy is optimal for brief instructions or distinct code samples.
+
+[WARNING]
+Unfortunately, this strategy and the one described next (selectable rewrites) comes with a big limitation: it is HTML only.
+It will not work in PDF, so you need to plan for graceful “degradation” of these features if you output in PDF.
+We'll look at this handling in <<output-format-strategy>>.
+
+[TIP]
+Yes, this _does_ mean that all the other strategies listed here work with PDF output.
+
+==== Strategy: User-selectable rewrites
+
+Very similarly to the tab approach, a rewrite widget changes tokenized text throughout the current page.
+When a dropdown or or button value are altered, certain tokenzied content throughout the current pages switches instantly.
+
+A token can be anything truly, unique with no risk of collision. For example: `<$%=some_variable_name=%$>`.
+
+Now _this_ is something our front-end code can work with.
+When a modern browser renders a topic containing that token, JavaScript will rewrite every case of this entire token with the value associated with the user's selection.
+
+Let's get concrete.
+If the variable is a patch version number, users would be able to choose the patch version that matches their current installed version of the product.
+Perhaps there have been two patches since he `1.1.0` minor version was released, those being `1.1.1` and `1.1.2`.
+If minor versions are considered a point of radical divergence, deserving their own, separate artifact, then the documentation is essentially the same, except perhaps references to the version number itself.
+So when the user applies their installed version, ever reference to that version on the page instantly converts to that version, and this setting is remembered across topics as the user navigates.
+Anywhere the product version is referenced, it matches he user's own product version.
+
+[NOTE]
+It is critical to understand that selectable rewrites do not interact with AsciiDoc conditionals or variables (attributes).
+In fact, they do not interact directly with AsciiDoc source at all.
+Now _this_ is what we mean by _superficial_.
+
+[NOTE]
+This feature is not yet implemented in the DEY Docs Portal platform.
+
+==== Strategy: Complex Variables
+
+Complex variables can be set up front or built during preprocessing.
+Either way, the point is to handle complicated cases differently depending on the portal in which they are called.
+You might create several variables containing alternate strings that make perfect sense when resolved in the proper environment.
+Let's get to an instance from our example scenario.
+Perhaps we have a limitation in our product's capacity that we want to reference, but its value differs between our Basic and Premium offerings, while it happens to be limitless in our on-prem offering.
+To be specific, we want to tell users that they have either 1 gigabyte of storage (Basic SaaS), 50 gigabytes of storage (Premium SaaS), or however much storage they provide using their own resources (on-prem).
+
+[source,asciidoc]
+----
+[CAUTION]
+Be sure not to exceed your {host-unit-type}'s storage capacity{prod-storage-max-stated}.
+----
+
+For our SaaS portal, `host-unit-type` is set to `account`, so we'll reference _your account's storage_, whereas the on-prem edition would talk about the machine (`host server`) on which you've installed the software, so _your hosts server's storage_.
+But this is not our complex variable.
+That comes expressed like so:
+
+.In the on-prem product docs
+====
+[CAUTION]
+Be sure not to exceed your host server's storage capacity.
+====
+
+.In the SaaS product docs
+====
+[CAUTION]
+Be sure not to exceed your account's storage capacity (1gb for Basic, 100gb for Premium).
+====
+
+Note complex variables are special because they apply context around simple values.
+Remember, for our product's maximum storage (`prod-storage-max-stated`), there would also be attributes/variables with names like `prod-storage-max-gb-basic` and `prod-storage-max-gb-premium`, which would just be a number of gigabytes.
+
+The SaaS variable would also be concatenated during preprocessing.
+The Liquid would look something like this:
+
+[source,liquid]
+----
+{%- if product_edition == "onprem" %}
+...
+prod-storage-max-stated:
+...
+{% elsif product_edition == "saas" -%}
+...
+prod-storage-max-stated:  ({{prod-storage-max-gb-basic}}gb for Basic, {{prod-storage-max-gb-premium}}gb for Premium)
+...
+{% endif -%}
+----
+
+We leave the on-prem version completely blank, but for the SaaS variant we construct a string out of Liquid variables that expresses quite a lot.

@@ -1,0 +1,12 @@
+This {guide_term} is intended to orient you to the role of *documentarian*, a LiquiDoc user mainly concerned with _creating and managing content_.
+This {guide_term} expects that you have a pre-configured LiquiDoc CMF environment established by a qualified engineer, and you just need to get up and running so you can write/edit content.
+Hopefully, whoever did that configuring has edited this documentation in key areas to ensure it applies to your instance.
+
+ifndef::build_prime[]
+[TIP]
+Check with your LiquiDoc CMF administrator to ensure this guide is oriented toward your LDCMF instance; then maybe remind them to remove this note.
+endif::build_prime[]
+
+In this guide, you will learn to...
+
+include::{snippetsdir}/_built_user-stories-bulleted-by-role.adoc[tags="docpro-bullets"]

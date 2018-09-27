@@ -1,0 +1,14 @@
+= GitHub
+
+This project is intended to be managed using *link:https://github.com[GitHub]*, the most popular cloud service for Git repository hosting.
+You will need a GitHub account to fully participate as a contributor.
+
+Unfortunately, GitHub's friendly user interface will only handle some of the procedures you need to perform in order to commit to documentation.
+
+Managing content directly with Git allows documentation to more accurately align with the product it covers, a key objective of LDCMF.
+
+ifdef::guide_docpro[]
+If you're a technical writer who has avoided Git so far, your number may be up.
+There's great news: Git is a highly marketable skill with an ever-widening range of applications in various sectors, fields, and roles.
+Once you experience its potential in the world of documentation, you will understand what everyone is so excited about.
+endif::guide_docpro[]

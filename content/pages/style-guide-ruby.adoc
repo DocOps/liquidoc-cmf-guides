@@ -1,13 +1,14 @@
 = Ruby Style Guide
+:page-permalink: coding-style-guide
 
 The following is extracted from the Asciidoctor project's asciidoc-jekyll “link:https://github.com/asciidoctor/jekyll-asciidoc/blob/master/coding-style-guide.adoc[Coding Style Guide]”.
 
-ifdef::cheat[]
+ifdef::show_cheats[]
 [TIP.cheat]
 The following content is included from the remote source using this directive, which reads the remote file beginning on Line `3`:
 +
  include::https://raw.githubusercontent.com/asciidoctor/jekyll-asciidoc/master/coding-style-guide.adoc[lines=3..]
 
-endif::cheat[]
+endif::show_cheats[]
 
 include::https://raw.githubusercontent.com/asciidoctor/jekyll-asciidoc/master/coding-style-guide.adoc[lines=3..-1]

@@ -1,0 +1,34 @@
+include::{topic_page_meta}[tags="source-markup-xref-attributes"]
+
+Cross referencing is an important element of technical documentation, but handling it has never been trivial.
+Cross references (“xrefs”) work differently for different document types, which adds some complexity
+
+include::{snippetsdir}/admonitions.adoc[tags="nonstandard-asciidoc"]
+For more, see the link:https://asciidoctor.org/docs/user-manual/#xref[Asciidoctor User Manual on cross references].
+
+== Tokenized Xrefs
+
+LiquiDoc CMF makes linking between units of content called “topics” fairly straightforward by generating attributes (variables) that can be used to write AsciiDoc's complex cross-reference markup fairly simple.
+
+For example, the markup `\<<some-topic-slug#,That Topic's Title Text>>` will be generated from `\<<{XREF_some-topic-slug}>>`, because `xref`-prefixed variables have been generated for each topic slug.
+
+[NOTE]
+While Asciidoctor rendering does automatically insert header text for other sections _within the document_, this does not apply to multi-page website artifacts.
+link:{jekyll-asciidoc_url}[Asciidoctor-enhanced Jekyll] builds a multi-document docset, whereas Asciidoctor itself generates single-document docsets in one-page HTML or multi-page PDF.
+
+== Explicit Xrefs
+
+If you want to have _customized hyperlinked text_ for a cross reference, use explicit syntax.
+You may have noted standard Jekyll xrefs require a hash mark to denote the previous string was a page slug and not an internal (same-page) reference, which now must be addressed in our source.
+
+.Example explicit cross references
+[source,asciidoc]
+----
+Let's link to <<another-section-on-this-page>> and then to <<another-topic{sfx},custom text hyperlinked to another topic>>.
+----
+
+These inter-page xrefs must be maintained manually to ensure explicit titles/headers are updated consistently whenever changes are made.
+
+[NOTE]
+Because of the noted differences between Asciidoctor-enhanced Jekyll and conventional Asciidoctor document handling, xrefs to subsections inside topics does not work.
+A system of cataloging topic subsections (and other anchor points) will be required in order for any xref replacement system to work.

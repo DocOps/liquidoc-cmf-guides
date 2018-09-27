@@ -5,7 +5,8 @@ gem 'json'
 gem 'liquid'
 gem 'logger'
 gem 'crack'
-gem 'liquidoc' , path: '../liquidoc-gem' # For testing with unreleased gems
+gem 'liquidoc' #, path: "../liquidoc-gem"
+gem 'html-proofer'
 
 group :asciidoctor_plugins do
   gem 'asciidoctor-pdf'

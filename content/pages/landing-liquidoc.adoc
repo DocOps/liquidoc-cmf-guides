@@ -1,0 +1,8 @@
+= LiquiDoc
+:page-layout: landing
+:page-permalink: /liquidoc
+:page-hide_sidebar: true
+
+A free, open-source utility for configuring complicated documentation builds using the AJYL docstack: Asciidoctor, Jekyll, YAML, and Liquid.
+
+include::{topics_gem_path}/README.adoc[lines="2..-1"]

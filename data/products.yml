@@ -1,0 +1,10 @@
+- slug: gem
+  name: LiquiDoc
+  description: A powerful, open-source build utility for generating rich documentation artifacts from content and data sources that are treated like product code.
+  versions_supported: [0.7.0,0.8.0,0.9.0]
+  product_path: gem
+- slug: cmf
+  name: LiquiDoc CMF
+  description: A lightweight “content management framework” consisting of an environment and conventions for handling complex documentation source with the LiquiDoc build utility.
+  versions_supported: [0.0.1,0.0.2,0.0.3]
+  product_path: cmf

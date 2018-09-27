@@ -7,6 +7,7 @@ icons: font
 allow-uri-read: true
 cache-uri: true
 configs_path: ../../../_configs
-includes_dir: ../includes
-page_meta: ../includes/_built_page-meta.adoc
+includesdir: ../snippets
+snippetsdir: ../snippets
+productsdir: ../products
 data_dir: ../data
