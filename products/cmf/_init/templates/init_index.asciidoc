@@ -1,5 +1,0 @@
-= {{product_common_name}}
-
-== Maker Info
-
-include::snippets/_built_company-info.adoc[]

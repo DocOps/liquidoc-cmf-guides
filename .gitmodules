@@ -6,7 +6,7 @@
 	url = git@github.com:briandominick/liquidoc-gem.git
 [submodule "products/gem"]
 	path = products/gem
-	url = git@github.com:briandominick/liquidoc-gem.git
+	url = git@github.com:DocOps/liquidoc-gem.git
 [submodule "products/cmf"]
 	path = products/cmf
 	url = git@github.com:DocOps/liquidoc-cmf.git
