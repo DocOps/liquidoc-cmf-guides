@@ -18,6 +18,15 @@
 {% if vars.build_guides %}
   {% assign build_guides = vars.build_guides | split: "," %}
 {% endif %}
+- stage: read-version
+  action: parse
+  data:
+    type: regex
+    file: products/gem/lib/liquidoc/version.rb
+    pattern: ^\s\sVERSION\s\=\s"(?<version>.*)"$
+  builds:
+    - template: _templates/liquid/liquidoc-data.yaml
+      output: _build/data/built/liquidoc.yml
 - stage: migrate-content
   action: migrate
   source: content/
@@ -290,13 +299,10 @@
         pdf: true
       style: theme/pdf-theme.yml
 - action: render
-  source: content/pages/landing-liquidoc.adoc
-  data: _configs/asciidoctor.yml
+  source: products/gem/docs/index.adoc
+  data: _build/data/built/liquidoc.yml
   builds:
-    - output: _build/docs/liquidoc-docs.pdf
-      attributes:
-        pdf: true
-      style: theme/pdf-theme.yml
+    - output: _build/site/liquidoc-manual.html
 
 # Make a copy of the PDFs inside site/ dir for convenient serving
   {% unless vars.nopdf %}
