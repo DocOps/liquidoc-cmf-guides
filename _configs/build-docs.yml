@@ -290,13 +290,9 @@
         pdf: true
       style: theme/pdf-theme.yml
 - action: render
-  source: content/pages/landing-liquidoc.adoc
-  data: _configs/asciidoctor.yml
+  source: products/gem/docs/index.adoc
   builds:
-    - output: _build/docs/liquidoc-docs.pdf
-      attributes:
-        pdf: true
-      style: theme/pdf-theme.yml
+    - output: _build/site/liquidoc-manual.html
 
 # Make a copy of the PDFs inside site/ dir for convenient serving
   {% unless vars.nopdf %}
