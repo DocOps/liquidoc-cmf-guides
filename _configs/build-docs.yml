@@ -303,6 +303,8 @@
   data: _build/data/built/liquidoc.yml
   builds:
     - output: _build/site/liquidoc-manual.html
+      attributes:
+        toclevels: 4
 
 # Make a copy of the PDFs inside site/ dir for convenient serving
   {% unless vars.nopdf %}
