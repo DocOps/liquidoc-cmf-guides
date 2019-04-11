@@ -18,6 +18,15 @@
 {% if vars.build_guides %}
   {% assign build_guides = vars.build_guides | split: "," %}
 {% endif %}
+- stage: read-version
+  action: parse
+  data:
+    type: regex
+    file: products/gem/lib/liquidoc/version.rb
+    pattern: ^\s\sVERSION\s\=\s"(?<version>.*)"$
+  builds:
+    - template: _templates/liquid/liquidoc-data.yaml
+      output: _build/data/built/liquidoc.yml
 - stage: migrate-content
   action: migrate
   source: content/
@@ -291,6 +300,7 @@
       style: theme/pdf-theme.yml
 - action: render
   source: products/gem/docs/index.adoc
+  data: _build/data/built/liquidoc.yml
   builds:
     - output: _build/site/liquidoc-manual.html
 
